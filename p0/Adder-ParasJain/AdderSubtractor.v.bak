@@ -1,0 +1,6 @@
+module AdderSubtractor (SW, LEDR);
+	input[0:9] SW;
+	output[4:0] LEDR;
+	
+	assign LEDR = SW;
+endmodule

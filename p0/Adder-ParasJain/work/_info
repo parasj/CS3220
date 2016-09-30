@@ -1,0 +1,104 @@
+m255
+K3
+13
+cModel Technology
+Z0 dH:\quartus\13\modelsim_ase\win32aloem
+vAdderSubtractor
+Z1 !s100 >9HP?mN>KKXzE3]XWQT8Q2
+Z2 ILhH?LkkGNHD06@6^`;2`z0
+Z3 V`5ccQ1X_IGilV_GOz>mHG3
+Z4 dH:\projects\p0\Adder-ParasJain
+Z5 w1475272964
+Z6 8H:/projects/p0/Adder-ParasJain/AdderSubtractor.v
+Z7 FH:/projects/p0/Adder-ParasJain/AdderSubtractor.v
+L0 1
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s90 -reportprogress|300|-work|work|H:/projects/p0/Adder-ParasJain/AdderSubtractor.v|
+Z10 o-work work -O0
+Z11 n@adder@subtractor
+Z12 !s108 1475275013.435000
+Z13 !s107 H:/projects/p0/Adder-ParasJain/AdderSubtractor.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vFourBitFullAdder
+Z14 !s100 20Tlf@Z3e8M^0jBT1E4[X3
+Z15 IBeM<PmkzSKANb6^zH@ozc2
+Z16 VJi7KZPT5o_]JS58;PRHlW2
+R4
+Z17 w1475273308
+Z18 8H:\projects\p0\Adder-ParasJain\FourBitFullAdder.v
+Z19 FH:\projects\p0\Adder-ParasJain\FourBitFullAdder.v
+L0 1
+R8
+r1
+31
+Z20 !s90 -reportprogress|300|-work|work|H:\projects\p0\Adder-ParasJain\FourBitFullAdder.v|
+R10
+Z21 n@four@bit@full@adder
+Z22 !s108 1475275013.763000
+Z23 !s107 H:\projects\p0\Adder-ParasJain\FourBitFullAdder.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vFullAdder
+Z24 !s100 bfam5VMVZKRBFFlEYOD9]0
+Z25 IH7;S;jSQ1dN7mm<gQ<REY3
+Z26 Vg;9>ezg?<CUD]ZShjSl=_1
+R4
+Z27 w1475265344
+Z28 8H:/projects/p0/Adder-ParasJain/FullAdder.v
+Z29 FH:/projects/p0/Adder-ParasJain/FullAdder.v
+L0 1
+R8
+r1
+31
+Z30 !s90 -reportprogress|300|-work|work|H:/projects/p0/Adder-ParasJain/FullAdder.v|
+R10
+Z31 n@full@adder
+Z32 !s108 1475275014.060000
+Z33 !s107 H:/projects/p0/Adder-ParasJain/FullAdder.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vhex27seg
+!i10b 1
+!s100 B;]l9U9X@;1kZbMWEU@X^0
+IX;8AGQ4=Jn6]JmcP4do`41
+VOzKJj^OV7E872h;SjNiQ[1
+R4
+w1475275010
+8H:/projects/p0/Adder-ParasJain/hex27seg.v
+FH:/projects/p0/Adder-ParasJain/hex27seg.v
+L0 1
+R8
+r1
+!s85 0
+31
+!s108 1475275014.669000
+!s107 H:/projects/p0/Adder-ParasJain/hex27seg.v|
+!s90 -reportprogress|300|-work|work|H:/projects/p0/Adder-ParasJain/hex27seg.v|
+!s101 -O0
+R10
+vTestAdderSubtractor
+Z34 !s100 G7ID_bgD>e]M463YBJ1@[1
+Z35 I5UPTgE[TZRKGoO0VgS?MK2
+Z36 V:VB4_:i53>YThNb2?7gG<0
+R4
+Z37 w1475274072
+Z38 8H:/projects/p0/Adder-ParasJain/TestAdderSubtractor.v
+Z39 FH:/projects/p0/Adder-ParasJain/TestAdderSubtractor.v
+L0 3
+R8
+r1
+31
+Z40 !s90 -reportprogress|300|-work|work|H:/projects/p0/Adder-ParasJain/TestAdderSubtractor.v|
+R10
+Z41 n@test@adder@subtractor
+!i10b 1
+!s85 0
+Z42 !s108 1475275014.372000
+Z43 !s107 H:/projects/p0/Adder-ParasJain/TestAdderSubtractor.v|
+!s101 -O0

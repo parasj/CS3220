@@ -1,0 +1,11 @@
+module FourBitFullAdder (a, b, cin, s, cout);
+	input[3:0] a;
+	input[3:0] b;
+	input cin;
+	
+	output[3:0] s;
+	output cout;
+	
+	assign s = a ^ b ^ cin;
+	assign cout = (a & b) | (a & cin) | (b & cin);
+endmodule
