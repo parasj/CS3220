@@ -1,0 +1,10 @@
+# Compile of AdderSubtractor.v was successful.
+# Compile of FourBitFullAdder.v was successful.
+# Compile of FullAdder.v was successful.
+# Compile of hex27seg.v was successful.
+# Compile of TestAdderSubtractor.v was successful.
+# 5 compiles, 0 failed with no errors. 
+# Load canceled
+restart -f
+# No Design Loaded!
+# Load canceled

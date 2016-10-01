@@ -16,7 +16,7 @@
 // PROGRAM "Quartus II 64-Bit"
 // VERSION "Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition"
 
-// DATE "09/30/2016 19:03:32"
+// DATE "10/01/2016 12:22:26"
 
 // 
 // Device: Altera 5CEBA4F23C7 Package FBGA484
@@ -99,13 +99,15 @@ wire \SW[6]~input_o ;
 wire \fulladder|f1|s~combout ;
 wire \SW[3]~input_o ;
 wire \SW[7]~input_o ;
+wire \comb~0_combout ;
 wire \fulladder|f1|cout~0_combout ;
 wire \fulladder|f2|s~combout ;
 wire \SW[8]~input_o ;
 wire \SW[4]~input_o ;
 wire \fulladder|f3|s~0_combout ;
 wire \fulladder|f3|s~combout ;
-wire \fulladder|f3|cout~0_combout ;
+wire \comb~1_combout ;
+wire \fulladder|s[4]~0_combout ;
 wire \h0|display[0]~0_combout ;
 wire \h0|display[1]~1_combout ;
 wire \h0|display[2]~2_combout ;
@@ -128,7 +130,6 @@ wire \h4|display[3]~3_combout ;
 wire \h4|display[4]~4_combout ;
 wire \h4|display[5]~5_combout ;
 wire \h4|display[6]~6_combout ;
-wire [3:0] b_xor;
 
 
 // Location: IOOBUF_X0_Y18_N79
@@ -197,7 +198,7 @@ defparam \LEDR[3]~output .shift_series_termination_control = "false";
 
 // Location: IOOBUF_X0_Y19_N39
 cyclonev_io_obuf \LEDR[4]~output (
-	.i(\fulladder|f3|cout~0_combout ),
+	.i(\fulladder|s[4]~0_combout ),
 	.oe(vcc),
 	.dynamicterminationcontrol(gnd),
 	.seriesterminationcontrol(16'b0000000000000000),
@@ -673,9 +674,9 @@ defparam \SW[7]~input .simulate_z_as = "z";
 // synopsys translate_on
 
 // Location: LABCELL_X43_Y1_N12
-cyclonev_lcell_comb \b_xor[2] (
+cyclonev_lcell_comb \comb~0 (
 // Equation(s):
-// b_xor[2] = ( \SW[7]~input_o  & ( !\SW[0]~input_o  ) ) # ( !\SW[7]~input_o  & ( \SW[0]~input_o  ) )
+// \comb~0_combout  = ( \SW[7]~input_o  & ( !\SW[0]~input_o  ) ) # ( !\SW[7]~input_o  & ( \SW[0]~input_o  ) )
 
 	.dataa(!\SW[0]~input_o ),
 	.datab(gnd),
@@ -686,14 +687,14 @@ cyclonev_lcell_comb \b_xor[2] (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(b_xor[2]),
+	.combout(\comb~0_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \b_xor[2] .extended_lut = "off";
-defparam \b_xor[2] .lut_mask = 64'h55555555AAAAAAAA;
-defparam \b_xor[2] .shared_arith = "off";
+defparam \comb~0 .extended_lut = "off";
+defparam \comb~0 .lut_mask = 64'h55555555AAAAAAAA;
+defparam \comb~0 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X43_Y1_N6
@@ -724,11 +725,11 @@ defparam \fulladder|f1|cout~0 .shared_arith = "off";
 // Location: LABCELL_X43_Y1_N51
 cyclonev_lcell_comb \fulladder|f2|s (
 // Equation(s):
-// \fulladder|f2|s~combout  = ( \fulladder|f1|cout~0_combout  & ( !\SW[3]~input_o  $ (b_xor[2]) ) ) # ( !\fulladder|f1|cout~0_combout  & ( !\SW[3]~input_o  $ (!b_xor[2]) ) )
+// \fulladder|f2|s~combout  = ( \fulladder|f1|cout~0_combout  & ( !\SW[3]~input_o  $ (\comb~0_combout ) ) ) # ( !\fulladder|f1|cout~0_combout  & ( !\SW[3]~input_o  $ (!\comb~0_combout ) ) )
 
 	.dataa(!\SW[3]~input_o ),
 	.datab(gnd),
-	.datac(!b_xor[2]),
+	.datac(!\comb~0_combout ),
 	.datad(gnd),
 	.datae(gnd),
 	.dataf(!\fulladder|f1|cout~0_combout ),
@@ -794,10 +795,10 @@ defparam \fulladder|f3|s~0 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N30
 cyclonev_lcell_comb \fulladder|f3|s (
 // Equation(s):
-// \fulladder|f3|s~combout  = ( \fulladder|f3|s~0_combout  & ( \fulladder|f1|cout~0_combout  & ( (!b_xor[2] & !\SW[3]~input_o ) ) ) ) # ( !\fulladder|f3|s~0_combout  & ( \fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o ) # (b_xor[2]) ) ) ) # ( 
-// \fulladder|f3|s~0_combout  & ( !\fulladder|f1|cout~0_combout  & ( (!b_xor[2]) # (!\SW[3]~input_o ) ) ) ) # ( !\fulladder|f3|s~0_combout  & ( !\fulladder|f1|cout~0_combout  & ( (b_xor[2] & \SW[3]~input_o ) ) ) )
+// \fulladder|f3|s~combout  = ( \fulladder|f3|s~0_combout  & ( \fulladder|f1|cout~0_combout  & ( (!\comb~0_combout  & !\SW[3]~input_o ) ) ) ) # ( !\fulladder|f3|s~0_combout  & ( \fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o ) # (\comb~0_combout ) ) ) ) # 
+// ( \fulladder|f3|s~0_combout  & ( !\fulladder|f1|cout~0_combout  & ( (!\comb~0_combout ) # (!\SW[3]~input_o ) ) ) ) # ( !\fulladder|f3|s~0_combout  & ( !\fulladder|f1|cout~0_combout  & ( (\comb~0_combout  & \SW[3]~input_o ) ) ) )
 
-	.dataa(!b_xor[2]),
+	.dataa(!\comb~0_combout ),
 	.datab(gnd),
 	.datac(!\SW[3]~input_o ),
 	.datad(gnd),
@@ -817,9 +818,9 @@ defparam \fulladder|f3|s .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X43_Y1_N15
-cyclonev_lcell_comb \b_xor[3] (
+cyclonev_lcell_comb \comb~1 (
 // Equation(s):
-// b_xor[3] = !\SW[0]~input_o  $ (!\SW[8]~input_o )
+// \comb~1_combout  = !\SW[0]~input_o  $ (!\SW[8]~input_o )
 
 	.dataa(!\SW[0]~input_o ),
 	.datab(gnd),
@@ -830,39 +831,40 @@ cyclonev_lcell_comb \b_xor[3] (
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(b_xor[3]),
+	.combout(\comb~1_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \b_xor[3] .extended_lut = "off";
-defparam \b_xor[3] .lut_mask = 64'h5A5A5A5A5A5A5A5A;
-defparam \b_xor[3] .shared_arith = "off";
+defparam \comb~1 .extended_lut = "off";
+defparam \comb~1 .lut_mask = 64'h5A5A5A5A5A5A5A5A;
+defparam \comb~1 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X43_Y1_N27
-cyclonev_lcell_comb \fulladder|f3|cout~0 (
+cyclonev_lcell_comb \fulladder|s[4]~0 (
 // Equation(s):
-// \fulladder|f3|cout~0_combout  = ( \SW[4]~input_o  & ( \fulladder|f1|cout~0_combout  & ( ((b_xor[2]) # (b_xor[3])) # (\SW[3]~input_o ) ) ) ) # ( !\SW[4]~input_o  & ( \fulladder|f1|cout~0_combout  & ( (b_xor[3] & ((b_xor[2]) # (\SW[3]~input_o ))) ) ) ) # ( 
-// \SW[4]~input_o  & ( !\fulladder|f1|cout~0_combout  & ( ((\SW[3]~input_o  & b_xor[2])) # (b_xor[3]) ) ) ) # ( !\SW[4]~input_o  & ( !\fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o  & (b_xor[3] & b_xor[2])) ) ) )
+// \fulladder|s[4]~0_combout  = ( \SW[4]~input_o  & ( \fulladder|f1|cout~0_combout  & ( (!\SW[3]~input_o  & (\comb~1_combout  & !\comb~0_combout )) ) ) ) # ( !\SW[4]~input_o  & ( \fulladder|f1|cout~0_combout  & ( (!\comb~1_combout  & ((\comb~0_combout ) # 
+// (\SW[3]~input_o ))) ) ) ) # ( \SW[4]~input_o  & ( !\fulladder|f1|cout~0_combout  & ( (\comb~1_combout  & ((!\SW[3]~input_o ) # (!\comb~0_combout ))) ) ) ) # ( !\SW[4]~input_o  & ( !\fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o  & (!\comb~1_combout  & 
+// \comb~0_combout )) ) ) )
 
 	.dataa(!\SW[3]~input_o ),
-	.datab(!b_xor[3]),
-	.datac(!b_xor[2]),
+	.datab(!\comb~1_combout ),
+	.datac(!\comb~0_combout ),
 	.datad(gnd),
 	.datae(!\SW[4]~input_o ),
 	.dataf(!\fulladder|f1|cout~0_combout ),
 	.datag(gnd),
 	.cin(gnd),
 	.sharein(gnd),
-	.combout(\fulladder|f3|cout~0_combout ),
+	.combout(\fulladder|s[4]~0_combout ),
 	.sumout(),
 	.cout(),
 	.shareout());
 // synopsys translate_off
-defparam \fulladder|f3|cout~0 .extended_lut = "off";
-defparam \fulladder|f3|cout~0 .lut_mask = 64'h0101373713137F7F;
-defparam \fulladder|f3|cout~0 .shared_arith = "off";
+defparam \fulladder|s[4]~0 .extended_lut = "off";
+defparam \fulladder|s[4]~0 .lut_mask = 64'h040432324C4C2020;
+defparam \fulladder|s[4]~0 .shared_arith = "off";
 // synopsys translate_on
 
 // Location: LABCELL_X43_Y1_N3
@@ -1207,10 +1209,10 @@ defparam \h2|display[6]~6 .shared_arith = "off";
 // Location: LABCELL_X43_Y1_N48
 cyclonev_lcell_comb \fulladder|f2|cout~0 (
 // Equation(s):
-// \fulladder|f2|cout~0_combout  = ( \fulladder|f1|cout~0_combout  & ( (b_xor[2]) # (\SW[3]~input_o ) ) ) # ( !\fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o  & b_xor[2]) ) )
+// \fulladder|f2|cout~0_combout  = ( \fulladder|f1|cout~0_combout  & ( (\comb~0_combout ) # (\SW[3]~input_o ) ) ) # ( !\fulladder|f1|cout~0_combout  & ( (\SW[3]~input_o  & \comb~0_combout ) ) )
 
 	.dataa(!\SW[3]~input_o ),
-	.datab(!b_xor[2]),
+	.datab(!\comb~0_combout ),
 	.datac(gnd),
 	.datad(gnd),
 	.datae(gnd),
@@ -1231,12 +1233,12 @@ defparam \fulladder|f2|cout~0 .shared_arith = "off";
 // Location: LABCELL_X43_Y1_N54
 cyclonev_lcell_comb \h4|display[0]~0 (
 // Equation(s):
-// \h4|display[0]~0_combout  = ( \SW[4]~input_o  & ( \fulladder|f2|s~combout  & ( (!\fulladder|f1|s~combout  & (!b_xor[3] $ (!\fulladder|f2|cout~0_combout  $ (\fulladder|f0|s~0_combout )))) ) ) ) # ( !\SW[4]~input_o  & ( \fulladder|f2|s~combout  & ( 
-// (!\fulladder|f1|s~combout  & (!b_xor[3] $ (!\fulladder|f2|cout~0_combout  $ (!\fulladder|f0|s~0_combout )))) ) ) ) # ( \SW[4]~input_o  & ( !\fulladder|f2|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f1|s~combout  $ (!b_xor[3] $ 
-// (\fulladder|f2|cout~0_combout )))) ) ) ) # ( !\SW[4]~input_o  & ( !\fulladder|f2|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f1|s~combout  $ (!b_xor[3] $ (!\fulladder|f2|cout~0_combout )))) ) ) )
+// \h4|display[0]~0_combout  = ( \SW[4]~input_o  & ( \fulladder|f2|s~combout  & ( (!\fulladder|f1|s~combout  & (!\comb~1_combout  $ (!\fulladder|f2|cout~0_combout  $ (\fulladder|f0|s~0_combout )))) ) ) ) # ( !\SW[4]~input_o  & ( \fulladder|f2|s~combout  & ( 
+// (!\fulladder|f1|s~combout  & (!\comb~1_combout  $ (!\fulladder|f2|cout~0_combout  $ (!\fulladder|f0|s~0_combout )))) ) ) ) # ( \SW[4]~input_o  & ( !\fulladder|f2|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f1|s~combout  $ (!\comb~1_combout  
+// $ (\fulladder|f2|cout~0_combout )))) ) ) ) # ( !\SW[4]~input_o  & ( !\fulladder|f2|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f1|s~combout  $ (!\comb~1_combout  $ (!\fulladder|f2|cout~0_combout )))) ) ) )
 
 	.dataa(!\fulladder|f1|s~combout ),
-	.datab(!b_xor[3]),
+	.datab(!\comb~1_combout ),
 	.datac(!\fulladder|f2|cout~0_combout ),
 	.datad(!\fulladder|f0|s~0_combout ),
 	.datae(!\SW[4]~input_o ),
@@ -1257,17 +1259,17 @@ defparam \h4|display[0]~0 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N6
 cyclonev_lcell_comb \h4|display[1]~1 (
 // Equation(s):
-// \h4|display[1]~1_combout  = ( b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((!\SW[3]~input_o  & 
-// !\fulladder|f1|cout~0_combout ))))) ) ) ) # ( !b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ 
-// (((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) ) ) ) # ( b_xor[2] & ( !\fulladder|f1|s~combout  & ( (!\SW[3]~input_o  & (!\fulladder|f1|cout~0_combout  & (!\fulladder|f3|s~0_combout  $ (!\fulladder|f0|s~0_combout )))) # (\SW[3]~input_o  & 
-// (\fulladder|f1|cout~0_combout  & (!\fulladder|f3|s~0_combout  $ (\fulladder|f0|s~0_combout )))) ) ) ) # ( !b_xor[2] & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & (\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ 
-// (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f3|s~0_combout  & (!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) )
+// \h4|display[1]~1_combout  = ( \comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((!\SW[3]~input_o  & 
+// !\fulladder|f1|cout~0_combout ))))) ) ) ) # ( !\comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ 
+// (((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) ) ) ) # ( \comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\SW[3]~input_o  & (!\fulladder|f1|cout~0_combout  & (!\fulladder|f3|s~0_combout  $ (!\fulladder|f0|s~0_combout )))) # 
+// (\SW[3]~input_o  & (\fulladder|f1|cout~0_combout  & (!\fulladder|f3|s~0_combout  $ (\fulladder|f0|s~0_combout )))) ) ) ) # ( !\comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & (\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  
+// $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f3|s~0_combout  & (!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) )
 
 	.dataa(!\fulladder|f3|s~0_combout ),
 	.datab(!\fulladder|f0|s~0_combout ),
 	.datac(!\SW[3]~input_o ),
 	.datad(!\fulladder|f1|cout~0_combout ),
-	.datae(!b_xor[2]),
+	.datae(!\comb~0_combout ),
 	.dataf(!\fulladder|f1|s~combout ),
 	.datag(gnd),
 	.cin(gnd),
@@ -1285,17 +1287,17 @@ defparam \h4|display[1]~1 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N42
 cyclonev_lcell_comb \h4|display[2]~2 (
 // Equation(s):
-// \h4|display[2]~2_combout  = ( b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) # (\fulladder|f3|s~0_combout  & ((!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o ) # 
-// (!\fulladder|f1|cout~0_combout ))) # (\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )))) ) ) ) # ( !b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ 
-// (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) # (\fulladder|f0|s~0_combout  & (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) ) # ( b_xor[2] & ( !\fulladder|f1|s~combout  & ( 
-// (!\fulladder|f0|s~0_combout  & ((!\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )))) ) ) ) # ( !b_xor[2] & ( !\fulladder|f1|s~combout  & ( 
-// (\fulladder|f3|s~0_combout  & (!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) )
+// \h4|display[2]~2_combout  = ( \comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) # (\fulladder|f3|s~0_combout  & ((!\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o ) # 
+// (!\fulladder|f1|cout~0_combout ))) # (\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )))) ) ) ) # ( !\comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ 
+// (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) # (\fulladder|f0|s~0_combout  & (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) ) # ( \comb~0_combout  & ( !\fulladder|f1|s~combout  & ( 
+// (!\fulladder|f0|s~0_combout  & ((!\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )))) ) ) ) # ( !\comb~0_combout  & ( 
+// !\fulladder|f1|s~combout  & ( (\fulladder|f3|s~0_combout  & (!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) )
 
 	.dataa(!\fulladder|f3|s~0_combout ),
 	.datab(!\fulladder|f0|s~0_combout ),
 	.datac(!\SW[3]~input_o ),
 	.datad(!\fulladder|f1|cout~0_combout ),
-	.datae(!b_xor[2]),
+	.datae(!\comb~0_combout ),
 	.dataf(!\fulladder|f1|s~combout ),
 	.datag(gnd),
 	.cin(gnd),
@@ -1313,17 +1315,18 @@ defparam \h4|display[2]~2 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N18
 cyclonev_lcell_comb \h4|display[3]~3 (
 // Equation(s):
-// \h4|display[3]~3_combout  = ( b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ 
-// (\fulladder|f1|cout~0_combout )))) ) ) ) # ( !b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  & 
-// !\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) ) # ( b_xor[2] & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\fulladder|f3|s~0_combout  & 
-// (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) ) # ( !b_xor[2] & ( 
-// !\fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (\fulladder|f1|cout~0_combout )))) ) ) )
+// \h4|display[3]~3_combout  = ( \comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ 
+// (\fulladder|f1|cout~0_combout )))) ) ) ) # ( !\comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & ((!\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & 
+// (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) ) ) ) # ( \comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & 
+// ((!\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )) # (\fulladder|f3|s~0_combout  & (\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout 
+// )))) ) ) ) # ( !\comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o  $ 
+// (\fulladder|f1|cout~0_combout )))) ) ) )
 
 	.dataa(!\fulladder|f3|s~0_combout ),
 	.datab(!\fulladder|f0|s~0_combout ),
 	.datac(!\SW[3]~input_o ),
 	.datad(!\fulladder|f1|cout~0_combout ),
-	.datae(!b_xor[2]),
+	.datae(!\comb~0_combout ),
 	.dataf(!\fulladder|f1|s~combout ),
 	.datag(gnd),
 	.cin(gnd),
@@ -1341,17 +1344,17 @@ defparam \h4|display[3]~3 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N24
 cyclonev_lcell_comb \h4|display[4]~4 (
 // Equation(s):
-// \h4|display[4]~4_combout  = ( b_xor[2] & ( \fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) ) ) ) # ( !b_xor[2] & ( \fulladder|f1|s~combout  & ( 
-// (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout ))))) ) ) ) # ( b_xor[2] & ( !\fulladder|f1|s~combout  & ( (!\SW[3]~input_o  & ((!\fulladder|f1|cout~0_combout  & (!\fulladder|f3|s~0_combout )) 
-// # (\fulladder|f1|cout~0_combout  & ((\fulladder|f0|s~0_combout ))))) # (\SW[3]~input_o  & ((!\fulladder|f1|cout~0_combout  & ((\fulladder|f0|s~0_combout ))) # (\fulladder|f1|cout~0_combout  & (\fulladder|f3|s~0_combout )))) ) ) ) # ( !b_xor[2] & ( 
-// !\fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )) # (\fulladder|f0|s~0_combout ))) # (\fulladder|f3|s~0_combout  & (\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  $ 
-// (\fulladder|f1|cout~0_combout )))) ) ) )
+// \h4|display[4]~4_combout  = ( \comb~0_combout  & ( \fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) ) ) ) # ( !\comb~0_combout  & ( \fulladder|f1|s~combout  
+// & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout ))))) ) ) ) # ( \comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\SW[3]~input_o  & ((!\fulladder|f1|cout~0_combout  & 
+// (!\fulladder|f3|s~0_combout )) # (\fulladder|f1|cout~0_combout  & ((\fulladder|f0|s~0_combout ))))) # (\SW[3]~input_o  & ((!\fulladder|f1|cout~0_combout  & ((\fulladder|f0|s~0_combout ))) # (\fulladder|f1|cout~0_combout  & (\fulladder|f3|s~0_combout )))) 
+// ) ) ) # ( !\comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & ((!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )) # (\fulladder|f0|s~0_combout ))) # (\fulladder|f3|s~0_combout  & (\fulladder|f0|s~0_combout  & 
+// (!\SW[3]~input_o  $ (\fulladder|f1|cout~0_combout )))) ) ) )
 
 	.dataa(!\fulladder|f3|s~0_combout ),
 	.datab(!\fulladder|f0|s~0_combout ),
 	.datac(!\SW[3]~input_o ),
 	.datad(!\fulladder|f1|cout~0_combout ),
-	.datae(!b_xor[2]),
+	.datae(!\comb~0_combout ),
 	.dataf(!\fulladder|f1|s~combout ),
 	.datag(gnd),
 	.cin(gnd),
@@ -1369,17 +1372,17 @@ defparam \h4|display[4]~4 .shared_arith = "off";
 // Location: MLABCELL_X49_Y1_N0
 cyclonev_lcell_comb \h4|display[5]~5 (
 // Equation(s):
-// \h4|display[5]~5_combout  = ( b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ 
-// (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) ) ) ) # ( !b_xor[2] & ( \fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & ((!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  & !\fulladder|f1|cout~0_combout )) # (\fulladder|f0|s~0_combout 
-//  & ((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) # (\fulladder|f3|s~0_combout  & (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) ) ) ) # ( b_xor[2] & ( !\fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & 
-// (!\fulladder|f3|s~0_combout  $ (((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) ) ) ) # ( !b_xor[2] & ( !\fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((\fulladder|f1|cout~0_combout ) # 
-// (\SW[3]~input_o ))))) ) ) )
+// \h4|display[5]~5_combout  = ( \comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f0|s~0_combout  & (\fulladder|f3|s~0_combout  & (!\SW[3]~input_o  $ (!\fulladder|f1|cout~0_combout )))) # (\fulladder|f0|s~0_combout  & 
+// (!\fulladder|f3|s~0_combout  $ (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) ) ) ) # ( !\comb~0_combout  & ( \fulladder|f1|s~combout  & ( (!\fulladder|f3|s~0_combout  & ((!\fulladder|f0|s~0_combout  & (!\SW[3]~input_o  & 
+// !\fulladder|f1|cout~0_combout )) # (\fulladder|f0|s~0_combout  & ((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) # (\fulladder|f3|s~0_combout  & (((\SW[3]~input_o  & \fulladder|f1|cout~0_combout )))) ) ) ) # ( \comb~0_combout  & ( 
+// !\fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & (!\fulladder|f3|s~0_combout  $ (((!\SW[3]~input_o ) # (!\fulladder|f1|cout~0_combout ))))) ) ) ) # ( !\comb~0_combout  & ( !\fulladder|f1|s~combout  & ( (\fulladder|f0|s~0_combout  & 
+// (!\fulladder|f3|s~0_combout  $ (((\fulladder|f1|cout~0_combout ) # (\SW[3]~input_o ))))) ) ) )
 
 	.dataa(!\fulladder|f3|s~0_combout ),
 	.datab(!\fulladder|f0|s~0_combout ),
 	.datac(!\SW[3]~input_o ),
 	.datad(!\fulladder|f1|cout~0_combout ),
-	.datae(!b_xor[2]),
+	.datae(!\comb~0_combout ),
 	.dataf(!\fulladder|f1|s~combout ),
 	.datag(gnd),
 	.cin(gnd),

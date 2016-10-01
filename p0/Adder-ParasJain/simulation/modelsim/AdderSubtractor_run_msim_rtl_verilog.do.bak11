@@ -8,6 +8,7 @@ vmap work rtl_work
 vlog -vlog01compat -work work +incdir+H:/projects/p0/Adder-ParasJain {H:/projects/p0/Adder-ParasJain/AdderSubtractor.v}
 vlog -vlog01compat -work work +incdir+H:/projects/p0/Adder-ParasJain {H:/projects/p0/Adder-ParasJain/FullAdder.v}
 vlog -vlog01compat -work work +incdir+H:/projects/p0/Adder-ParasJain {H:/projects/p0/Adder-ParasJain/FourBitFullAdder.v}
+vlog -vlog01compat -work work +incdir+H:/projects/p0/Adder-ParasJain {H:/projects/p0/Adder-ParasJain/hex27seg.v}
 
 vlog -vlog01compat -work work +incdir+H:/projects/p0/Adder-ParasJain {H:/projects/p0/Adder-ParasJain/TestAdderSubtractor.v}
 

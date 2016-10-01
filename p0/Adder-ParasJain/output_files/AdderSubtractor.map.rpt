@@ -1,5 +1,5 @@
 Analysis & Synthesis report for AdderSubtractor
-Fri Sep 30 19:02:12 2016
+Sat Oct 01 12:21:00 2016
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -42,7 +42,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                          ;
 +-------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status         ; Successful - Fri Sep 30 19:02:12 2016           ;
+; Analysis & Synthesis Status         ; Successful - Sat Oct 01 12:21:00 2016           ;
 ; Quartus II 64-Bit Version           ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                       ; AdderSubtractor                                 ;
 ; Top-level Entity Name               ; AdderSubtractor                                 ;
@@ -205,11 +205,11 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ; Compilation Hierarchy Node      ; LC Combinationals ; LC Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                      ; Library Name ;
 +---------------------------------+-------------------+--------------+-------------------+------------+------+--------------+----------------------------------------------------------+--------------+
 ; |AdderSubtractor                ; 31 (2)            ; 0 (0)        ; 0                 ; 0          ; 35   ; 0            ; |AdderSubtractor                                         ; work         ;
-;    |FourBitFullAdder:fulladder| ; 8 (0)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder              ; work         ;
+;    |FourBitFullAdder:fulladder| ; 8 (1)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder              ; work         ;
 ;       |FullAdder:f0|            ; 1 (1)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder|FullAdder:f0 ; work         ;
 ;       |FullAdder:f1|            ; 2 (2)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder|FullAdder:f1 ; work         ;
 ;       |FullAdder:f2|            ; 2 (2)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder|FullAdder:f2 ; work         ;
-;       |FullAdder:f3|            ; 3 (3)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder|FullAdder:f3 ; work         ;
+;       |FullAdder:f3|            ; 2 (2)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|FourBitFullAdder:fulladder|FullAdder:f3 ; work         ;
 ;    |hex27seg:h0|                ; 7 (7)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|hex27seg:h0                             ; work         ;
 ;    |hex27seg:h2|                ; 7 (7)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|hex27seg:h2                             ; work         ;
 ;    |hex27seg:h4|                ; 7 (7)             ; 0 (0)        ; 0                 ; 0          ; 0    ; 0            ; |AdderSubtractor|hex27seg:h4                             ; work         ;
@@ -248,7 +248,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:00     ;
 +----------------+--------------+
 
 
@@ -258,7 +258,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Fri Sep 30 19:02:06 2016
+    Info: Processing started: Sat Oct 01 12:20:55 2016
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off AdderSubtractor -c AdderSubtractor
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 1 design units, including 1 entities, in source file addersubtractor.v
@@ -308,9 +308,9 @@ Info (21057): Implemented 66 device resources after synthesis - the final resour
     Info (21059): Implemented 26 output pins
     Info (21061): Implemented 31 logic cells
 Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 27 warnings
-    Info: Peak virtual memory: 505 megabytes
-    Info: Processing ended: Fri Sep 30 19:02:13 2016
-    Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:03
+    Info: Peak virtual memory: 499 megabytes
+    Info: Processing ended: Sat Oct 01 12:21:00 2016
+    Info: Elapsed time: 00:00:05
+    Info: Total CPU time (on all processors): 00:00:02
 
 
