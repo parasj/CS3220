@@ -1,0 +1,3 @@
+module ClockMultiplier (clk, multiple);
+	
+endmodule

@@ -1,3 +1,0 @@
-module FullAdder (a, b, cin, s, cout);
-	
-endmodule
