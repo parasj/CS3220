@@ -1,0 +1,3 @@
+module TestClockMultipler;
+	ClockMultiplier()
+end

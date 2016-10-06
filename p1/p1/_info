@@ -1,0 +1,45 @@
+m255
+K3
+13
+cModel Technology
+Z0 dH:\quartus\13\modelsim_ase\win32aloem
+vClockMultiplier
+Z1 IPYS5ZXEL7=T`ShL4>2iOV0
+Z2 V0]Y7MTO>dXJmU6g_Z:SBK2
+Z3 dH:\projects\p1
+Z4 w1475791534
+Z5 8H:\projects\p1\ClockMultiplier.v
+Z6 FH:\projects\p1\ClockMultiplier.v
+L0 1
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 o-work p1 -O0
+Z9 n@clock@multiplier
+!i10b 1
+Z10 !s100 U=IRTzNnHbndL`=Ta?4020
+!s85 0
+Z11 !s108 1475791535.808000
+Z12 !s107 H:\projects\p1\ClockMultiplier.v|
+Z13 !s90 -reportprogress|300|-work|p1|H:\projects\p1\ClockMultiplier.v|
+!s101 -O0
+vTimer
+!i10b 1
+Z14 !s100 oCO=ihAOV@8AdR?4D0kA;3
+Z15 Ig4T2d7zkcCQlC]ghEQ=Y53
+Z16 ViQfij:mcFPf8gQWP2oaSg3
+R3
+Z17 w1475784374
+Z18 8H:/projects/p1/Timer.v
+Z19 FH:/projects/p1/Timer.v
+L0 1
+R7
+r1
+!s85 0
+31
+!s108 1475791536.087000
+!s107 H:/projects/p1/Timer.v|
+Z20 !s90 -reportprogress|300|-work|p1|H:/projects/p1/Timer.v|
+!s101 -O0
+R8
+Z21 n@timer
