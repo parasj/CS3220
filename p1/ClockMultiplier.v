@@ -1,11 +1,14 @@
-module ClockMultiplier (reset, clkin, multiple, clkoutport);
+module ClockMultiplier (reset, clkin, multiple, clkoutport, currentvalue);
 	input reset;
 	input clkin;
 	input[31:0] multiple;
 	output clkoutport;
+	output currentvalue;
 
 	reg clkout;
 	reg[31:0] counter;
+
+	assign currentvalue = counter;
 	
 	assign clkoutport = clkout;
 
@@ -26,5 +29,4 @@ module ClockMultiplier (reset, clkin, multiple, clkoutport);
 				counter <= counter - 1;
 		end
 	end
-	
 endmodule

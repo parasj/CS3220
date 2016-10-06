@@ -1,3 +1,3 @@
 module TestClockMultipler;
-	ClockMultiplier()
-end
+	
+endmodule

@@ -19,8 +19,11 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 
 	
 	wire clock1;
-	ClockMultiplier c1 (reset, SW[0], 5, clock1);
+	wire[3:0] test_out;
+	ClockMultiplier c1 (reset, SW[0], 5, clock1, test_out);
 
-	assign LEDR[0] = clock1;	
-	
+	dec2_7seg dseg (test_out, HEX0);
+
+	assign LEDR[1] = SW[0];
+	assign LEDR[0] = clock1;
 endmodule
