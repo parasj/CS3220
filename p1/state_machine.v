@@ -13,7 +13,15 @@ module state_machine(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 
     assign reset = KEY[0];
 
-    always @ (posedge CLOCK_50 or posedge reset or KEY[0] or KEY[1] or KEY[2]) begin
+    always @ (STATE) begin
+        case STATE...
+    end
+
+    always @ (reset) begin
+        STATE <= RESET
+    end
+
+    always @ (posedge CLOCK_50) begin
         if (reset = 1'b1) begin
             STATE <= RESET;
         end
