@@ -12,7 +12,14 @@ module state_machine(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
     reg[2:0] STATE;
     parameter RESET = 3'b000, SECOND = 3'b001, MINUTE = 3'b010, STOP = 3'b011, START = 3'b100, FLASH = 3'b101;
 
+    wire reset;
+    wire settimer;
+    wire toggletimer;
+    
     assign reset = KEY[0];
+    assign settimer = KEY[1];
+    assign toggletimer = KEY[2];
+
 
     //logic
     always @ (posedge CLOCK_50) begin
@@ -26,5 +33,13 @@ module state_machine(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
     //transitions
     always @ (posedge CLOCK_50) begin
         case(STATE)
+            RESET:
+                STATE <= SECOND;
+        endcase
+    end
+
+    always @ (negedge settimer and posedge CLOCK_50) begin
+        if (STATE == SECOND) STATE <= MINUTE
+        if (STATE == MINUTE) STATE <= MINUTE
     end
 endmodule
