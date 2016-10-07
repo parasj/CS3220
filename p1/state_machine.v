@@ -10,20 +10,21 @@ module state_machine(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
     output[6:0] HEX3;
     
     reg[2:0] STATE;
+    parameter RESET = 3'b000, SECOND = 3'b001, MINUTE = 3'b010, STOP = 3'b011, START = 3'b100, FLASH = 3'b101;
 
     assign reset = KEY[0];
 
-    always @ (STATE) begin
-        case STATE...
+    //logic
+    always @ (posedge CLOCK_50) begin
+        case(STATE)
     end
 
-    always @ (reset) begin
+    always @ (negedge reset) begin
         STATE <= RESET
     end
 
+    //transitions
     always @ (posedge CLOCK_50) begin
-        if (reset = 1'b1) begin
-            STATE <= RESET;
-        end
+        case(STATE)
     end
 endmodule
