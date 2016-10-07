@@ -15,7 +15,7 @@ module ClockMultiplier (clkin, clkoutport, currentvalue);
 	always @ (posedge clkin) begin
 		counter <= counter - 1;
 
-		if (counter == 1) begin
+		if (counter == 32'b1) begin
 			counter <= multiple;
 			clkout <= ~clkout;
 		end
