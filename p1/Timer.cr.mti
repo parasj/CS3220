@@ -1,4 +1,11 @@
-H:/projects/p1/dec2_7seg.v {1 {vlog -work work H:/projects/p1/dec2_7seg.v
+H:/projects/p1/ClockDivider.v {1 {vlog -work work H:/projects/p1/ClockDivider.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module ClockDivider
+
+Top level modules:
+	ClockDivider
+
+} {} {}} H:/projects/p1/dec2_7seg.v {1 {vlog -work work H:/projects/p1/dec2_7seg.v
 Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 -- Compiling module dec2_7seg
 

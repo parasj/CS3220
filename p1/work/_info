@@ -4,37 +4,37 @@ K3
 cModel Technology
 Z0 dH:\quartus\13\modelsim_ase\win32aloem
 vClockDivider
-Z1 IB:gR`9ECY`h7NbH=G;74Z0
-Z2 VUeTI^Cf?eeMj0@0LD^=__1
-Z3 dH:\projects\p1
-Z4 w1475803412
-Z5 8H:/projects/p1/ClockDivider.v
-Z6 FH:/projects/p1/ClockDivider.v
+Z1 !s100 dM7C6UjRBTzAQWeVNNB]l3
+Z2 IB:gR`9ECY`h7NbH=G;74Z0
+Z3 VUeTI^Cf?eeMj0@0LD^=__1
+Z4 dH:\projects\p1
+Z5 w1475803412
+Z6 8H:/projects/p1/ClockDivider.v
+Z7 FH:/projects/p1/ClockDivider.v
 L0 1
-Z7 OV;L;10.1d;51
+Z8 OV;L;10.1d;51
 r1
 31
-Z8 o-work work -O0
-Z9 n@clock@divider
+Z9 !s90 -reportprogress|300|-work|work|H:/projects/p1/ClockDivider.v|
+Z10 o-work work -O0
+Z11 n@clock@divider
 !i10b 1
-Z10 !s100 dM7C6UjRBTzAQWeVNNB]l3
 !s85 0
-Z11 !s108 1475803582.410000
-Z12 !s107 H:/projects/p1/ClockDivider.v|
-Z13 !s90 -reportprogress|300|-work|work|H:/projects/p1/ClockDivider.v|
+Z12 !s108 1475803794.713000
+Z13 !s107 H:/projects/p1/ClockDivider.v|
 !s101 -O0
 vClockMultiplier
 Z14 IT2ZmkZa:F>^U74zI2R_hf3
 Z15 V?UTVkijgRcfLKkCO?B;gX3
-R3
+R4
 Z16 w1475803284
 Z17 8H:/projects/p1/ClockMultiplier.v
 Z18 FH:/projects/p1/ClockMultiplier.v
 L0 1
-R7
+R8
 r1
 31
-R8
+R10
 Z19 n@clock@multiplier
 Z20 !s100 L9UBcdZgblKBzR3f:TH?h1
 Z21 !s108 1475803294.116000
@@ -47,78 +47,78 @@ vdec2_7seg
 Z24 !s100 G?57BZaf<?ZG<J=Jj?[>21
 Z25 IDnhIF^2o0HXfDl;8B5C_>3
 Z26 V>=@`lWP8z@0bHzMjKAf>H1
-R3
+R4
 Z27 w1475792540
 Z28 8H:/projects/p1/dec2_7seg.v
 Z29 FH:/projects/p1/dec2_7seg.v
 L0 1
-R7
+R8
 r1
 31
 Z30 !s90 -reportprogress|300|-work|work|H:/projects/p1/dec2_7seg.v|
-R8
-Z31 !s108 1475803581.778000
+R10
+Z31 !s108 1475803794.137000
 Z32 !s107 H:/projects/p1/dec2_7seg.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vTestClockDivider
 !i10b 1
-!s100 R8ScKI9?i>1hdOSb^Qm923
-I:>i9P:?gHd=CVW2LZ[IVZ3
-VFEm?>Pz3zCa5[bHfXhZaW0
-R3
-w1475803422
-8H:/projects/p1/TestClockDivider.v
-FH:/projects/p1/TestClockDivider.v
+!s100 :?8nW?zP:=Lbf7g[a_JX=3
+I_OP[Gg8=1=51EKG]SFZ;H3
+Z33 VFEm?>Pz3zCa5[bHfXhZaW0
+R4
+w1475803782
+Z34 8H:/projects/p1/TestClockDivider.v
+Z35 FH:/projects/p1/TestClockDivider.v
 L0 2
-R7
+R8
 r1
 !s85 0
 31
-!s108 1475803582.725000
+!s108 1475803794.999000
 !s107 H:/projects/p1/TestClockDivider.v|
-!s90 -reportprogress|300|-work|work|H:/projects/p1/TestClockDivider.v|
+Z36 !s90 -reportprogress|300|-work|work|H:/projects/p1/TestClockDivider.v|
 !s101 -O0
-R8
-n@test@clock@divider
+R10
+Z37 n@test@clock@divider
 vTestClockMultipler
-Z33 !s100 E:b<JlU`FBVeC9obYa55T0
-Z34 I:GiPKg[KP2DXcISi:MYlz0
-Z35 VQ4^ZnSPm7`6aK>VPVd0U`3
-R3
-Z36 w1475794508
-Z37 8H:/projects/p1/TestClockMultiplier.v
-Z38 FH:/projects/p1/TestClockMultiplier.v
+Z38 !s100 E:b<JlU`FBVeC9obYa55T0
+Z39 I:GiPKg[KP2DXcISi:MYlz0
+Z40 VQ4^ZnSPm7`6aK>VPVd0U`3
+R4
+Z41 w1475794508
+Z42 8H:/projects/p1/TestClockMultiplier.v
+Z43 FH:/projects/p1/TestClockMultiplier.v
 L0 2
-R7
+R8
 r1
 31
-R8
-Z39 n@test@clock@multipler
-Z40 !s108 1475803294.739000
-Z41 !s107 H:/projects/p1/TestClockMultiplier.v|
-Z42 !s90 -reportprogress|300|-work|work|H:/projects/p1/TestClockMultiplier.v|
+R10
+Z44 n@test@clock@multipler
+Z45 !s108 1475803294.739000
+Z46 !s107 H:/projects/p1/TestClockMultiplier.v|
+Z47 !s90 -reportprogress|300|-work|work|H:/projects/p1/TestClockMultiplier.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vTimer
-Z43 Io3DKjAao`zSOTH><W:Rjk2
-Z44 VfSo@BnlN:_81>Q_G2Y8963
-R3
-Z45 w1475803418
-Z46 8H:/projects/p1/Timer.v
-Z47 FH:/projects/p1/Timer.v
+Z48 !s100 5k3io2molY^=b]=YYgXa02
+Z49 Io3DKjAao`zSOTH><W:Rjk2
+Z50 VfSo@BnlN:_81>Q_G2Y8963
+R4
+Z51 w1475803790
+Z52 8H:/projects/p1/Timer.v
+Z53 FH:/projects/p1/Timer.v
 L0 1
-R7
+R8
 r1
 31
-Z48 !s90 -reportprogress|300|-work|work|H:/projects/p1/Timer.v|
-R8
-Z49 n@timer
-Z50 !s100 5k3io2molY^=b]=YYgXa02
-Z51 !s108 1475803582.095000
-Z52 !s107 H:/projects/p1/Timer.v|
+Z54 !s90 -reportprogress|300|-work|work|H:/projects/p1/Timer.v|
+R10
+Z55 n@timer
+Z56 !s108 1475803794.430000
+Z57 !s107 H:/projects/p1/Timer.v|
 !i10b 1
 !s85 0
 !s101 -O0
