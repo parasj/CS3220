@@ -17,6 +17,30 @@ module state_machine(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
     //logic
     always @ (posedge CLOCK_50) begin
         case(STATE)
+
+        RESET: begin
+            LEDR[9:0] = 0;
+        end
+
+        SECOND: begin
+            LEDR[9:0] = 1;
+        end
+
+        MINUTE: begin
+            LEDR[9:0] = 2;
+        end
+
+        STOP: begin
+            LEDR[9:0] = 3;
+        end
+
+        START: begin
+            LEDR[9:0] = 4;
+        end
+
+        FLASH: begin
+            LEDR[9:0] = 5;
+        end
     end
 
     always @ (negedge reset) begin
