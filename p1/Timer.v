@@ -17,10 +17,8 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	assign settimer = KEY[1];
 	assign toggletimer = KEY[2];
 	
-	wire clock1;
+	wire clock1hz;
 	wire[31:0] test_out;
-	ClockDivider c1 (KEY[3], clock1, test_out);
-
-	assign LEDR[9:1] = test_out[8:0];
-	assign LEDR[0] = clock1;
+	ClockDivider c1 (CLOCK_50, clock1hz);
+	assign LEDR[0] = clock1hz;
 endmodule

@@ -1,15 +1,11 @@
-module ClockDivider (clkin, clkoutport, currentvalue);
-	parameter multiple = 4;
+module ClockDivider (clkin, clkoutport);
+	parameter multiple = 25000000;
 
 	input clkin;
 	output clkoutport;
-	output[31:0] currentvalue;
 
 	reg clkout = 1'b0;
 	reg[31:0] counter = multiple;
-
-	assign currentvalue = counter;
-	
 	assign clkoutport = clkout;
 
 	always @ (posedge clkin) begin
