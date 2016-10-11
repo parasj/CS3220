@@ -41,10 +41,10 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	wire set_timer_btn;
 	wire toggle_timer_btn;
 
-	wire [3:0] sec_unit;
-	wire [3:0] sec_10;
-	wire [3:0] min_unit;
-	wire [3:0] min_10;
+	reg [3:0] sec_unit;
+	reg [3:0] sec_10;
+	reg [3:0] min_unit;
+	reg [3:0] min_10;
 	
 	assign reset_btn = KEY[0];
 	assign set_timer_btn = KEY[1];
@@ -55,9 +55,53 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	TFlipFlop u0 (KEY[0], KEY[1], x[0]);
 	TFlipFlop u1 (KEY[0], KEY[2] & (STATE > 2'b01), x[1]);
 
+	dec2_7seg h0(sec_unit, HEX0);
+	dec2_7seg h1(sec_10, HEX1);
+	dec2_7seg h2(min_unit, HEX2);
+	dec2_7seg h3(min_10, HEX3);
+
 	ClockDivider c1 (CLOCK_50, clock1hz);
 
 	assign LEDR[9:3] = (STATE == FLASH) ? {8{clock1hz}} : 0;
+
+
+	always @ (posedge CLOCK_50) begin
+		if (reset_btn == 1'b0) begin
+			sec_unit <= 0;
+			sec_10 <= 0;
+			min_unit <= 0;
+			min_10 <= 0;
+		end else begin
+			case(STATE)
+				
+				SECOND: begin
+					if (SW[3:0] < 4'b1010) begin
+						sec_unit <= SW[3:0];
+					end else begin
+						sec_unit <= 0;
+					end
+					if (SW[7:4] < 4'b0110) begin
+						sec_10 <= SW[7:4];
+					end else begin
+						sec_10 <= 0;
+					end
+				end
+
+				MINUTE: begin
+					if (SW[3:0] < 4'b1010) begin
+						min_unit <= SW[3:0];
+					end else begin
+						min_unit <= 0;
+					end
+					if (SW[7:4] < 4'b1010) begin
+						min_10 <= SW[7:4];
+					end else begin
+						min_10 <= 0;
+					end
+				end
+			endcase
+		end
+	end
 
 	//transitions
 	always @ (posedge CLOCK_50) begin
