@@ -35,7 +35,7 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	output[6:0] HEX3; 
 	
 	reg[2:0] STATE;
-	parameter SECOND = 3'b000, MINUTE = 3'b001, STOP = 3'b010, START = 3'b011, FLASH = 3'b100;
+	parameter RESET = 3'b000, SECOND = 3'b001, MINUTE = 3'b010, STOP = 3'b011, START = 3'b100, FLASH = 3'b101;
 
 	wire reset_btn;
 	wire set_timer_btn;
@@ -136,26 +136,31 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	//transitions
 	always @ (posedge CLOCK_50) begin
 		if (reset_btn == 1'b0) begin
-			STATE <= SECOND;
+			STATE <= RESET;
 			start <= 0;
 		end
 		case(STATE)
-
-			SECOND: begin
+			RESET: begin
 				if (x[0] == 1'b1) begin
+					STATE <= SECOND;
+				end
+			end
+		
+			SECOND: begin
+				if (x[0] == 1'b0) begin
 					STATE <= MINUTE;
 				end
 			end
 
 			MINUTE: begin
-				if (x[0] == 1'b0) begin
+				if (x[0] == 1'b1) begin
 					STATE <= START;
 					start <= 1;
 				end
 			end
 
 			START: begin
-				if (x[1] == 1'b1) begin
+				if (x[1] == 1'b0) begin
 					STATE <= STOP;
 					start <= 0;
 				end
