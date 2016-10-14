@@ -47,11 +47,11 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	reg [3:0] min_10;
 
 	reg	timer_finished;
-	
+	reg start;
+
 	assign reset_btn = KEY[0];
 	assign set_timer_btn = KEY[1];
 	assign toggle_timer_btn = KEY[2];
-	assign LEDR[2:0] = STATE;
 	wire[1:0] x;
 
 	TFlipFlop u0 (KEY[0], KEY[1], x[0]);
@@ -62,12 +62,13 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	dec2_7seg h2(min_unit, HEX2);
 	dec2_7seg h3(min_10, HEX3);
 
+	PulseGenerator p1 (reset_btn, start, CLOCK_50, pulse1hz);
 	ClockDivider c1 (CLOCK_50, clock1hz);
 
-	assign LEDR[9:3] = (STATE == FLASH) ? {8{clock1hz}} : 0;
+	assign LEDR[9:0] = (STATE == FLASH) ? {10{clock1hz}} : 0;
 
 
-	always @ (negedge reset_btn or negedge clock1hz) begin
+	always @ (negedge reset_btn or posedge CLOCK_50) begin
 		if (reset_btn == 1'b0) begin
 			sec_unit <= 0;
 			sec_10 <= 0;
@@ -75,6 +76,7 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 			min_10 <= 0;
 			timer_finished <= 0;
 		end else begin
+
 			case(STATE)
 				
 				SECOND: begin
@@ -105,21 +107,25 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 				end
 
 				START: begin
-					if (sec_unit > 0) begin
-						sec_unit <= sec_unit - 1;
-					end else if (sec_10 > 0) begin
-						sec_10 <= sec_10 - 1;
-						sec_unit <= 9;
-					end else if (min_unit > 0) begin
-						min_unit <= min_unit - 1;
-						sec_10 <= 5;
-						sec_unit = 9;
-					end else if (min_10 > 0) begin
-						min_10 <= min_10 - 1;
-						min_unit <= 9;
-						sec_10 <= 5;
-						sec_unit <= 9;
-					end else begin
+					if (pulse1hz == 1'b1) begin
+						if (sec_unit > 0) begin
+							sec_unit <= sec_unit - 1;
+						end else if (sec_10 > 0 | min_unit > 0 | min_10 > 0) begin
+							sec_unit <= 9;
+							if (sec_10 > 0) begin
+								sec_10 <= sec_10 - 1;
+							end else begin
+								sec_10 <= 5;
+								if (min_unit > 0) begin
+									min_unit <= min_unit - 1;
+								end else begin
+									min_unit <= 9;
+									min_10 <= min_10 - 1;
+								end
+							end
+						end
+					end
+					if (sec_unit == 1'b0 & sec_10 == 1'b0 & min_unit == 1'b0 & min_10 == 1'b0) begin
 						timer_finished <= 1'b1;
 					end
 				end
@@ -131,6 +137,7 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	always @ (posedge CLOCK_50) begin
 		if (reset_btn == 1'b0) begin
 			STATE <= SECOND;
+			start <= 0;
 		end
 		case(STATE)
 
@@ -143,12 +150,14 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 			MINUTE: begin
 				if (x[0] == 1'b0) begin
 					STATE <= START;
+					start <= 1;
 				end
 			end
 
 			START: begin
 				if (x[1] == 1'b1) begin
 					STATE <= STOP;
+					start <= 0;
 				end
 				if (timer_finished == 1'b1) begin
 					STATE <= FLASH;
@@ -158,6 +167,7 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 			STOP: begin
 				if (x[1] == 1'b0) begin
 					STATE <= START;
+					start <= 1;
 				end
 			end
 		endcase
