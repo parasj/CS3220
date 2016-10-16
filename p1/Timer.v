@@ -62,6 +62,8 @@ module Timer(SW, KEY, LEDR, HEX0, HEX1, HEX2, HEX3, CLOCK_50);
 	dec2_7seg h2(min_unit, HEX2);
 	dec2_7seg h3(min_10, HEX3);
 
+	dec2_7seg h4(STATE, HEX5);
+
 	PulseGenerator p1 (reset_btn, start, CLOCK_50, pulse1hz);
 	ClockDivider c1 (CLOCK_50, clock1hz);
 
