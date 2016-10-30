@@ -16,6 +16,8 @@
 module ALU(aluop, a, b, c, cmdflag);
 	parameter WIDTH = 8;
 
+
+	input[3:0] aluop;
 	input[WIDTH-1:0] a;
 	input[WIDTH-1:0] b;
 	output[WIDTH-1:0] c;
@@ -26,18 +28,18 @@ module ALU(aluop, a, b, c, cmdflag);
 	// 11 = unused
 	output[1:0] cmdflag;
 
-	assign c = (opcode == `ALU_ADD) ? (a + b) :
-			   (opcode == `ALU_SUB) ? (a - b) :
-			   (opcode == `ALU_AND) ? (a & b) :
-			   (opcode == `ALU_OR) ? (a | b) :
-			   (opcode == `ALU_XOR) ? (a ^ b) :
-			   (opcode == `ALU_NAND) ? ~(a & b) :
-			   (opcode == `ALU_NOR) ? ~(a | b) :
-			   (opcode == `ALU_XNOR) ? a ^~ b :
+	assign c = (aluop == `ALU_ADD) ? (a + b) :
+			   (aluop == `ALU_SUB) ? (a - b) :
+			   (aluop == `ALU_AND) ? (a & b) :
+			   (aluop == `ALU_OR) ? (a | b) :
+			   (aluop == `ALU_XOR) ? (a ^ b) :
+			   (aluop == `ALU_NAND) ? ~(a & b) :
+			   (aluop == `ALU_NOR) ? ~(a | b) :
+			   (aluop == `ALU_XNOR) ? a ^~ b :
 			   {WIDTH{1'bx}};
 
 	assign cmdflag = (c == {WIDTH{1'b0}}) ? `CMD_EQ :
 					 (c[WIDTH-1] == 1'b1) ? `CMD_LT :
 					 (c[WIDTH-1] == 1'b0) ? `CMD_GT :
-					 CMD_XX;
+					 `CMD_XX;
 endmodule
