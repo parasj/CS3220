@@ -6,7 +6,6 @@
 `define ALU_NAND 4'b0101
 `define ALU_NOR 4'b0110
 `define ALU_XNOR 4'b0111
-
 `define ALU_MVHI 4'b1000
 `define ALU_EQ 4'b1001
 `define ALU_LT 4'b1010
