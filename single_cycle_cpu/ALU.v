@@ -65,7 +65,7 @@ module ALU(aluop, a, b, c, cmdflag);
 				cmdflag <= 1'b0;
 			end
 			`ALU_MVHI: begin
-				c <= ((b & (1 << ((WIDTH >> 1) + 1))) << (WIDTH >> 1));
+				c <= ((b & ((1 << ((WIDTH >> 1) + 1))) - 1) << (WIDTH >> 1));
 				cmdflag <= 1'b0;
 			end
 			`ALU_EQ: begin
