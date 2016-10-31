@@ -15,12 +15,6 @@
 `define ALU_GTE 4'b1110
 `define ALU_GT 4'b1111
 
-`define CMD_EQ 2'b00
-`define CMD_LT 2'b01
-`define CMD_GT 2'b10
-`define CMD_XX 2'bxx
-
-
 module ALU(aluop, a, b, c, cmdflag);
 	parameter WIDTH = 32;
 
