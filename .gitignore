@@ -39,6 +39,8 @@
 *.jpg
 *.log
 *.mif
+*.mpf
+*.mti
 *.pin
 *.pof
 *.ptf.*
@@ -52,6 +54,7 @@
 *.summary
 *.tcl
 *.txt # Explicitly add any text files used
+*.wlf
 *~
 *example*
 *sopc_*
