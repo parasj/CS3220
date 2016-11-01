@@ -55,7 +55,7 @@ module Project2(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
   // Create the registers
   
   // Create ALU unit
-  
+  ALU alu()
   // Put the code for data memory and I/O here
   
   // KEYS, SWITCHES, HEXS, and LEDS are memeory mapped IO
