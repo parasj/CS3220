@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module Mux_tb();
+module TestMux();
 	reg s0;
 	reg [1:0] s1;
 	reg [31:0] d0, d1, d2, d3;

@@ -1,4 +1,4 @@
-module Nux4(s, d0, d1, d2, d3, out);
+module Mux4(s, d0, d1, d2, d3, out);
 	input [1:0]	s;
 	input [31:0] d0, d1, d2, d3;
 	output [31:0] out;
