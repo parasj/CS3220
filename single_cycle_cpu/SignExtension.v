@@ -1,4 +1,4 @@
-module SignExtension(dIn, dOut);
+module SignExtension (dIn, dOut);
   parameter IN_BIT_WIDTH;
   parameter OUT_BIT_WIDTH;
   
