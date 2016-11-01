@@ -1,0 +1,71 @@
+[2016-10-31 22:17:23 EDT] vlib work && vlog '-timescale' '1ns/1ns' '-sv2k9' design.sv testbench.sv  && vsim -c -do "vsim +access+r; run -all; exit"  
+VSIMSA: Configuration file changed: `/home/runner/library.cfg'
+ALIB: Library `work' attached.
+work = /home/runner/work/work.lib
+MESSAGE "Pass 1. Scanning modules hierarchy."
+MESSAGE "Pass 2. Processing instantiations."
+MESSAGE "Pass 3. Processing behavioral statements."
+MESSAGE "Running Optimizer."
+MESSAGE "ELB/DAG code generating."
+MESSAGE "Unit top modules: test."
+MESSAGE "$root top modules: test."
+SUCCESS "Compile success 0 Errors 0 Warnings  Analysis time: 0[s]."
+ALOG: Warning: The source is compiled without the -dbg switch. Line breakpoints and assertion debug will not be available.
+done
+
+# Aldec, Inc. Riviera-PRO version 2015.06.92.5791 built for Linux64 on July 13, 2015.
+# HDL, SystemC, and Assertions simulator, debugger, and design environment.
+# (c) 1999-2015 Aldec, Inc. All rights reserved.
+vsim +access+r;
+# ELBREAD: Elaboration process.
+# ELBREAD: Elaboration time 0.0 [s].
+# KERNEL: Main thread initiated.
+# KERNEL: Kernel process initialization phase.
+# KERNEL: Time resolution set to 1ns.
+# ELAB2: Elaboration final pass...
+# ELAB2: Create instances ...
+# ELAB2: Create instances complete.
+# SLP: Started
+# SLP: Elaboration phase ...
+# SLP: Elaboration phase ... done : 0.0 [s]
+# SLP: Generation phase ...
+# SLP: Generation phase ... done : 0.1 [s]
+# SLP: Finished : 0.2 [s]
+# SLP: 0 primitives and 11 (100.00%) other processes in SLP
+# SLP: 32 (100.00%) signals in SLP and 0 interface signals
+# ELAB2: Elaboration final pass complete - time: 0.2 [s].
+# KERNEL: SLP loading done - time: 0.0 [s].
+# KERNEL: Warning: You are using the Riviera-PRO EDU Edition. The performance of simulation is reduced.
+# KERNEL: Warning: Contact Aldec for available upgrade options - sales@aldec.com.
+# KERNEL: SLP simulation initialization done - time: 0.0 [s].
+# KERNEL: Kernel process initialization done.
+# Allocation: Simulator allocated 5302 kB (elbread=1024 elab2=4128 kernel=150 sdf=0)
+# KERNEL: ASDB file was created in location /home/runner/dataset.asdb
+run -all;
+# KERNEL: -8 (0) 19 = 0 cmdflag: 0
+# KERNEL: -8 (1) 19 = 11 cmdflag: 0
+# KERNEL: -8 (10) 19 = 4294967269 cmdflag: 0
+# KERNEL: -8 (11) 19 = 16 cmdflag: 0
+# KERNEL: -8 (100) 19 = 4294967291 cmdflag: 0
+# KERNEL: -8 (101) 19 = 4294967275 cmdflag: 0
+# KERNEL: -8 (110) 19 = 4294967279 cmdflag: 0
+# KERNEL: -8 (111) 19 = 4 cmdflag: 0
+# KERNEL: -8 (1000) 19 = 20 cmdflag: 0
+# KERNEL: -8 (1001) 19 = 1245184 cmdflag: 0
+# KERNEL: -8 (1010) 19 = 0 cmdflag: 0
+# KERNEL: -8 (1011) 19 = 0 cmdflag: 0
+# KERNEL: -8 (1100) 19 = 1 cmdflag: 1
+# KERNEL: -8 (1101) 19 = 1 cmdflag: 1
+# KERNEL: -8 (1110) 19 = 1 cmdflag: 1
+# KERNEL: -8 (1111) 19 = 1 cmdflag: 1
+# KERNEL: -8 (10000) 19 = 0 cmdflag: 0
+# KERNEL: -8 (10001) 19 = 0 cmdflag: 0
+# KERNEL: -8 (10010) 19 = 0 cmdflag: 0
+# KERNEL: -8 (10011) 19 = 1 cmdflag: 1
+# KERNEL: -8 (10100) 19 = 1 cmdflag: 1
+# KERNEL: -8 (10101) 19 = 1 cmdflag: 1
+# KERNEL: -8 (10110) 19 = 0 cmdflag: 0
+# KERNEL: -8 (10111) 19 = 0 cmdflag: 0
+# KERNEL: Simulation has finished. There are no more test vectors to simulate.
+exit
+# VSIM: Simulation has finished.

@@ -1,3 +1,6 @@
+// Testbench
+// https://www.edaplayground.com/x/5cQk
+
 `define ALU_UNUSED 5'b0
 `define ALU_ADD 5'b1
 `define ALU_SUB 5'b10
@@ -23,227 +26,98 @@
 `define ALU_BGTEZ 5'b10110
 `define ALU_BGTZ 5'b10111
 
-module ALU(aluop, a, b, c, cmdflag);
-	parameter WIDTH = 32;
+module test;
 
-	input[4 : 0] aluop;
-	input[WIDTH - 1 : 0] a;
-	input[WIDTH - 1 : 0] b;
-	output reg[WIDTH - 1 : 0] c;
-	output reg cmdflag;
+  reg[4:0] aluop;
+  reg[31:0] a;
+  reg[31:0] b;
+  wire[31:0] c;
+  wire cmdflag;
+  
+  // Instantiate design under test
+  ALU #(32) a1(.aluop(aluop), .a(a), .b(b), .c(c), .cmdflag(cmdflag));
+          
+  initial begin
+    a = ~32'b1000 + 32'b1;
+    b = 32'b10011;
 
-	wire[WIDTH - 1 : 0] out_one = {{(WIDTH - 1){1'b0}}, 1'b1};
-	wire[WIDTH - 1 : 0] out_zero = {WIDTH{1'b0}};
+    aluop = `ALU_UNUSED;
+    display;
 
-	wire lt, gt, eq;
-	SignedComparator #(WIDTH) sc1(a, b, lt, gt, eq);
+    aluop = `ALU_ADD;
+    display;
 
-	wire ltz, gtz, eqz;
-	SignedComparator #(WIDTH) sc2(a, out_zero, ltz, gtz, eqz);
+    aluop = `ALU_SUB;
+    display;
 
-	always @(aluop or a or b) begin
-		case (aluop)
-			`ALU_UNUSED: begin
-				c <= {WIDTH{1'bx}};
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_ADD: begin
-				c <= a + b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_SUB: begin
-				c <= a - b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_AND: begin
-				c <= a & b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_OR: begin
-				c <= a | b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_XOR: begin
-				c <= a ^ b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_NAND: begin
-				c <= ~(a & b);
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_NOR: begin
-				c <= ~(a | b);
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_XNOR: begin
-				c <= a ^~ b;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_MVHI: begin
-				c <= ((b & ((1 << ((WIDTH >> 1) + 1))) - 1) << (WIDTH >> 1));
-				cmdflag <= 1'b0;
-			end
+    aluop = `ALU_AND;
+    display;
 
-			`ALU_F: begin
-				c <= out_zero;
-				cmdflag <= 1'b0;
-			end
-			
-			`ALU_EQ: begin
-				if (eq) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_LT: begin
-				if (lt) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_LTE: begin
-				if (lt || eq) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_T: begin
-				c <= out_one;
-				cmdflag <= 1'b1;
-			end
-			
-			`ALU_NE: begin
-				if (!eq) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_GTE: begin
-				if (gt || eq) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_GT: begin
-				if (gt) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BEQZ: begin
-				if (eqz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BLTZ: begin
-				if (ltz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BLTEZ: begin
-				if (ltz || eqz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BNEZ: begin
-				if (!eqz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BGTEZ: begin
-				if (gtz || eqz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			`ALU_BGTZ: begin
-				if (gtz) begin
-					c <= out_one;
-					cmdflag <= 1'b1;
-				end else begin
-					c <= out_zero;
-					cmdflag <= 1'b0;
-				end
-			end
-			
-			default: begin
-				c <= {WIDTH{1'bx}};
-				cmdflag <= 1'b0;
-			end
-		endcase
-	end
+    aluop = `ALU_OR;
+    display;
+
+    aluop = `ALU_XOR;
+    display;
+
+    aluop = `ALU_NAND;
+    display;
+
+    aluop = `ALU_NOR;
+    display;
+
+    aluop = `ALU_XNOR;
+    display;
+
+    aluop = `ALU_MVHI;
+    display;
+
+    aluop = `ALU_F;
+    display;
+
+    aluop = `ALU_EQ;
+    display;
+
+    aluop = `ALU_LT;
+    display;
+
+    aluop = `ALU_LTE;
+    display;
+
+    aluop = `ALU_T;
+    display;
+
+    aluop = `ALU_NE;
+    display;
+
+    aluop = `ALU_GTE;
+    display;
+
+    aluop = `ALU_GT;
+    display;
+
+    aluop = `ALU_BEQZ;
+    display;
+
+    aluop = `ALU_BLTZ;
+    display;
+
+    aluop = `ALU_BLTEZ;
+    display;
+
+    aluop = `ALU_BNEZ;
+    display;
+
+    aluop = `ALU_BGTEZ;
+    display;
+
+    aluop = `ALU_BGTZ;
+    display;
+
+  end
+  
+  task display;
+    #1 $display("-%0000d (%00000b) %0000d = %0000d cmdflag: %0b", ~a + 1, aluop, b, c, cmdflag);
+  endtask
+
 endmodule
 
-module SignedComparator(a, b, lt, gt, eq);
-	parameter WIDTH = 32;
-	input[WIDTH - 1 : 0] a;
-	input[WIDTH  - 1: 0] b;
-	
-	output lt;
-	output gt;
-	output eq;
-
-	wire[WIDTH - 1 : 0] delta = a - b;
-	wire diff = delta[WIDTH - 1];
-
-	assign eq = (diff == {WIDTH{1'b0}}) ? 1'b1 : 1'b0;
-	assign lt = (!eq && diff == 1'b1) ? 1'b1 : 1'b0;
-	assign gt = (!eq && diff == 1'b0) ? 1'b1 : 1'b0;
-endmodule

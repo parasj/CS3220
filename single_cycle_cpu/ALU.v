@@ -44,7 +44,7 @@ module ALU(aluop, a, b, c, cmdflag);
 	always @(aluop or a or b) begin
 		case (aluop)
 			`ALU_UNUSED: begin
-				c <= {WIDTH{1'bx}};
+				c <= {WIDTH{1'b0}};
 				cmdflag <= 1'b0;
 			end
 			
