@@ -10,31 +10,35 @@ module ClockDivider (
 	parameter[31 : 0] tmin = 32'd200; // period time in ns, multiple of 20 where n >= 40
 
 	input	  inclk0;
-	output	  c0 = outclk;
-	output	  locked = outlocked; // clock is paused when locked is 1
+	output	  c0;
+	output	  locked;// clock is paused when locked is 1
 
 	reg[27:0] counter;
 	reg outclk;
 	reg outlocked;
 
+	assign c0 = outclk;
+	assign locked = outlocked;
+
 	initial begin
 		outclk = 1'b0;
 		outlocked = 1'b0;
+		counter = tmin;
 	end
 
-	always @(posedge clk or posedge rst) begin
-		if (rst) begin
+	always @(posedge inclk0) begin
+		/*if (rst) begin
 			counter <= tmin;
 			outclk = 1'b0;
 			outlocked = 1'b0;
 		end
-		else begin
+		else begin*/
 			counter <= counter - 32'b1;
 			if (counter == 32'b0) begin
 				counter <= tmin;
 				outclk <= ~outclk;
 				outlocked = 1'b0;
 			end
-		end
+		//end
 	end
 endmodule
