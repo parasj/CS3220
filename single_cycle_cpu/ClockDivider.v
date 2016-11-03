@@ -5,7 +5,7 @@ module ClockDivider (inclk0, c0);
 	// Slow down the clock to ensure the cycle is long enough for all operations to execute
 	// If you don't, you might get weird errors
 
-	parameter[BIT_WIDTH - 1 : 0] tmin = 32'd200; // period time in ns, multiple of 20 where n >= 40
+	parameter[BIT_WIDTH - 1 : 0] tmin = 32'd25000000;
 
 	input	  inclk0;
 	output	  c0;
