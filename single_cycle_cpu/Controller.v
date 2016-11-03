@@ -13,9 +13,9 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	wire [3:0] fn;
 	wire [8:0] x;
 	wire [12:0] out;
-
-	assign src_index1 = in[19:16];
-	assign src_index2 = in[15:12];
+	assign fn = in[31:28];
+	assign src_index1 = (fn == 4'b0010) ? in[23:20] : in[19:16];
+	assign src_index2 = (fn == 4'b0010) ? in[19:16] : in[15:12];
 	assign dst_index = in[23:20];
 	assign imm = in[15:0];
 	assign x = {in[INST_BIT_WIDTH - 1 : 24], cmd_flag};
