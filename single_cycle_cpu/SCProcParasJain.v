@@ -37,12 +37,9 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // t
   parameter OP1_LW   					 = 4'b1001;
   parameter OP1_JAL  					 = 4'b1011;
   
-  wire reset = KEY[0];
+  wire reset = SW[0];
   wire clk;
-  assign clk = KEY[1];
-  // ClockDivider #(.BIT_WIDTH(DBITS)) clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
-  // assign LEDR[0] = clk;
-  // assign LEDR[1] = reset;
+  ClockDivider #(.BIT_WIDTH(DBITS)) clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
 
   
 
