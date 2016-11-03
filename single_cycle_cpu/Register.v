@@ -7,11 +7,14 @@ module Register(clk, reset, wrtEn, dataIn, dataOut);
 	output[BIT_WIDTH - 1: 0] dataOut;
 	reg[BIT_WIDTH - 1: 0] dataOut;
 	
+	initial begin
+		dataOut = RESET_VALUE;
+	end
+
 	always @(posedge clk) begin
 		if (reset == 1'b1)
 			dataOut <= RESET_VALUE;
 		else if (wrtEn == 1'b1)
 			dataOut <= dataIn;
 	end
-	
 endmodule
