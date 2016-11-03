@@ -35,7 +35,7 @@ module DataMemory(clk, wrtEn, addr, dIn, sw, key, ledr, hex, dOut);
 
 	always @(negedge clk) begin
 		if (wrtEn && !addr[29]) data[addr[13:2]] <= dIn;	
-		addr_reg <= addr[13:2];									
+		addr_reg <= addr[13:2];
 	end
 
 	assign dOut = addr[29] ? (addr[2] ? sw_reg : key_reg) : data[addr_reg];

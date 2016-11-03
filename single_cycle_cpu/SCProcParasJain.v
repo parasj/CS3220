@@ -1,9 +1,10 @@
-module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
+module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // todo remove hex4 hex5
   input  [9:0] SW;
   input  [3:0] KEY;
   input  CLOCK_50;
   output [9:0] LEDR;
   output [6:0] HEX0,HEX1,HEX2,HEX3;
+  output [6:0] HEX4,HEX5;
  
   parameter DBITS         				 = 32;
   parameter INST_SIZE      			 = 32'd4;
@@ -36,21 +37,14 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
   parameter OP1_LW   					 = 4'b1001;
   parameter OP1_JAL  					 = 4'b1011;
   
+  wire reset = KEY[0];
   wire clk;
-  // ClockDivider clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
+  assign clk = KEY[1];
+  // ClockDivider #(.BIT_WIDTH(DBITS)) clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
+  // assign LEDR[0] = clk;
+  // assign LEDR[1] = reset;
 
-  assign clk = SW[0];
-  wire reset = SW[1];
-
-  assign LEDR = pcOut[9 : 0];
-
-  wire [16 : 0] hex;
-  dec2_7seg h0 (hex[3:0], HEX0);
-  dec2_7seg h1 (hex[7:4], HEX1);
-  dec2_7seg h3 (hex[11:8], HEX2);
-  dec2_7seg h4 (hex[16:12], HEX3);
-
-  assign hex = instWord[15 : 0];
+  
 
 
   // PC calculations
@@ -79,11 +73,9 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
   wire[DBITS - 1 : 0] alu_b;
   wire[DBITS - 1 : 0] alu_out;
   wire[4 : 0] alu_op;
+  wire cmd_flag;
 
   wire[DBITS - 1 : 0] mem_out;
-  
-  wire[9:0] led_wire = 0;
-  wire[15:0] hex_wire = 0;
 
   PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
   BranchCalculator #(.BIT_WIDTH(DBITS)) branchCalculator (imm_ext, pcOutPlusOne, pcBranchIn);
@@ -102,9 +94,17 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
   Mux4 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux, src2_data, imm_ext, (imm_ext << 2), 32'b0, alu_b);
   ALU #(.BIT_WIDTH(DBITS)) alu(alu_op, src1_data, alu_b, alu_out, cmd_flag);
 
-  DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, 10'b0, 4'b0, led_wire, hex_wire, mem_out);
-
   // Put the code for data memory and I/O here
   // KEYS, SWITCHES, HEXS, and LEDS are memeory mapped IO
+
+  wire [15 : 0] hex;
+  dec2_7seg h0 (hex[3:0], HEX0);
+  dec2_7seg h1 (hex[7:4], HEX1);
+  dec2_7seg h3 (hex[11:8], HEX2);
+  dec2_7seg h4 (hex[15:12], HEX3);
+
+  DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, SW, KEY, LEDR, hex, mem_out);
     
+  dec2_7seg h5 (pcOut[3:0], HEX5);
+  dec2_7seg h6 (pcOut[7:4], HEX6);
 endmodule
