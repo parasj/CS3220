@@ -1,0 +1,159 @@
+# vsim -do {run -all; exit} -c CPUTestBench 
+# Loading work.CPUTestBench
+# Loading work.PCIncrementer
+# Loading work.BranchCalculator
+# Loading work.Mux4
+# Loading work.Register
+# Loading work.DummyMemory
+# Loading work.Controller
+# Loading work.SignExtension
+# Loading work.RegFile
+# Loading work.ALU
+# Loading work.SignedComparator
+# Loading work.DataMemory
+# run -all 
+# clk 0 rst 0
+# clk 0 rst 1
+# clk 1 rst 1
+# IMEM[00000040] = 4fe00000
+#   IR: PCIN MUX[00](pcOutPlusOne 00000044, pcBranchIn 00000044, alu_out 00000000) -> pcin 00000044
+#   IR: PC 00000040
+#   IR: InstWord 4fe00000
+#   ID -> **: , alu_op 0000, alu_mux 0000, reg_wrt_en 1110, mem_wrt_en 0000000000000000, next_pc_mux 01001, cmd_flag 0101000
+#   RR: src_index1 0, src_index2 0, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 01001, src1_data 00000000, alu_b 00000000, alu_out 00000000
+#   WB: reg_wrt_en 1, dst_index e, dstdata_mux 00(alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000044)
+# clk 1 rst 0
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000044] = 47ee2000
+#   IR: PCIN MUX[00](pcOutPlusOne 00000048, pcBranchIn 00008048, alu_out 00002000) -> pcin 00000048
+#   IR: PC 00000044
+#   IR: InstWord 47ee2000
+#   ID -> **: , alu_op 1110, alu_mux 0010, reg_wrt_en 1110, mem_wrt_en 0010000000000000, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 e, src_index2 2, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000000, alu_b 00002000, alu_out 00002000
+#   WB: reg_wrt_en 1, dst_index e, dstdata_mux 00(alu_out 00002000, mem_out xxxxxxxx, pcoutplus1 00000048)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000048] = 4fc0f000
+#   IR: PCIN MUX[00](pcOutPlusOne 0000004c, pcBranchIn ffffc04c, alu_out f0000000) -> pcin 0000004c
+#   IR: PC 00000048
+#   IR: InstWord 4fc0f000
+#   ID -> **: , alu_op 0000, alu_mux 1111, reg_wrt_en 1100, mem_wrt_en 1111000000000000, next_pc_mux 01001, cmd_flag 0101000
+#   RR: src_index1 0, src_index2 f, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 01001, src1_data 00000000, alu_b fffff000, alu_out f0000000
+#   WB: reg_wrt_en 1, dst_index c, dstdata_mux 00(alu_out f0000000, mem_out xxxxxxxx, pcoutplus1 0000004c)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000004c] = 40660000
+#   IR: PCIN MUX[00](pcOutPlusOne 00000050, pcBranchIn 00000050, alu_out 00000000) -> pcin 00000050
+#   IR: PC 0000004c
+#   IR: InstWord 40660000
+#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0110, mem_wrt_en 0000000000000000, next_pc_mux 00011, cmd_flag 0101000
+#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 00011, src1_data 00000000, alu_b 00000000, alu_out 00000000
+#   WB: reg_wrt_en 1, dst_index 6, dstdata_mux 00(alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000050)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000050] = 306c0004
+#   IR: PCIN MUX[00](pcOutPlusOne 00000054, pcBranchIn 00000064, alu_out f0000000) -> pcin 00000054
+#   IR: PC 00000050
+#   IR: InstWord 306c0004
+#   ID -> **: , alu_op 1100, alu_mux 0000, reg_wrt_en 0110, mem_wrt_en 0000000000000100, next_pc_mux 00001, cmd_flag 0010100
+#   RR: src_index1 c, src_index2 0, src1_data f0000000, src2_data 00000000
+#   ALU: alu_op 00001, src1_data f0000000, alu_b 00000000, alu_out f0000000
+#   WB: reg_wrt_en 0, dst_index 6, dstdata_mux 01(alu_out f0000000, mem_out 0000000f, pcoutplus1 00000054)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000054] = 47460100
+#   IR: PCIN MUX[00](pcOutPlusOne 00000058, pcBranchIn 00000458, alu_out 00000100) -> pcin 00000058
+#   IR: PC 00000054
+#   IR: InstWord 47460100
+#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0100, mem_wrt_en 0000000100000000, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000000, alu_b 00000100, alu_out 00000100
+#   WB: reg_wrt_en 1, dst_index 4, dstdata_mux 00(alu_out 00000100, mem_out xxxxxxxx, pcoutplus1 00000058)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000058] = 47541000
+#   IR: PCIN MUX[00](pcOutPlusOne 0000005c, pcBranchIn 0000405c, alu_out 00001100) -> pcin 0000005c
+#   IR: PC 00000058
+#   IR: InstWord 47541000
+#   ID -> **: , alu_op 0100, alu_mux 0001, reg_wrt_en 0101, mem_wrt_en 0001000000000000, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 4, src_index2 1, src1_data 00000100, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000100, alu_b 00001000, alu_out 00001100
+#   WB: reg_wrt_en 1, dst_index 5, dstdata_mux 00(alu_out 00001100, mem_out xxxxxxxx, pcoutplus1 0000005c)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000005c] = 47760009
+#   IR: PCIN MUX[00](pcOutPlusOne 00000060, pcBranchIn 00000084, alu_out 00000009) -> pcin 00000060
+#   IR: PC 0000005c
+#   IR: InstWord 47760009
+#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001001, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000000, alu_b 00000009, alu_out 00000009
+#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000009, mem_out xxxxxxxx, pcoutplus1 00000060)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000060] = 30740000
+#   IR: PCIN MUX[00](pcOutPlusOne 00000064, pcBranchIn 00000064, alu_out 00000100) -> pcin 00000064
+#   IR: PC 00000060
+#   IR: InstWord 30740000
+#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000000000, next_pc_mux 00001, cmd_flag 0010100
+#   RR: src_index1 4, src_index2 0, src1_data 00000100, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000100, alu_b 00000000, alu_out 00000100
+#   WB: reg_wrt_en 0, dst_index 7, dstdata_mux 01(alu_out 00000100, mem_out xxxxxxxx, pcoutplus1 00000064)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000064] = 4777000d
+#   IR: PCIN MUX[00](pcOutPlusOne 00000068, pcBranchIn 0000009c, alu_out 00000016) -> pcin 00000068
+#   IR: PC 00000064
+#   IR: InstWord 4777000d
+#   ID -> **: , alu_op 0111, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001101, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 7, src_index2 0, src1_data 00000009, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000009, alu_b 0000000d, alu_out 00000016
+#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000016, mem_out 00000000, pcoutplus1 00000068)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000068] = 47440004
+#   IR: PCIN MUX[00](pcOutPlusOne 0000006c, pcBranchIn 0000007c, alu_out 00000104) -> pcin 0000006c
+#   IR: PC 00000068
+#   IR: InstWord 47440004
+#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0100, mem_wrt_en 0000000000000100, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 4, src_index2 0, src1_data 00000100, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000100, alu_b 00000004, alu_out 00000104
+#   WB: reg_wrt_en 1, dst_index 4, dstdata_mux 00(alu_out 00000104, mem_out xxxxxxxx, pcoutplus1 0000006c)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000006c] = 2545fffc
+#   IR: PCIN MUX[01](pcOutPlusOne 00000070, pcBranchIn 00000060, alu_out 00000001) -> pcin 00000060
+#   IR: PC 0000006c
+#   IR: InstWord 2545fffc
+#   ID -> **: , alu_op 0100, alu_mux 0101, reg_wrt_en 0100, mem_wrt_en 1111111111111100, next_pc_mux 01111, cmd_flag 0000011
+#   RR: src_index1 4, src_index2 5, src1_data 00000104, src2_data 00001100
+#   ALU: alu_op 01111, src1_data 00000104, alu_b 00001100, alu_out 00000001
+#   WB: reg_wrt_en 0, dst_index 4, dstdata_mux 00(alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 00000070)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000060] = 30740000
+#   IR: PCIN MUX[00](pcOutPlusOne 00000064, pcBranchIn 00000064, alu_out 00000104) -> pcin 00000064
+#   IR: PC 00000060
+#   IR: InstWord 30740000
+#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000000000, next_pc_mux 00001, cmd_flag 0010100
+#   RR: src_index1 4, src_index2 0, src1_data 00000104, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000104, alu_b 00000000, alu_out 00000104
+#   WB: reg_wrt_en 0, dst_index 7, dstdata_mux 01(alu_out 00000104, mem_out xxxxxxxx, pcoutplus1 00000064)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000064] = 4777000d
+#   IR: PCIN MUX[00](pcOutPlusOne 00000068, pcBranchIn 0000009c, alu_out 00000023) -> pcin 00000068
+#   IR: PC 00000064
+#   IR: InstWord 4777000d
+#   ID -> **: , alu_op 0111, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001101, next_pc_mux 00001, cmd_flag 0101000
+#   RR: src_index1 7, src_index2 0, src1_data 00000016, src2_data 00000000
+#   ALU: alu_op 00001, src1_data 00000016, alu_b 0000000d, alu_out 00000023
+#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000023, mem_out 00000000, pcoutplus1 00000068)
+# Break in Module CPUTestBench at CPUTestBench.v line 112
+# Stopped at CPUTestBench.v line 112 
+#  exit 

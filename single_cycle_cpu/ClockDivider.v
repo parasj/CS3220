@@ -1,7 +1,4 @@
-module ClockDivider (
-	inclk0,
-	c0,
-	locked);
+module ClockDivider (inclk0, c0);
 	
 	// Implement this yourself
 	// Slow down the clock to ensure the cycle is long enough for all operations to execute
@@ -11,18 +8,14 @@ module ClockDivider (
 
 	input	  inclk0;
 	output	  c0;
-	output	  locked;// clock is paused when locked is 1
 
 	reg[27:0] counter;
 	reg outclk;
-	reg outlocked;
 
 	assign c0 = outclk;
-	assign locked = outlocked;
 
 	initial begin
 		outclk = 1'b0;
-		outlocked = 1'b0;
 		counter = tmin;
 	end
 
@@ -37,7 +30,6 @@ module ClockDivider (
 			if (counter == 32'b0) begin
 				counter <= tmin;
 				outclk <= ~outclk;
-				outlocked = 1'b0;
 			end
 		//end
 	end

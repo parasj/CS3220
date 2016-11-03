@@ -41,15 +41,15 @@ module NickTest(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50, rst);
   // ClockDivider clk_divider (.inclk0 (CLOCK_50),.c0 (clk),.locked (lock));
 
   assign clk = CLOCK_50;
-  //wire reset = ~lock;
+  
   wire reset;
   assign reset = rst;
 
-  wire [16 : 0] hex;
-//  dec2_7seg h0 (hex[3:0], HEX0);
-//  dec2_7seg h1 (hex[7:4], HEX1);
-//  dec2_7seg h3 (hex[11:8], HEX2);
-//  dec2_7seg h4 (hex[16:12], HEX3);
+  wire [15 : 0] hex;
+  dec2_7seg h0 (hex[3:0], HEX0);
+  dec2_7seg h1 (hex[7:4], HEX1);
+  dec2_7seg h3 (hex[11:8], HEX2);
+  dec2_7seg h4 (hex[15:12], HEX3);
 
   // PC calculations
   wire[DBITS - 1: 0] pcOutPlusOne;
@@ -79,17 +79,11 @@ module NickTest(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50, rst);
   wire[4 : 0] alu_op;
 
   wire[DBITS - 1 : 0] mem_out;
-  
-  wire[9:0] led_wire = 0;
-  wire[15:0] hex_wire = 0;
-
-  assign LEDR = pcOut[9 : 0];
-  assign hex = instWord[15 : 0];
 
   PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
   BranchCalculator #(.BIT_WIDTH(DBITS)) branchCalculator (imm_ext, pcOutPlusOne, pcBranchIn);
 
-  Mux4 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, pcBranchIn, alu_out, 32'b0, pcIn);
+  Mux4 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, pcBranchIn, alu_out, 32'bx, pcIn);
   Register #(.BIT_WIDTH(DBITS), .RESET_VALUE(START_PC)) pc (clk, reset, pcWrtEn, pcIn, pcOut);
 
   DummyMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instWord);
@@ -97,13 +91,13 @@ module NickTest(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50, rst);
   Controller #(.INST_BIT_WIDTH(DBITS)) control(instWord, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
   SignExtension #(16, DBITS) sign_ext(imm, imm_ext);
 
-  Mux4 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux, alu_out, mem_out, pcOutPlusOne, 32'b0, dst_data);
+  Mux4 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux, alu_out, mem_out, pcOutPlusOne, 32'bx, dst_data);
   RegFile #(.BIT_WIDTH(DBITS)) regfile(clk, reset, src_index1, src_index2, dst_index, dst_data, src1_data, src2_data, reg_wrt_en);
   
-  Mux4 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux, src2_data, imm_ext, (imm_ext << 2), 32'b0, alu_b);
+  Mux4 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux, src2_data, imm_ext, (imm_ext << 2), 32'bx, alu_b);
   ALU #(.BIT_WIDTH(DBITS)) alu(alu_op, src1_data, alu_b, alu_out, cmd_flag);
 
-  DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, 10'b0, 4'b0, led_wire, hex_wire, mem_out);
+  DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, SW, KEY, LEDR, hex, mem_out);
 
   // Put the code for data memory and I/O here
   // KEYS, SWITCHES, HEXS, and LEDS are memeory mapped IO

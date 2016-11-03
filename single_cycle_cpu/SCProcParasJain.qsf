@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CEBA4F23C7
-set_global_assignment -name TOP_LEVEL_ENTITY SCProcParasJain
+set_global_assignment -name TOP_LEVEL_ENTITY SCProcParasJainTest
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "01:38:15  NOVEMBER 03, 2016"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
