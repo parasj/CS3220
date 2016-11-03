@@ -40,10 +40,3 @@ module DataMemory(clk, wrtEn, addr, dIn, sw, key, ledr, hex, dOut);
 
 	assign dOut = addr[29] ? (addr[2] ? sw_reg : key_reg) : data[addr_reg];
 endmodule
-
-
-
-
-
-
-

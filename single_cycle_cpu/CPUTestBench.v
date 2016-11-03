@@ -121,15 +121,27 @@ module CPUTestBench();
       #20
 
       $display("IMEM[%h] = %h", pcOut, instWord);
-      $display("  IR: PCIN MUX[%b](pcOutPlusOne %h, pcBranchIn %h, alu_out %h) -> pcin %h", next_pc_mux, pcOutPlusOne, pcBranchIn, alu_out, pcIn);
-      $display("  IR: PC %h", pcOut);
+      $display("  PC: PCOut %h", pcOut);
       $display("  IR: InstWord %h", instWord);
-      $display("  ID -> **: , alu_op %b, alu_mux %b, reg_wrt_en %b, mem_wrt_en %b, next_pc_mux %b, cmd_flag %b", src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
-      
-      $display("  RR: src_index1 %h, src_index2 %h, src1_data %h, src2_data %h", src_index1, src_index2, src1_data, src2_data);
-      $display("  ALU: alu_op %b, src1_data %h, alu_b %h, alu_out %h", alu_op, src1_data, alu_b, alu_out);
+      $display("  RR: src1[%h] = %h, src2[%h] = %h", src_index1, src1_data, src_index2, src2_data);
+      $display("  ALU: %h (op=%b) %h = %h", src1_data, alu_op, alu_b, alu_out);
+      $display("       SRC2 = (RegSrc2 %h, ImmExt %h, 4*ImmExt %h)[%b]", src2_data, imm_ext, (imm_ext << 2), alu_mux);
 
-      $display("  WB: reg_wrt_en %b, dst_index %h, dstdata_mux %b(alu_out %h, mem_out %h, pcoutplus1 %h)", reg_wrt_en, dst_index, dstdata_mux, alu_out, mem_out, pcOutPlusOne);
+      if (reg_wrt_en == 1'b1) begin
+        $display("  WB: RR_WRT_EN=%b    rr[%h] = %h", reg_wrt_en, dst_index, dst_data);
+        $display("      dst_data = (alu_out %h, mem_out %h, pcoutplus1 %h)[%b] ", alu_out, mem_out, pcOutPlusOne, dstdata_mux);
+      end
+      
+      if (mem_wrt_en == 1'b1) begin
+        $display("  MEM: WRT mem_wrt_en %b    mem[%h] <- %h (=%h))", mem_wrt_en, alu_out, src2_data, mem_out);
+      end else begin
+        $display("  MEM: GET mem[%h] == %h)", alu_out, mem_out);
+      end
+
+      $display("  PC UPDATE: pcin %h", pcIn);
+      $display("             pcin = MUX[%b](pcOutPlusOne %h, pcBranchIn %h, alu_out %h)", next_pc_mux, pcOutPlusOne, pcBranchIn, alu_out);
+
+      // $display("  ID -> **: , alu_op %b, alu_mux %b, reg_wrt_en %b, mem_wrt_en %b, next_pc_mux %b, cmd_flag %b", src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
     end
   endtask
 endmodule
