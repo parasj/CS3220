@@ -50,14 +50,30 @@ module Project2(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
   wire[IMEM_DATA_BIT_WIDTH - 1: 0] instWord;
   InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instWord);
   
-  // Put the code for getting opcode1, rd, rs, rt, imm, etc. here 
-  
+  // Put the code for getting opcode1, rd, rs, rt, imm, etc. here
+  wire[REG_INDEX_BIT_WIDTH - 1: 0] src_index1, src_index2, dst_index;
+  wire[15:0] imm;
+  wire[DBITS-1: 0] imm_ext;
+  wire[1:0] alu_mux, dstdata_mux, nextpc_mux;
+  wire reg_wrt_en, mem_wrt_en;
+  Controller control(instWord, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
+  SignExtension #(16, DBITS) sign_ext(imm, imm_ext);
+
   // Create the registers
+  wire[DBITS - 1: 0] dst_data;
+  wire[DBITS - 1: 0] src1_data, src2_data;
+  wire[DBITS - 1: 0] alu_b;
+  RegFile regfile(clk, reset, src_index1, src_index2, dst_index, dst_data, src1_data, src2_data, reg_wrt_en);
   
   // Create ALU unit
+  wire[DBITS - 1: 0] alu_out;
+  ALU alu(alu_op, src1_data, alu_b, alu_out, cmd_flag);
+  
 
   // Put the code for data memory and I/O here
-  
+  wire[DBITS - 1: 0] mem_out;
+  Mux4 m2(dstdata_mux, alu_out, mem_out, 0, 0, dst_data); // remember pc
+  Mux4 m0(alu_mux, src2_data, imm_ext, 0, 0, alu_b); // remember to do shift
   // KEYS, SWITCHES, HEXS, and LEDS are memeory mapped IO
     
 endmodule
