@@ -68,3 +68,4 @@
 */testbench/
 */*_sim/
 */work/*
+single_cycle_cpu/wave.do
