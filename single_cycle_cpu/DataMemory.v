@@ -1,5 +1,5 @@
 module DataMemory(clk, wrtEn, addr, dIn, sw, key, ledr, hex, dOut);
-	parameter MEM_INIT_FILE;
+	// parameter MEM_INIT_FILE;
 	parameter ADDR_BIT_WIDTH = 32;
 	parameter DATA_BIT_WIDTH = 32;
 	parameter TRUE_ADDR_BIT_WIDTH = 11;
@@ -14,7 +14,7 @@ module DataMemory(clk, wrtEn, addr, dIn, sw, key, ledr, hex, dOut);
 	output reg [9:0] ledr;	
 	output reg [15:0] hex;
     
-	(* ram_init_file = MEM_INIT_FILE *)
+	// (* ram_init_file = MEM_INIT_FILE *)
 	reg [DATA_BIT_WIDTH - 1 : 0] data [0 : N_WORDS - 1];
 	reg [TRUE_ADDR_BIT_WIDTH - 1 :0] addr_reg;
 	reg [DATA_BIT_WIDTH - 1 : 0] sw_reg;

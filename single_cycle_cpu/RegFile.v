@@ -1,11 +1,13 @@
 module RegFile(clk, rst, src1, src2, dst, dst_data, src1_data, src2_data, wrt_en);
+	parameter BIT_WIDTH = 32;
+
 	input clk, rst;
 	input [3:0] src1, src2, dst;
-	input [31:0] dst_data;
+	input [BIT_WIDTH - 1 : 0] dst_data;
 	input	wrt_en;
-	output [31:0] src1_data, src2_data;
+	output [BIT_WIDTH - 1 : 0] src1_data, src2_data;
 
-	reg [31:0]	file [0:15];
+	reg [BIT_WIDTH - 1 : 0]	file [0:15];
 
 	assign src1_data = file[src1];
 	assign src2_data = file[src2];

@@ -32,6 +32,7 @@ module TestController();
 		in = 31'h47ee2000;
 		#1
 		rst = 0;
+		
 		#1
 		in = 31'h47460100;
 		#2;

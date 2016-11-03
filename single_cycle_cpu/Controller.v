@@ -1,5 +1,7 @@
 module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, nextpc_mux, cmd_flag);
-	input [31:0] in;
+	parameter INST_BIT_WIDTH = 32;
+	input [INST_BIT_WIDTH - 1 : 0] in;
+	
 	input cmd_flag;
 	output[3:0] src_index1, src_index2, dst_index;
 	output[1:0] alu_mux, dstdata_mux, nextpc_mux;
@@ -16,7 +18,7 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	assign src_index2 = in[15:12];
 	assign dst_index = in[23:20];
 	assign imm = in[15:0];
-	assign x = {in[31:24], cmd_flag};
+	assign x = {in[INST_BIT_WIDTH - 1 : 24], cmd_flag};
 	assign alu_op = out[12:8];
 	assign alu_mux = out[7:6];
 	assign dstdata_mux = out[5:4];

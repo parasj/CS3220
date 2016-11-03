@@ -24,27 +24,27 @@
 `define ALU_BGTZ 5'b10111
 
 module ALU(aluop, a, b, c, cmdflag);
-	parameter WIDTH = 32;
+	parameter BIT_WIDTH = 32;
 
 	input[4 : 0] aluop;
-	input[WIDTH - 1 : 0] a;
-	input[WIDTH - 1 : 0] b;
-	output reg[WIDTH - 1 : 0] c;
+	input[BIT_WIDTH - 1 : 0] a;
+	input[BIT_WIDTH - 1 : 0] b;
+	output reg[BIT_WIDTH - 1 : 0] c;
 	output reg cmdflag;
 
-	wire[WIDTH - 1 : 0] out_one = {{(WIDTH - 1){1'b0}}, 1'b1};
-	wire[WIDTH - 1 : 0] out_zero = {WIDTH{1'b0}};
+	wire[BIT_WIDTH - 1 : 0] out_one = {{(BIT_WIDTH - 1){1'b0}}, 1'b1};
+	wire[BIT_WIDTH - 1 : 0] out_zero = {BIT_WIDTH{1'b0}};
 
 	wire lt, gt, eq;
-	SignedComparator #(WIDTH) sc1(a, b, lt, gt, eq);
+	SignedComparator #(BIT_WIDTH) sc1(a, b, lt, gt, eq);
 
 	wire ltz, gtz, eqz;
-	SignedComparator #(WIDTH) sc2(a, out_zero, ltz, gtz, eqz);
+	SignedComparator #(BIT_WIDTH) sc2(a, out_zero, ltz, gtz, eqz);
 
 	always @(aluop or a or b) begin
 		case (aluop)
 			`ALU_UNUSED: begin
-				c <= {WIDTH{1'b0}};
+				c <= {BIT_WIDTH{1'b0}};
 				cmdflag <= 1'b0;
 			end
 			
@@ -89,7 +89,7 @@ module ALU(aluop, a, b, c, cmdflag);
 			end
 			
 			`ALU_MVHI: begin
-				c <= ((b & ((1 << ((WIDTH >> 1) + 1))) - 1) << (WIDTH >> 1));
+				c <= ((b & ((1 << ((BIT_WIDTH >> 1) + 1))) - 1) << (BIT_WIDTH >> 1));
 				cmdflag <= 1'b0;
 			end
 
@@ -224,7 +224,7 @@ module ALU(aluop, a, b, c, cmdflag);
 			end
 			
 			default: begin
-				c <= {WIDTH{1'bx}};
+				c <= {BIT_WIDTH{1'bx}};
 				cmdflag <= 1'b0;
 			end
 		endcase
@@ -232,18 +232,18 @@ module ALU(aluop, a, b, c, cmdflag);
 endmodule
 
 module SignedComparator(a, b, lt, gt, eq);
-	parameter WIDTH = 32;
-	input[WIDTH - 1 : 0] a;
-	input[WIDTH  - 1: 0] b;
+	parameter BIT_WIDTH = 32;
+	input[BIT_WIDTH - 1 : 0] a;
+	input[BIT_WIDTH  - 1: 0] b;
 	
 	output lt;
 	output gt;
 	output eq;
 
-	wire[WIDTH - 1 : 0] delta = a - b;
-	wire diff = delta[WIDTH - 1];
+	wire[BIT_WIDTH - 1 : 0] delta = a - b;
+	wire diff = delta[BIT_WIDTH - 1];
 
-	assign eq = (diff == {WIDTH{1'b0}}) ? 1'b1 : 1'b0;
+	assign eq = (diff == {BIT_WIDTH{1'b0}}) ? 1'b1 : 1'b0;
 	assign lt = (!eq && diff == 1'b1) ? 1'b1 : 1'b0;
 	assign gt = (!eq && diff == 1'b0) ? 1'b1 : 1'b0;
 endmodule
