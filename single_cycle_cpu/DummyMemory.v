@@ -12,18 +12,13 @@ module DummyMemory(addr, dataOut);
 	assign dataOut = data[addr];
 
 	initial begin
-		data[16] = 32'h4fe00000;
-		data[17] = 32'h47ee2000;
-		data[18] = 32'h4fc0f000;
+		data[16] = 32'h47440014;
+		data[17] = 32'h4755000f;
+		data[18] = 32'hc7645000;
 		data[19] = 32'h40660000;
-		data[20] = 32'h306c0004;
-		data[21] = 32'h47460100;
-		data[22] = 32'h47541000;
-		data[23] = 32'h47760009;
-		data[24] = 32'h30740000;
-		data[25] = 32'h4777000d;
-		data[26] = 32'h47440004;
-		data[27] = 32'h2545fffc;
-		data[28] = 32'h60f6002d;
+		data[20] = 32'h0;
+		data[21] = 32'h0;
+		data[22] = 32'h0;
+		data[23] = 32'h0;
 	end
 endmodule
