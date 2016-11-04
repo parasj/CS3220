@@ -15,145 +15,1244 @@
 # clk 0 rst 0
 # clk 0 rst 1
 # clk 1 rst 1
-# IMEM[00000040] = 4fe00000
-#   IR: PCIN MUX[00](pcOutPlusOne 00000044, pcBranchIn 00000044, alu_out 00000000) -> pcin 00000044
-#   IR: PC 00000040
-#   IR: InstWord 4fe00000
-#   ID -> **: , alu_op 0000, alu_mux 0000, reg_wrt_en 1110, mem_wrt_en 0000000000000000, next_pc_mux 01001, cmd_flag 0101000
-#   RR: src_index1 0, src_index2 0, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 01001, src1_data 00000000, alu_b 00000000, alu_out 00000000
-#   WB: reg_wrt_en 1, dst_index e, dstdata_mux 00(alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000044)
+# IMEM[00000040] = 47860bef
+#   PC: PCOut 00000040
+#   IR: InstWord 47860bef
+#   RR: src1[6] = 00000000, src2[0] = 00000000
+#   ALU: 00000000 (op=00001) 00000bef = 00000bef
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000bef, 4*ImmExt 00002fbc)[01]
+#   WB: RR_WRT_EN=1    rr[8] = 00000bef
+#       dst_data = (alu_out 00000bef, mem_out xxxxxxxx, pcoutplus1 00000044)[00] 
+#   MEM: GET mem[00000bef] == xxxxxxxx)
+#   PC UPDATE: pcin 00000044
+#              pcin = MUX[00](pcOutPlusOne 00000044, pcBranchIn 00003000, alu_out 00000bef)
 # clk 1 rst 0
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000044] = 47ee2000
-#   IR: PCIN MUX[00](pcOutPlusOne 00000048, pcBranchIn 00008048, alu_out 00002000) -> pcin 00000048
-#   IR: PC 00000044
-#   IR: InstWord 47ee2000
-#   ID -> **: , alu_op 1110, alu_mux 0010, reg_wrt_en 1110, mem_wrt_en 0010000000000000, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 e, src_index2 2, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000000, alu_b 00002000, alu_out 00002000
-#   WB: reg_wrt_en 1, dst_index e, dstdata_mux 00(alu_out 00002000, mem_out xxxxxxxx, pcoutplus1 00000048)
+# IMEM[00000044] = c2ddd000
+#   PC: PCOut 00000044
+#   IR: InstWord c2ddd000
+#   RR: src1[d] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=00101) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt ffffd000, 4*ImmExt ffff4000)[00]
+#   WB: RR_WRT_EN=1    rr[d] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000048)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000048
+#              pcin = MUX[00](pcOutPlusOne 00000048, pcBranchIn ffff4048, alu_out 00000000)
 # clk 0 rst 0
 # clk 1 rst 0
 # IMEM[00000048] = 4fc0f000
-#   IR: PCIN MUX[00](pcOutPlusOne 0000004c, pcBranchIn ffffc04c, alu_out f0000000) -> pcin 0000004c
-#   IR: PC 00000048
+#   PC: PCOut 00000048
 #   IR: InstWord 4fc0f000
-#   ID -> **: , alu_op 0000, alu_mux 1111, reg_wrt_en 1100, mem_wrt_en 1111000000000000, next_pc_mux 01001, cmd_flag 0101000
-#   RR: src_index1 0, src_index2 f, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 01001, src1_data 00000000, alu_b fffff000, alu_out f0000000
-#   WB: reg_wrt_en 1, dst_index c, dstdata_mux 00(alu_out f0000000, mem_out xxxxxxxx, pcoutplus1 0000004c)
+#   RR: src1[0] = 00000000, src2[f] = 00000000
+#   ALU: 00000000 (op=01001) fffff000 = f0000000
+#        SRC2 = (RegSrc2 00000000, ImmExt fffff000, 4*ImmExt ffffc000)[01]
+#   WB: RR_WRT_EN=1    rr[c] = f0000000
+#       dst_data = (alu_out f0000000, mem_out xxxxxxxx, pcoutplus1 0000004c)[00] 
+#   MEM: GET mem[f0000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000004c
+#              pcin = MUX[00](pcOutPlusOne 0000004c, pcBranchIn ffffc04c, alu_out f0000000)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[0000004c] = 40660000
-#   IR: PCIN MUX[00](pcOutPlusOne 00000050, pcBranchIn 00000050, alu_out 00000000) -> pcin 00000050
-#   IR: PC 0000004c
-#   IR: InstWord 40660000
-#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0110, mem_wrt_en 0000000000000000, next_pc_mux 00011, cmd_flag 0101000
-#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 00011, src1_data 00000000, alu_b 00000000, alu_out 00000000
-#   WB: reg_wrt_en 1, dst_index 6, dstdata_mux 00(alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000050)
+# IMEM[0000004c] = 4f600000
+#   PC: PCOut 0000004c
+#   IR: InstWord 4f600000
+#   RR: src1[0] = 00000000, src2[0] = 00000000
+#   ALU: 00000000 (op=01001) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000000, 4*ImmExt 00000000)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 00000050)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000050
+#              pcin = MUX[00](pcOutPlusOne 00000050, pcBranchIn 00000050, alu_out 00000000)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000050] = 306c0004
-#   IR: PCIN MUX[00](pcOutPlusOne 00000054, pcBranchIn 00000064, alu_out f0000000) -> pcin 00000054
-#   IR: PC 00000050
+# IMEM[00000050] = 47660001
+#   PC: PCOut 00000050
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000000, src2[0] = 00000000
+#   ALU: 00000000 (op=00001) 00000001 = 00000001
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 00000054)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 00000054
+#              pcin = MUX[00](pcOutPlusOne 00000054, pcBranchIn 00000058, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000054] = 306c0004
+#   PC: PCOut 00000054
 #   IR: InstWord 306c0004
-#   ID -> **: , alu_op 1100, alu_mux 0000, reg_wrt_en 0110, mem_wrt_en 0000000000000100, next_pc_mux 00001, cmd_flag 0010100
-#   RR: src_index1 c, src_index2 0, src1_data f0000000, src2_data 00000000
-#   ALU: alu_op 00001, src1_data f0000000, alu_b 00000000, alu_out f0000000
-#   WB: reg_wrt_en 0, dst_index 6, dstdata_mux 01(alu_out f0000000, mem_out 0000000f, pcoutplus1 00000054)
+#   RR: src1[c] = f0000000, src2[6] = 00000001
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000001 (=xxxxxxxx))
+#   PC UPDATE: pcin 00000058
+#              pcin = MUX[00](pcOutPlusOne 00000058, pcBranchIn 00000068, alu_out f0000004)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000054] = 47460100
-#   IR: PCIN MUX[00](pcOutPlusOne 00000058, pcBranchIn 00000458, alu_out 00000100) -> pcin 00000058
-#   IR: PC 00000054
-#   IR: InstWord 47460100
-#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0100, mem_wrt_en 0000000100000000, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000000, alu_b 00000100, alu_out 00000100
-#   WB: reg_wrt_en 1, dst_index 4, dstdata_mux 00(alu_out 00000100, mem_out xxxxxxxx, pcoutplus1 00000058)
+# IMEM[00000058] = 47660001
+#   PC: PCOut 00000058
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000001, src2[0] = 00000000
+#   ALU: 00000001 (op=00001) 00000001 = 00000002
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000002
+#       dst_data = (alu_out 00000002, mem_out xxxxxxxx, pcoutplus1 0000005c)[00] 
+#   MEM: GET mem[00000002] == xxxxxxxx)
+#   PC UPDATE: pcin 0000005c
+#              pcin = MUX[00](pcOutPlusOne 0000005c, pcBranchIn 00000060, alu_out 00000002)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000058] = 47541000
-#   IR: PCIN MUX[00](pcOutPlusOne 0000005c, pcBranchIn 0000405c, alu_out 00001100) -> pcin 0000005c
-#   IR: PC 00000058
-#   IR: InstWord 47541000
-#   ID -> **: , alu_op 0100, alu_mux 0001, reg_wrt_en 0101, mem_wrt_en 0001000000000000, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 4, src_index2 1, src1_data 00000100, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000100, alu_b 00001000, alu_out 00001100
-#   WB: reg_wrt_en 1, dst_index 5, dstdata_mux 00(alu_out 00001100, mem_out xxxxxxxx, pcoutplus1 0000005c)
+# IMEM[0000005c] = 306c0004
+#   PC: PCOut 0000005c
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000002
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000002, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000002 (=xxxxxxxx))
+#   PC UPDATE: pcin 00000060
+#              pcin = MUX[00](pcOutPlusOne 00000060, pcBranchIn 00000070, alu_out f0000004)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[0000005c] = 47760009
-#   IR: PCIN MUX[00](pcOutPlusOne 00000060, pcBranchIn 00000084, alu_out 00000009) -> pcin 00000060
-#   IR: PC 0000005c
-#   IR: InstWord 47760009
-#   ID -> **: , alu_op 0110, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001001, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 6, src_index2 0, src1_data 00000000, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000000, alu_b 00000009, alu_out 00000009
-#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000009, mem_out xxxxxxxx, pcoutplus1 00000060)
+# IMEM[00000060] = 474dffff
+#   PC: PCOut 00000060
+#   IR: InstWord 474dffff
+#   RR: src1[d] = 00000000, src2[f] = 00000000
+#   ALU: 00000000 (op=00001) ffffffff = ffffffff
+#        SRC2 = (RegSrc2 00000000, ImmExt ffffffff, 4*ImmExt fffffffc)[01]
+#   WB: RR_WRT_EN=1    rr[4] = ffffffff
+#       dst_data = (alu_out ffffffff, mem_out xxxxxxxx, pcoutplus1 00000064)[00] 
+#   MEM: GET mem[ffffffff] == xxxxxxxx)
+#   PC UPDATE: pcin 00000064
+#              pcin = MUX[00](pcOutPlusOne 00000064, pcBranchIn 00000060, alu_out ffffffff)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000060] = 30740000
-#   IR: PCIN MUX[00](pcOutPlusOne 00000064, pcBranchIn 00000064, alu_out 00000100) -> pcin 00000064
-#   IR: PC 00000060
-#   IR: InstWord 30740000
-#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000000000, next_pc_mux 00001, cmd_flag 0010100
-#   RR: src_index1 4, src_index2 0, src1_data 00000100, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000100, alu_b 00000000, alu_out 00000100
-#   WB: reg_wrt_en 0, dst_index 7, dstdata_mux 01(alu_out 00000100, mem_out xxxxxxxx, pcoutplus1 00000064)
+# IMEM[00000064] = 475d0002
+#   PC: PCOut 00000064
+#   IR: InstWord 475d0002
+#   RR: src1[d] = 00000000, src2[0] = 00000000
+#   ALU: 00000000 (op=00001) 00000002 = 00000002
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000002, 4*ImmExt 00000008)[01]
+#   WB: RR_WRT_EN=1    rr[5] = 00000002
+#       dst_data = (alu_out 00000002, mem_out xxxxxxxx, pcoutplus1 00000068)[00] 
+#   MEM: GET mem[00000002] == xxxxxxxx)
+#   PC UPDATE: pcin 00000068
+#              pcin = MUX[00](pcOutPlusOne 00000068, pcBranchIn 00000070, alu_out 00000002)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000064] = 4777000d
-#   IR: PCIN MUX[00](pcOutPlusOne 00000068, pcBranchIn 0000009c, alu_out 00000016) -> pcin 00000068
-#   IR: PC 00000064
-#   IR: InstWord 4777000d
-#   ID -> **: , alu_op 0111, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001101, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 7, src_index2 0, src1_data 00000009, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000009, alu_b 0000000d, alu_out 00000016
-#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000016, mem_out 00000000, pcoutplus1 00000068)
+# IMEM[00000068] = 470d0001
+#   PC: PCOut 00000068
+#   IR: InstWord 470d0001
+#   RR: src1[d] = 00000000, src2[0] = 00000000
+#   ALU: 00000000 (op=00001) 00000001 = 00000001
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[0] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000006c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000006c
+#              pcin = MUX[00](pcOutPlusOne 0000006c, pcBranchIn 00000070, alu_out 00000001)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000068] = 47440004
-#   IR: PCIN MUX[00](pcOutPlusOne 0000006c, pcBranchIn 0000007c, alu_out 00000104) -> pcin 0000006c
-#   IR: PC 00000068
-#   IR: InstWord 47440004
-#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0100, mem_wrt_en 0000000000000100, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 4, src_index2 0, src1_data 00000100, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000100, alu_b 00000004, alu_out 00000104
-#   WB: reg_wrt_en 1, dst_index 4, dstdata_mux 00(alu_out 00000104, mem_out xxxxxxxx, pcoutplus1 0000006c)
+# IMEM[0000006c] = c7145000
+#   PC: PCOut 0000006c
+#   IR: InstWord c7145000
+#   RR: src1[4] = ffffffff, src2[5] = 00000002
+#   ALU: ffffffff (op=00001) 00000002 = 00000001
+#        SRC2 = (RegSrc2 00000002, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[1] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 00000070)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 00000070
+#              pcin = MUX[00](pcOutPlusOne 00000070, pcBranchIn 00014070, alu_out 00000001)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[0000006c] = 2545fffc
-#   IR: PCIN MUX[01](pcOutPlusOne 00000070, pcBranchIn 00000060, alu_out 00000001) -> pcin 00000060
-#   IR: PC 0000006c
-#   IR: InstWord 2545fffc
-#   ID -> **: , alu_op 0100, alu_mux 0101, reg_wrt_en 0100, mem_wrt_en 1111111111111100, next_pc_mux 01111, cmd_flag 0000011
-#   RR: src_index1 4, src_index2 5, src1_data 00000104, src2_data 00001100
-#   ALU: alu_op 01111, src1_data 00000104, alu_b 00001100, alu_out 00000001
-#   WB: reg_wrt_en 0, dst_index 4, dstdata_mux 00(alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 00000070)
+# IMEM[00000070] = 26010004
+#   PC: PCOut 00000070
+#   IR: InstWord 26010004
+#   RR: src1[0] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01011) 00000001 = 00000001
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000004, 4*ImmExt 00000010)[00]
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 00000084
+#              pcin = MUX[01](pcOutPlusOne 00000074, pcBranchIn 00000084, alu_out 00000001)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000060] = 30740000
-#   IR: PCIN MUX[00](pcOutPlusOne 00000064, pcBranchIn 00000064, alu_out 00000104) -> pcin 00000064
-#   IR: PC 00000060
-#   IR: InstWord 30740000
-#   ID -> **: , alu_op 0100, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000000000, next_pc_mux 00001, cmd_flag 0010100
-#   RR: src_index1 4, src_index2 0, src1_data 00000104, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000104, alu_b 00000000, alu_out 00000104
-#   WB: reg_wrt_en 0, dst_index 7, dstdata_mux 01(alu_out 00000104, mem_out xxxxxxxx, pcoutplus1 00000064)
+# IMEM[00000084] = 47660001
+#   PC: PCOut 00000084
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000002, src2[0] = 00000001
+#   ALU: 00000002 (op=00001) 00000001 = 00000003
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000003
+#       dst_data = (alu_out 00000003, mem_out xxxxxxxx, pcoutplus1 00000088)[00] 
+#   MEM: GET mem[00000003] == xxxxxxxx)
+#   PC UPDATE: pcin 00000088
+#              pcin = MUX[00](pcOutPlusOne 00000088, pcBranchIn 0000008c, alu_out 00000003)
 # clk 0 rst 0
 # clk 1 rst 0
-# IMEM[00000064] = 4777000d
-#   IR: PCIN MUX[00](pcOutPlusOne 00000068, pcBranchIn 0000009c, alu_out 00000023) -> pcin 00000068
-#   IR: PC 00000064
-#   IR: InstWord 4777000d
-#   ID -> **: , alu_op 0111, alu_mux 0000, reg_wrt_en 0111, mem_wrt_en 0000000000001101, next_pc_mux 00001, cmd_flag 0101000
-#   RR: src_index1 7, src_index2 0, src1_data 00000016, src2_data 00000000
-#   ALU: alu_op 00001, src1_data 00000016, alu_b 0000000d, alu_out 00000023
-#   WB: reg_wrt_en 1, dst_index 7, dstdata_mux 00(alu_out 00000023, mem_out 00000000, pcoutplus1 00000068)
-# Break in Module CPUTestBench at CPUTestBench.v line 112
-# Stopped at CPUTestBench.v line 112 
+# IMEM[00000088] = 306c0004
+#   PC: PCOut 00000088
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000003
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000003, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000003 (=00000000))
+#   PC UPDATE: pcin 0000008c
+#              pcin = MUX[00](pcOutPlusOne 0000008c, pcBranchIn 0000009c, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000008c] = 474d0007
+#   PC: PCOut 0000008c
+#   IR: InstWord 474d0007
+#   RR: src1[d] = 00000000, src2[0] = 00000001
+#   ALU: 00000000 (op=00001) 00000007 = 00000007
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000007, 4*ImmExt 0000001c)[01]
+#   WB: RR_WRT_EN=1    rr[4] = 00000007
+#       dst_data = (alu_out 00000007, mem_out xxxxxxxx, pcoutplus1 00000090)[00] 
+#   MEM: GET mem[00000007] == xxxxxxxx)
+#   PC UPDATE: pcin 00000090
+#              pcin = MUX[00](pcOutPlusOne 00000090, pcBranchIn 000000ac, alu_out 00000007)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000090] = 47540003
+#   PC: PCOut 00000090
+#   IR: InstWord 47540003
+#   RR: src1[4] = 00000007, src2[0] = 00000001
+#   ALU: 00000007 (op=00001) 00000003 = 0000000a
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000003, 4*ImmExt 0000000c)[01]
+#   WB: RR_WRT_EN=1    rr[5] = 0000000a
+#       dst_data = (alu_out 0000000a, mem_out xxxxxxxx, pcoutplus1 00000094)[00] 
+#   MEM: GET mem[0000000a] == xxxxxxxx)
+#   PC UPDATE: pcin 00000094
+#              pcin = MUX[00](pcOutPlusOne 00000094, pcBranchIn 000000a0, alu_out 0000000a)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000094] = c7055000
+#   PC: PCOut 00000094
+#   IR: InstWord c7055000
+#   RR: src1[5] = 0000000a, src2[5] = 0000000a
+#   ALU: 0000000a (op=00001) 0000000a = 00000014
+#        SRC2 = (RegSrc2 0000000a, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[0] = 00000014
+#       dst_data = (alu_out 00000014, mem_out xxxxxxxx, pcoutplus1 00000098)[00] 
+#   MEM: GET mem[00000014] == xxxxxxxx)
+#   PC UPDATE: pcin 00000098
+#              pcin = MUX[00](pcOutPlusOne 00000098, pcBranchIn 00014098, alu_out 00000014)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000098] = 41100025
+#   PC: PCOut 00000098
+#   IR: InstWord 41100025
+#   RR: src1[0] = 00000014, src2[0] = 00000014
+#   ALU: 00000014 (op=00100) 00000025 = 00000035
+#        SRC2 = (RegSrc2 00000014, ImmExt 00000025, 4*ImmExt 00000094)[01]
+#   WB: RR_WRT_EN=1    rr[1] = 00000035
+#       dst_data = (alu_out 00000035, mem_out xxxxxxxx, pcoutplus1 0000009c)[00] 
+#   MEM: GET mem[00000035] == xxxxxxxx)
+#   PC UPDATE: pcin 0000009c
+#              pcin = MUX[00](pcOutPlusOne 0000009c, pcBranchIn 00000130, alu_out 00000035)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000009c] = 402100d1
+#   PC: PCOut 0000009c
+#   IR: InstWord 402100d1
+#   RR: src1[1] = 00000035, src2[0] = 00000014
+#   ALU: 00000035 (op=00011) 000000d1 = 00000011
+#        SRC2 = (RegSrc2 00000014, ImmExt 000000d1, 4*ImmExt 00000344)[01]
+#   WB: RR_WRT_EN=1    rr[2] = 00000011
+#       dst_data = (alu_out 00000011, mem_out xxxxxxxx, pcoutplus1 000000a0)[00] 
+#   MEM: GET mem[00000011] == xxxxxxxx)
+#   PC UPDATE: pcin 000000a0
+#              pcin = MUX[00](pcOutPlusOne 000000a0, pcBranchIn 000003e4, alu_out 00000011)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000a0] = c2001000
+#   PC: PCOut 000000a0
+#   IR: InstWord c2001000
+#   RR: src1[0] = 00000014, src2[1] = 00000035
+#   ALU: 00000014 (op=00101) 00000035 = 00000021
+#        SRC2 = (RegSrc2 00000035, ImmExt 00001000, 4*ImmExt 00004000)[00]
+#   WB: RR_WRT_EN=1    rr[0] = 00000021
+#       dst_data = (alu_out 00000021, mem_out xxxxxxxx, pcoutplus1 000000a4)[00] 
+#   MEM: GET mem[00000021] == xxxxxxxx)
+#   PC UPDATE: pcin 000000a4
+#              pcin = MUX[00](pcOutPlusOne 000000a4, pcBranchIn 000040a4, alu_out 00000021)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000a4] = c1104000
+#   PC: PCOut 000000a4
+#   IR: InstWord c1104000
+#   RR: src1[0] = 00000021, src2[4] = 00000007
+#   ALU: 00000021 (op=00100) 00000007 = 00000027
+#        SRC2 = (RegSrc2 00000007, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[1] = 00000027
+#       dst_data = (alu_out 00000027, mem_out xxxxxxxx, pcoutplus1 000000a8)[00] 
+#   MEM: GET mem[00000027] == xxxxxxxx)
+#   PC UPDATE: pcin 000000a8
+#              pcin = MUX[00](pcOutPlusOne 000000a8, pcBranchIn 000100a8, alu_out 00000027)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000a8] = c9242000
+#   PC: PCOut 000000a8
+#   IR: InstWord c9242000
+#   RR: src1[4] = 00000007, src2[2] = 00000011
+#   ALU: 00000007 (op=00111) 00000011 = ffffffe8
+#        SRC2 = (RegSrc2 00000011, ImmExt 00002000, 4*ImmExt 00008000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = ffffffe8
+#       dst_data = (alu_out ffffffe8, mem_out 0000000f, pcoutplus1 000000ac)[00] 
+#   MEM: GET mem[ffffffe8] == 0000000f)
+#   PC UPDATE: pcin 000000ac
+#              pcin = MUX[00](pcOutPlusOne 000000ac, pcBranchIn 000080ac, alu_out ffffffe8)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000ac] = c8321000
+#   PC: PCOut 000000ac
+#   IR: InstWord c8321000
+#   RR: src1[2] = ffffffe8, src2[1] = 00000027
+#   ALU: ffffffe8 (op=00110) 00000027 = ffffffdf
+#        SRC2 = (RegSrc2 00000027, ImmExt 00001000, 4*ImmExt 00004000)[00]
+#   WB: RR_WRT_EN=1    rr[3] = ffffffdf
+#       dst_data = (alu_out ffffffdf, mem_out 00000000, pcoutplus1 000000b0)[00] 
+#   MEM: GET mem[ffffffdf] == 00000000)
+#   PC UPDATE: pcin 000000b0
+#              pcin = MUX[00](pcOutPlusOne 000000b0, pcBranchIn 000040b0, alu_out ffffffdf)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000b0] = c6142000
+#   PC: PCOut 000000b0
+#   IR: InstWord c6142000
+#   RR: src1[4] = 00000007, src2[2] = ffffffe8
+#   ALU: 00000007 (op=00010) ffffffe8 = 0000001f
+#        SRC2 = (RegSrc2 ffffffe8, ImmExt 00002000, 4*ImmExt 00008000)[00]
+#   WB: RR_WRT_EN=1    rr[1] = 0000001f
+#       dst_data = (alu_out 0000001f, mem_out xxxxxxxx, pcoutplus1 000000b4)[00] 
+#   MEM: GET mem[0000001f] == xxxxxxxx)
+#   PC UPDATE: pcin 000000b4
+#              pcin = MUX[00](pcOutPlusOne 000000b4, pcBranchIn 000080b4, alu_out 0000001f)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000b4] = c0412000
+#   PC: PCOut 000000b4
+#   IR: InstWord c0412000
+#   RR: src1[1] = 0000001f, src2[2] = ffffffe8
+#   ALU: 0000001f (op=00011) ffffffe8 = 00000008
+#        SRC2 = (RegSrc2 ffffffe8, ImmExt 00002000, 4*ImmExt 00008000)[00]
+#   WB: RR_WRT_EN=1    rr[4] = 00000008
+#       dst_data = (alu_out 00000008, mem_out xxxxxxxx, pcoutplus1 000000b8)[00] 
+#   MEM: GET mem[00000008] == xxxxxxxx)
+#   PC UPDATE: pcin 000000b8
+#              pcin = MUX[00](pcOutPlusOne 000000b8, pcBranchIn 000080b8, alu_out 00000008)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000b8] = ca114000
+#   PC: PCOut 000000b8
+#   IR: InstWord ca114000
+#   RR: src1[1] = 0000001f, src2[4] = 00000008
+#   ALU: 0000001f (op=01000) 00000008 = ffffffe8
+#        SRC2 = (RegSrc2 00000008, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[1] = ffffffe8
+#       dst_data = (alu_out ffffffe8, mem_out 0000000f, pcoutplus1 000000bc)[00] 
+#   MEM: GET mem[ffffffe8] == 0000000f)
+#   PC UPDATE: pcin 000000bc
+#              pcin = MUX[00](pcOutPlusOne 000000bc, pcBranchIn 000100bc, alu_out ffffffe8)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000bc] = c2223000
+#   PC: PCOut 000000bc
+#   IR: InstWord c2223000
+#   RR: src1[2] = ffffffe8, src2[3] = ffffffdf
+#   ALU: ffffffe8 (op=00101) ffffffdf = 00000037
+#        SRC2 = (RegSrc2 ffffffdf, ImmExt 00003000, 4*ImmExt 0000c000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000037
+#       dst_data = (alu_out 00000037, mem_out xxxxxxxx, pcoutplus1 000000c0)[00] 
+#   MEM: GET mem[00000037] == xxxxxxxx)
+#   PC UPDATE: pcin 000000c0
+#              pcin = MUX[00](pcOutPlusOne 000000c0, pcBranchIn 0000c0c0, alu_out 00000037)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000c0] = c6002000
+#   PC: PCOut 000000c0
+#   IR: InstWord c6002000
+#   RR: src1[0] = 00000021, src2[2] = 00000037
+#   ALU: 00000021 (op=00010) 00000037 = ffffffea
+#        SRC2 = (RegSrc2 00000037, ImmExt 00002000, 4*ImmExt 00008000)[00]
+#   WB: RR_WRT_EN=1    rr[0] = ffffffea
+#       dst_data = (alu_out ffffffea, mem_out 0000000f, pcoutplus1 000000c4)[00] 
+#   MEM: GET mem[ffffffea] == 0000000f)
+#   PC UPDATE: pcin 000000c4
+#              pcin = MUX[00](pcOutPlusOne 000000c4, pcBranchIn 000080c4, alu_out ffffffea)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000c4] = c7010000
+#   PC: PCOut 000000c4
+#   IR: InstWord c7010000
+#   RR: src1[1] = ffffffe8, src2[0] = ffffffea
+#   ALU: ffffffe8 (op=00001) ffffffea = ffffffd2
+#        SRC2 = (RegSrc2 ffffffea, ImmExt 00000000, 4*ImmExt 00000000)[00]
+#   WB: RR_WRT_EN=1    rr[0] = ffffffd2
+#       dst_data = (alu_out ffffffd2, mem_out 0000000f, pcoutplus1 000000c8)[00] 
+#   MEM: GET mem[ffffffd2] == 0000000f)
+#   PC UPDATE: pcin 000000c8
+#              pcin = MUX[00](pcOutPlusOne 000000c8, pcBranchIn 000000c8, alu_out ffffffd2)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000c8] = 475dfff8
+#   PC: PCOut 000000c8
+#   IR: InstWord 475dfff8
+#   RR: src1[d] = 00000000, src2[f] = 00000000
+#   ALU: 00000000 (op=00001) fffffff8 = fffffff8
+#        SRC2 = (RegSrc2 00000000, ImmExt fffffff8, 4*ImmExt ffffffe0)[01]
+#   WB: RR_WRT_EN=1    rr[5] = fffffff8
+#       dst_data = (alu_out fffffff8, mem_out 0000000f, pcoutplus1 000000cc)[00] 
+#   MEM: GET mem[fffffff8] == 0000000f)
+#   PC UPDATE: pcin 000000cc
+#              pcin = MUX[00](pcOutPlusOne 000000cc, pcBranchIn 000000ac, alu_out fffffff8)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000cc] = 25050004
+#   PC: PCOut 000000cc
+#   IR: InstWord 25050004
+#   RR: src1[0] = ffffffd2, src2[5] = fffffff8
+#   ALU: ffffffd2 (op=01111) fffffff8 = 00000001
+#        SRC2 = (RegSrc2 fffffff8, ImmExt 00000004, 4*ImmExt 00000010)[00]
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000000e0
+#              pcin = MUX[01](pcOutPlusOne 000000d0, pcBranchIn 000000e0, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000e0] = 47660001
+#   PC: PCOut 000000e0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000003, src2[0] = ffffffd2
+#   ALU: 00000003 (op=00001) 00000001 = 00000004
+#        SRC2 = (RegSrc2 ffffffd2, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000004
+#       dst_data = (alu_out 00000004, mem_out xxxxxxxx, pcoutplus1 000000e4)[00] 
+#   MEM: GET mem[00000004] == xxxxxxxx)
+#   PC UPDATE: pcin 000000e4
+#              pcin = MUX[00](pcOutPlusOne 000000e4, pcBranchIn 000000e8, alu_out 00000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000e4] = 306c0004
+#   PC: PCOut 000000e4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000004
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000004, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000004 (=00000000))
+#   PC UPDATE: pcin 000000e8
+#              pcin = MUX[00](pcOutPlusOne 000000e8, pcBranchIn 000000f8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000e8] = 471d0001
+#   PC: PCOut 000000e8
+#   IR: InstWord 471d0001
+#   RR: src1[d] = 00000000, src2[0] = ffffffd2
+#   ALU: 00000000 (op=00001) 00000001 = 00000001
+#        SRC2 = (RegSrc2 ffffffd2, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[1] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 000000ec)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000000ec
+#              pcin = MUX[00](pcOutPlusOne 000000ec, pcBranchIn 000000f0, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000ec] = 474d004b
+#   PC: PCOut 000000ec
+#   IR: InstWord 474d004b
+#   RR: src1[d] = 00000000, src2[0] = ffffffd2
+#   ALU: 00000000 (op=00001) 0000004b = 0000004b
+#        SRC2 = (RegSrc2 ffffffd2, ImmExt 0000004b, 4*ImmExt 0000012c)[01]
+#   WB: RR_WRT_EN=1    rr[4] = 0000004b
+#       dst_data = (alu_out 0000004b, mem_out xxxxxxxx, pcoutplus1 000000f0)[00] 
+#   MEM: GET mem[0000004b] == xxxxxxxx)
+#   PC UPDATE: pcin 000000f0
+#              pcin = MUX[00](pcOutPlusOne 000000f0, pcBranchIn 0000021c, alu_out 0000004b)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000f0] = 475d0022
+#   PC: PCOut 000000f0
+#   IR: InstWord 475d0022
+#   RR: src1[d] = 00000000, src2[0] = ffffffd2
+#   ALU: 00000000 (op=00001) 00000022 = 00000022
+#        SRC2 = (RegSrc2 ffffffd2, ImmExt 00000022, 4*ImmExt 00000088)[01]
+#   WB: RR_WRT_EN=1    rr[5] = 00000022
+#       dst_data = (alu_out 00000022, mem_out xxxxxxxx, pcoutplus1 000000f4)[00] 
+#   MEM: GET mem[00000022] == xxxxxxxx)
+#   PC UPDATE: pcin 000000f4
+#              pcin = MUX[00](pcOutPlusOne 000000f4, pcBranchIn 0000017c, alu_out 00000022)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000f4] = 470dffb0
+#   PC: PCOut 000000f4
+#   IR: InstWord 470dffb0
+#   RR: src1[d] = 00000000, src2[f] = 00000000
+#   ALU: 00000000 (op=00001) ffffffb0 = ffffffb0
+#        SRC2 = (RegSrc2 00000000, ImmExt ffffffb0, 4*ImmExt fffffec0)[01]
+#   WB: RR_WRT_EN=1    rr[0] = ffffffb0
+#       dst_data = (alu_out ffffffb0, mem_out 0000000f, pcoutplus1 000000f8)[00] 
+#   MEM: GET mem[ffffffb0] == 0000000f)
+#   PC UPDATE: pcin 000000f8
+#              pcin = MUX[00](pcOutPlusOne 000000f8, pcBranchIn ffffffb8, alu_out ffffffb0)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000f8] = dc245000
+#   PC: PCOut 000000f8
+#   IR: InstWord dc245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=01101) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 000000fc)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000000fc
+#              pcin = MUX[00](pcOutPlusOne 000000fc, pcBranchIn 000140fc, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000000fc] = 252d0045
+#   PC: PCOut 000000fc
+#   IR: InstWord 252d0045
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000045, 4*ImmExt 00000114)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000100
+#              pcin = MUX[00](pcOutPlusOne 00000100, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000100] = 47660001
+#   PC: PCOut 00000100
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000004, src2[0] = ffffffb0
+#   ALU: 00000004 (op=00001) 00000001 = 00000005
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000005
+#       dst_data = (alu_out 00000005, mem_out xxxxxxxx, pcoutplus1 00000104)[00] 
+#   MEM: GET mem[00000005] == xxxxxxxx)
+#   PC UPDATE: pcin 00000104
+#              pcin = MUX[00](pcOutPlusOne 00000104, pcBranchIn 00000108, alu_out 00000005)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000104] = 306c0004
+#   PC: PCOut 00000104
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000005
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000005, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000005 (=00000000))
+#   PC UPDATE: pcin 00000108
+#              pcin = MUX[00](pcOutPlusOne 00000108, pcBranchIn 00000118, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000108] = d9245000
+#   PC: PCOut 00000108
+#   IR: InstWord d9245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=01100) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 0000010c)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000010c
+#              pcin = MUX[00](pcOutPlusOne 0000010c, pcBranchIn 0001410c, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000010c] = 252d0041
+#   PC: PCOut 0000010c
+#   IR: InstWord 252d0041
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000041, 4*ImmExt 00000104)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000110
+#              pcin = MUX[00](pcOutPlusOne 00000110, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000110] = 47660001
+#   PC: PCOut 00000110
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000005, src2[0] = ffffffb0
+#   ALU: 00000005 (op=00001) 00000001 = 00000006
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000006
+#       dst_data = (alu_out 00000006, mem_out xxxxxxxx, pcoutplus1 00000114)[00] 
+#   MEM: GET mem[00000006] == xxxxxxxx)
+#   PC UPDATE: pcin 00000114
+#              pcin = MUX[00](pcOutPlusOne 00000114, pcBranchIn 00000118, alu_out 00000006)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000114] = 306c0004
+#   PC: PCOut 00000114
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000006
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000006, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000006 (=00000000))
+#   PC UPDATE: pcin 00000118
+#              pcin = MUX[00](pcOutPlusOne 00000118, pcBranchIn 00000128, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000118] = d6245000
+#   PC: PCOut 00000118
+#   IR: InstWord d6245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=01011) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 0000011c)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000011c
+#              pcin = MUX[00](pcOutPlusOne 0000011c, pcBranchIn 0001411c, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000011c] = 252d003d
+#   PC: PCOut 0000011c
+#   IR: InstWord 252d003d
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 0000003d, 4*ImmExt 000000f4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000120
+#              pcin = MUX[00](pcOutPlusOne 00000120, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000120] = 47660001
+#   PC: PCOut 00000120
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000006, src2[0] = ffffffb0
+#   ALU: 00000006 (op=00001) 00000001 = 00000007
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000007
+#       dst_data = (alu_out 00000007, mem_out xxxxxxxx, pcoutplus1 00000124)[00] 
+#   MEM: GET mem[00000007] == xxxxxxxx)
+#   PC UPDATE: pcin 00000124
+#              pcin = MUX[00](pcOutPlusOne 00000124, pcBranchIn 00000128, alu_out 00000007)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000124] = 306c0004
+#   PC: PCOut 00000124
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000007
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000007, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000007 (=00000000))
+#   PC UPDATE: pcin 00000128
+#              pcin = MUX[00](pcOutPlusOne 00000128, pcBranchIn 00000138, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000128] = d5245000
+#   PC: PCOut 00000128
+#   IR: InstWord d5245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=01111) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000012c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000012c
+#              pcin = MUX[00](pcOutPlusOne 0000012c, pcBranchIn 0001412c, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000012c] = 25210039
+#   PC: PCOut 0000012c
+#   IR: InstWord 25210039
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000039, 4*ImmExt 000000e4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000130
+#              pcin = MUX[00](pcOutPlusOne 00000130, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000130] = 47660001
+#   PC: PCOut 00000130
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000007, src2[0] = ffffffb0
+#   ALU: 00000007 (op=00001) 00000001 = 00000008
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000008
+#       dst_data = (alu_out 00000008, mem_out xxxxxxxx, pcoutplus1 00000134)[00] 
+#   MEM: GET mem[00000008] == xxxxxxxx)
+#   PC UPDATE: pcin 00000134
+#              pcin = MUX[00](pcOutPlusOne 00000134, pcBranchIn 00000138, alu_out 00000008)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000134] = 306c0004
+#   PC: PCOut 00000134
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000008
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000008, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000008 (=00000000))
+#   PC UPDATE: pcin 00000138
+#              pcin = MUX[00](pcOutPlusOne 00000138, pcBranchIn 00000148, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000138] = df245000
+#   PC: PCOut 00000138
+#   IR: InstWord df245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=10001) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000013c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000013c
+#              pcin = MUX[00](pcOutPlusOne 0000013c, pcBranchIn 0001413c, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000013c] = 25210035
+#   PC: PCOut 0000013c
+#   IR: InstWord 25210035
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000035, 4*ImmExt 000000d4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000140
+#              pcin = MUX[00](pcOutPlusOne 00000140, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000140] = 47660001
+#   PC: PCOut 00000140
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000008, src2[0] = ffffffb0
+#   ALU: 00000008 (op=00001) 00000001 = 00000009
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000009
+#       dst_data = (alu_out 00000009, mem_out xxxxxxxx, pcoutplus1 00000144)[00] 
+#   MEM: GET mem[00000009] == xxxxxxxx)
+#   PC UPDATE: pcin 00000144
+#              pcin = MUX[00](pcOutPlusOne 00000144, pcBranchIn 00000148, alu_out 00000009)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000144] = 306c0004
+#   PC: PCOut 00000144
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000009
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000009, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000009 (=00000000))
+#   PC UPDATE: pcin 00000148
+#              pcin = MUX[00](pcOutPlusOne 00000148, pcBranchIn 00000158, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000148] = da245000
+#   PC: PCOut 00000148
+#   IR: InstWord da245000
+#   RR: src1[4] = 0000004b, src2[5] = 00000022
+#   ALU: 0000004b (op=10000) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000014c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000014c
+#              pcin = MUX[00](pcOutPlusOne 0000014c, pcBranchIn 0001414c, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000014c] = 25210031
+#   PC: PCOut 0000014c
+#   IR: InstWord 25210031
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000031, 4*ImmExt 000000c4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000150
+#              pcin = MUX[00](pcOutPlusOne 00000150, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000150] = 47660001
+#   PC: PCOut 00000150
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000009, src2[0] = ffffffb0
+#   ALU: 00000009 (op=00001) 00000001 = 0000000a
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000a
+#       dst_data = (alu_out 0000000a, mem_out xxxxxxxx, pcoutplus1 00000154)[00] 
+#   MEM: GET mem[0000000a] == xxxxxxxx)
+#   PC UPDATE: pcin 00000154
+#              pcin = MUX[00](pcOutPlusOne 00000154, pcBranchIn 00000158, alu_out 0000000a)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000154] = 306c0004
+#   PC: PCOut 00000154
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000a
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000a, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000a (=00000000))
+#   PC UPDATE: pcin 00000158
+#              pcin = MUX[00](pcOutPlusOne 00000158, pcBranchIn 00000168, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000158] = dc255000
+#   PC: PCOut 00000158
+#   IR: InstWord dc255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=01101) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000015c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000015c
+#              pcin = MUX[00](pcOutPlusOne 0000015c, pcBranchIn 0001415c, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000015c] = 2521002d
+#   PC: PCOut 0000015c
+#   IR: InstWord 2521002d
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 0000002d, 4*ImmExt 000000b4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000160
+#              pcin = MUX[00](pcOutPlusOne 00000160, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000160] = 47660001
+#   PC: PCOut 00000160
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000a, src2[0] = ffffffb0
+#   ALU: 0000000a (op=00001) 00000001 = 0000000b
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000b
+#       dst_data = (alu_out 0000000b, mem_out xxxxxxxx, pcoutplus1 00000164)[00] 
+#   MEM: GET mem[0000000b] == xxxxxxxx)
+#   PC UPDATE: pcin 00000164
+#              pcin = MUX[00](pcOutPlusOne 00000164, pcBranchIn 00000168, alu_out 0000000b)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000164] = 306c0004
+#   PC: PCOut 00000164
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000b
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000b, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000b (=00000000))
+#   PC UPDATE: pcin 00000168
+#              pcin = MUX[00](pcOutPlusOne 00000168, pcBranchIn 00000178, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000168] = d9255000
+#   PC: PCOut 00000168
+#   IR: InstWord d9255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=01100) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 0000016c)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000016c
+#              pcin = MUX[00](pcOutPlusOne 0000016c, pcBranchIn 0001416c, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000016c] = 252d0029
+#   PC: PCOut 0000016c
+#   IR: InstWord 252d0029
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000029, 4*ImmExt 000000a4)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000170
+#              pcin = MUX[00](pcOutPlusOne 00000170, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000170] = 47660001
+#   PC: PCOut 00000170
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000b, src2[0] = ffffffb0
+#   ALU: 0000000b (op=00001) 00000001 = 0000000c
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000c
+#       dst_data = (alu_out 0000000c, mem_out xxxxxxxx, pcoutplus1 00000174)[00] 
+#   MEM: GET mem[0000000c] == xxxxxxxx)
+#   PC UPDATE: pcin 00000174
+#              pcin = MUX[00](pcOutPlusOne 00000174, pcBranchIn 00000178, alu_out 0000000c)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000174] = 306c0004
+#   PC: PCOut 00000174
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000c
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000c, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000c (=00000000))
+#   PC UPDATE: pcin 00000178
+#              pcin = MUX[00](pcOutPlusOne 00000178, pcBranchIn 00000188, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000178] = d6255000
+#   PC: PCOut 00000178
+#   IR: InstWord d6255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=01011) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 0000017c)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 0000017c
+#              pcin = MUX[00](pcOutPlusOne 0000017c, pcBranchIn 0001417c, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000017c] = 25210025
+#   PC: PCOut 0000017c
+#   IR: InstWord 25210025
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000025, 4*ImmExt 00000094)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000180
+#              pcin = MUX[00](pcOutPlusOne 00000180, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000180] = 47660001
+#   PC: PCOut 00000180
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000c, src2[0] = ffffffb0
+#   ALU: 0000000c (op=00001) 00000001 = 0000000d
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000d
+#       dst_data = (alu_out 0000000d, mem_out xxxxxxxx, pcoutplus1 00000184)[00] 
+#   MEM: GET mem[0000000d] == xxxxxxxx)
+#   PC UPDATE: pcin 00000184
+#              pcin = MUX[00](pcOutPlusOne 00000184, pcBranchIn 00000188, alu_out 0000000d)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000184] = 306c0004
+#   PC: PCOut 00000184
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000d
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000d, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000d (=00000000))
+#   PC UPDATE: pcin 00000188
+#              pcin = MUX[00](pcOutPlusOne 00000188, pcBranchIn 00000198, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000188] = d5255000
+#   PC: PCOut 00000188
+#   IR: InstWord d5255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=01111) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 0000018c)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000018c
+#              pcin = MUX[00](pcOutPlusOne 0000018c, pcBranchIn 0001418c, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000018c] = 252d0021
+#   PC: PCOut 0000018c
+#   IR: InstWord 252d0021
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 00000021, 4*ImmExt 00000084)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 00000190
+#              pcin = MUX[00](pcOutPlusOne 00000190, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000190] = 47660001
+#   PC: PCOut 00000190
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000d, src2[0] = ffffffb0
+#   ALU: 0000000d (op=00001) 00000001 = 0000000e
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000e
+#       dst_data = (alu_out 0000000e, mem_out xxxxxxxx, pcoutplus1 00000194)[00] 
+#   MEM: GET mem[0000000e] == xxxxxxxx)
+#   PC UPDATE: pcin 00000194
+#              pcin = MUX[00](pcOutPlusOne 00000194, pcBranchIn 00000198, alu_out 0000000e)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000194] = 306c0004
+#   PC: PCOut 00000194
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000e
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000e, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000e (=00000000))
+#   PC UPDATE: pcin 00000198
+#              pcin = MUX[00](pcOutPlusOne 00000198, pcBranchIn 000001a8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[00000198] = df255000
+#   PC: PCOut 00000198
+#   IR: InstWord df255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=10001) 00000022 = 00000000
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 0000019c)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 0000019c
+#              pcin = MUX[00](pcOutPlusOne 0000019c, pcBranchIn 0001419c, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[0000019c] = 252d001d
+#   PC: PCOut 0000019c
+#   IR: InstWord 252d001d
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 0000001d, 4*ImmExt 00000074)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001a0
+#              pcin = MUX[00](pcOutPlusOne 000001a0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001a0] = 47660001
+#   PC: PCOut 000001a0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000e, src2[0] = ffffffb0
+#   ALU: 0000000e (op=00001) 00000001 = 0000000f
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 0000000f
+#       dst_data = (alu_out 0000000f, mem_out xxxxxxxx, pcoutplus1 000001a4)[00] 
+#   MEM: GET mem[0000000f] == xxxxxxxx)
+#   PC UPDATE: pcin 000001a4
+#              pcin = MUX[00](pcOutPlusOne 000001a4, pcBranchIn 000001a8, alu_out 0000000f)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001a4] = 306c0004
+#   PC: PCOut 000001a4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 0000000f
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 0000000f, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 0000000f (=00000000))
+#   PC UPDATE: pcin 000001a8
+#              pcin = MUX[00](pcOutPlusOne 000001a8, pcBranchIn 000001b8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001a8] = da255000
+#   PC: PCOut 000001a8
+#   IR: InstWord da255000
+#   RR: src1[5] = 00000022, src2[5] = 00000022
+#   ALU: 00000022 (op=10000) 00000022 = 00000001
+#        SRC2 = (RegSrc2 00000022, ImmExt 00005000, 4*ImmExt 00014000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 000001ac)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000001ac
+#              pcin = MUX[00](pcOutPlusOne 000001ac, pcBranchIn 000141ac, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001ac] = 25210019
+#   PC: PCOut 000001ac
+#   IR: InstWord 25210019
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000019, 4*ImmExt 00000064)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001b0
+#              pcin = MUX[00](pcOutPlusOne 000001b0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001b0] = 47660001
+#   PC: PCOut 000001b0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 0000000f, src2[0] = ffffffb0
+#   ALU: 0000000f (op=00001) 00000001 = 00000010
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000010
+#       dst_data = (alu_out 00000010, mem_out xxxxxxxx, pcoutplus1 000001b4)[00] 
+#   MEM: GET mem[00000010] == xxxxxxxx)
+#   PC UPDATE: pcin 000001b4
+#              pcin = MUX[00](pcOutPlusOne 000001b4, pcBranchIn 000001b8, alu_out 00000010)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001b4] = 306c0004
+#   PC: PCOut 000001b4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000010
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000010, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000010 (=00000000))
+#   PC UPDATE: pcin 000001b8
+#              pcin = MUX[00](pcOutPlusOne 000001b8, pcBranchIn 000001c8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001b8] = dc204000
+#   PC: PCOut 000001b8
+#   IR: InstWord dc204000
+#   RR: src1[0] = ffffffb0, src2[4] = 0000004b
+#   ALU: ffffffb0 (op=01101) 0000004b = 00000001
+#        SRC2 = (RegSrc2 0000004b, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 000001bc)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000001bc
+#              pcin = MUX[00](pcOutPlusOne 000001bc, pcBranchIn 000101bc, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001bc] = 25210015
+#   PC: PCOut 000001bc
+#   IR: InstWord 25210015
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000015, 4*ImmExt 00000054)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001c0
+#              pcin = MUX[00](pcOutPlusOne 000001c0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001c0] = 47660001
+#   PC: PCOut 000001c0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000010, src2[0] = ffffffb0
+#   ALU: 00000010 (op=00001) 00000001 = 00000011
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000011
+#       dst_data = (alu_out 00000011, mem_out xxxxxxxx, pcoutplus1 000001c4)[00] 
+#   MEM: GET mem[00000011] == xxxxxxxx)
+#   PC UPDATE: pcin 000001c4
+#              pcin = MUX[00](pcOutPlusOne 000001c4, pcBranchIn 000001c8, alu_out 00000011)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001c4] = 306c0004
+#   PC: PCOut 000001c4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000011
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000011, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000011 (=00000000))
+#   PC UPDATE: pcin 000001c8
+#              pcin = MUX[00](pcOutPlusOne 000001c8, pcBranchIn 000001d8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001c8] = d9204000
+#   PC: PCOut 000001c8
+#   IR: InstWord d9204000
+#   RR: src1[0] = ffffffb0, src2[4] = 0000004b
+#   ALU: ffffffb0 (op=01100) 0000004b = 00000001
+#        SRC2 = (RegSrc2 0000004b, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 000001cc)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000001cc
+#              pcin = MUX[00](pcOutPlusOne 000001cc, pcBranchIn 000101cc, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001cc] = 25210011
+#   PC: PCOut 000001cc
+#   IR: InstWord 25210011
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000011, 4*ImmExt 00000044)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001d0
+#              pcin = MUX[00](pcOutPlusOne 000001d0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001d0] = 47660001
+#   PC: PCOut 000001d0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000011, src2[0] = ffffffb0
+#   ALU: 00000011 (op=00001) 00000001 = 00000012
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000012
+#       dst_data = (alu_out 00000012, mem_out xxxxxxxx, pcoutplus1 000001d4)[00] 
+#   MEM: GET mem[00000012] == xxxxxxxx)
+#   PC UPDATE: pcin 000001d4
+#              pcin = MUX[00](pcOutPlusOne 000001d4, pcBranchIn 000001d8, alu_out 00000012)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001d4] = 306c0004
+#   PC: PCOut 000001d4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000012
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000012, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000012 (=00000000))
+#   PC UPDATE: pcin 000001d8
+#              pcin = MUX[00](pcOutPlusOne 000001d8, pcBranchIn 000001e8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001d8] = d6204000
+#   PC: PCOut 000001d8
+#   IR: InstWord d6204000
+#   RR: src1[0] = ffffffb0, src2[4] = 0000004b
+#   ALU: ffffffb0 (op=01011) 0000004b = 00000000
+#        SRC2 = (RegSrc2 0000004b, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000000
+#       dst_data = (alu_out 00000000, mem_out xxxxxxxx, pcoutplus1 000001dc)[00] 
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001dc
+#              pcin = MUX[00](pcOutPlusOne 000001dc, pcBranchIn 000101dc, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001dc] = 252d000d
+#   PC: PCOut 000001dc
+#   IR: InstWord 252d000d
+#   RR: src1[2] = 00000000, src2[d] = 00000000
+#   ALU: 00000000 (op=01111) 00000000 = 00000000
+#        SRC2 = (RegSrc2 00000000, ImmExt 0000000d, 4*ImmExt 00000034)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001e0
+#              pcin = MUX[00](pcOutPlusOne 000001e0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001e0] = 47660001
+#   PC: PCOut 000001e0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000012, src2[0] = ffffffb0
+#   ALU: 00000012 (op=00001) 00000001 = 00000013
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000013
+#       dst_data = (alu_out 00000013, mem_out xxxxxxxx, pcoutplus1 000001e4)[00] 
+#   MEM: GET mem[00000013] == xxxxxxxx)
+#   PC UPDATE: pcin 000001e4
+#              pcin = MUX[00](pcOutPlusOne 000001e4, pcBranchIn 000001e8, alu_out 00000013)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001e4] = 306c0004
+#   PC: PCOut 000001e4
+#   IR: InstWord 306c0004
+#   RR: src1[c] = f0000000, src2[6] = 00000013
+#   ALU: f0000000 (op=00001) 00000004 = f0000004
+#        SRC2 = (RegSrc2 00000013, ImmExt 00000004, 4*ImmExt 00000010)[01]
+#   MEM: WRT mem_wrt_en 1    mem[f0000004] <- 00000013 (=00000000))
+#   PC UPDATE: pcin 000001e8
+#              pcin = MUX[00](pcOutPlusOne 000001e8, pcBranchIn 000001f8, alu_out f0000004)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001e8] = d5204000
+#   PC: PCOut 000001e8
+#   IR: InstWord d5204000
+#   RR: src1[0] = ffffffb0, src2[4] = 0000004b
+#   ALU: ffffffb0 (op=01111) 0000004b = 00000001
+#        SRC2 = (RegSrc2 0000004b, ImmExt 00004000, 4*ImmExt 00010000)[00]
+#   WB: RR_WRT_EN=1    rr[2] = 00000001
+#       dst_data = (alu_out 00000001, mem_out xxxxxxxx, pcoutplus1 000001ec)[00] 
+#   MEM: GET mem[00000001] == xxxxxxxx)
+#   PC UPDATE: pcin 000001ec
+#              pcin = MUX[00](pcOutPlusOne 000001ec, pcBranchIn 000101ec, alu_out 00000001)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001ec] = 25210009
+#   PC: PCOut 000001ec
+#   IR: InstWord 25210009
+#   RR: src1[2] = 00000001, src2[1] = 00000001
+#   ALU: 00000001 (op=01111) 00000001 = 00000000
+#        SRC2 = (RegSrc2 00000001, ImmExt 00000009, 4*ImmExt 00000024)[00]
+#   MEM: GET mem[00000000] == xxxxxxxx)
+#   PC UPDATE: pcin 000001f0
+#              pcin = MUX[00](pcOutPlusOne 000001f0, pcBranchIn 00000214, alu_out 00000000)
+# clk 0 rst 0
+# clk 1 rst 0
+# IMEM[000001f0] = 47660001
+#   PC: PCOut 000001f0
+#   IR: InstWord 47660001
+#   RR: src1[6] = 00000013, src2[0] = ffffffb0
+#   ALU: 00000013 (op=00001) 00000001 = 00000014
+#        SRC2 = (RegSrc2 ffffffb0, ImmExt 00000001, 4*ImmExt 00000004)[01]
+#   WB: RR_WRT_EN=1    rr[6] = 00000014
+#       dst_data = (alu_out 00000014, mem_out xxxxxxxx, pcoutplus1 000001f4)[00] 
+#   MEM: GET mem[00000014] == xxxxxxxx)
+#   PC UPDATE: pcin 000001f4
+#              pcin = MUX[00](pcOutPlusOne 000001f4, pcBranchIn 000001f8, alu_out 00000014)
+# Break in Module CPUTestBench at CPUTestBench.v line 203
+# Stopped at CPUTestBench.v line 203 
 #  exit 
