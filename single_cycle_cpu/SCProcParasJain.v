@@ -102,6 +102,6 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // t
 
   DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, SW, KEY, LEDR, hex, mem_out);
     
-  dec2_7seg h5 (pcOut[3:0], HEX5);
-  dec2_7seg h6 (pcOut[7:4], HEX6);
+  SevenSeg h5 (pcOut[3:0], HEX5);
+  SevenSeg h6 (pcOut[7:4], HEX6);
 endmodule

@@ -18,7 +18,7 @@ module RegFile(clk, rst, src1, src2, dst, dst_data, src1_data, src2_data, wrt_en
 			for (i = 0; i < 16; i = i + 1) begin
 				file[i] <= 0;
 			end
-		end else if (wrt_en == 1'b1 && dst != 0) begin
+		end else if (wrt_en == 1'b1) begin
 			file[dst] <= dst_data;
 		end
 	end
