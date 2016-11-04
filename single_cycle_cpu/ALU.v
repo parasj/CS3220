@@ -134,7 +134,7 @@ module ALU(aluop, a, b, c, cmdflag);
 			end
 			
 			`ALU_NE: begin
-				if (!eq) begin
+				if (a != b) begin
 					c <= out_one;
 					cmdflag <= 1'b1;
 				end else begin
@@ -243,7 +243,7 @@ module SignedComparator(a, b, lt, gt, eq);
 	wire[BIT_WIDTH - 1 : 0] delta = a - b;
 	wire diff = delta[BIT_WIDTH - 1];
 
-	assign eq = (diff == {BIT_WIDTH{1'b0}}) ? 1'b1 : 1'b0;
+	assign eq = (a == b) ? 1'b1 : 1'b0;
 	assign lt = (!eq && diff == 1'b1) ? 1'b1 : 1'b0;
 	assign gt = (!eq && diff == 1'b0) ? 1'b1 : 1'b0;
 endmodule

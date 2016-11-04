@@ -26,7 +26,7 @@
 `define ALU_BGTEZ 5'b10110
 `define ALU_BGTZ 5'b10111
 
-module test;
+module ALUTest;
 
   reg[4:0] aluop;
   reg[31:0] a;
@@ -38,8 +38,8 @@ module test;
   ALU #(32) a1(.aluop(aluop), .a(a), .b(b), .c(c), .cmdflag(cmdflag));
           
   initial begin
-    a = ~32'b1000 + 32'b1;
-    b = 32'b10011;
+    a = 32'h4b;
+    b = 32'h22;
 
     aluop = `ALU_UNUSED;
     display;
@@ -116,7 +116,7 @@ module test;
   end
   
   task display;
-    #1 $display("-%0000d (%00000b) %0000d = %0000d cmdflag: %0b", ~a + 1, aluop, b, c, cmdflag);
+    #10 $display("%h (%00000b) %h = %h cmdflag: %0b", a, aluop, b, c, cmdflag);
   endtask
 
 endmodule
