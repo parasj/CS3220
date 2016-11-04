@@ -95,13 +95,10 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // t
   // KEYS, SWITCHES, HEXS, and LEDS are memeory mapped IO
 
   wire [15 : 0] hex;
-  dec2_7seg h0 (hex[3:0], HEX0);
-  dec2_7seg h1 (hex[7:4], HEX1);
-  dec2_7seg h3 (hex[11:8], HEX2);
-  dec2_7seg h4 (hex[15:12], HEX3);
+  SevenSeg h0 (hex[3:0], HEX0);
+  SevenSeg h1 (hex[7:4], HEX1);
+  SevenSeg h3 (hex[11:8], HEX2);
+  SevenSeg h4 (hex[15:12], HEX3);
 
   DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, SW, KEY, LEDR, hex, mem_out);
-    
-  SevenSeg h5 (pcOut[3:0], HEX5);
-  SevenSeg h6 (pcOut[7:4], HEX6);
 endmodule
