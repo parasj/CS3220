@@ -1,4 +1,4 @@
-module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // todo remove hex4 hex5
+module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50); // todo remove hex4 hex5
   input  [9:0] SW;
   input  [3:0] KEY;
   input  CLOCK_50;
