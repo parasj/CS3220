@@ -490,7 +490,6 @@ set_global_assignment -name VERILOG_FILE Mux4.v
 set_global_assignment -name VERILOG_FILE InstMemory.v
 set_global_assignment -name VERILOG_FILE dec2_7seg.v
 set_global_assignment -name VERILOG_FILE DataMemory.v
-set_global_assignment -name VERILOG_FILE Controller.v
 set_global_assignment -name VERILOG_FILE ClockDivider.v
 set_global_assignment -name VERILOG_FILE BranchCalulator.v
 set_global_assignment -name VERILOG_FILE ALU.v

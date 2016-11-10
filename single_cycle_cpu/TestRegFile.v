@@ -23,8 +23,12 @@ module TestRegFile();
 		#1
 		rst = 0;
 		wrt_en = 1;
-		#5
-
+		#1
+    dst = 2;
+    src2 = 2;
+    #1
+    dst_data = 3;
+    #2
 		$stop;
 	end
 endmodule
