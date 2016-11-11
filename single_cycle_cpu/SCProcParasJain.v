@@ -16,7 +16,7 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // t
   parameter ADDR_HEX  					 = 32'hF0000000;
   parameter ADDR_LEDR 					 = 32'hF0000004;
   
-  parameter IMEM_INIT_FILE				   = "Test2.mif";
+  parameter IMEM_INIT_FILE				   = "Sorter2.mif";
   parameter IMEM_ADDR_BIT_WIDTH 		 = 11;
   parameter IMEM_DATA_BIT_WIDTH 		 = INST_BIT_WIDTH;
   parameter IMEM_PC_BITS_HI     		 = IMEM_ADDR_BIT_WIDTH + 2;
@@ -97,8 +97,10 @@ module SCProcParasJain(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // t
   wire [15 : 0] hex;
   SevenSeg h0 (hex[3:0], HEX0);
   SevenSeg h1 (hex[7:4], HEX1);
-  SevenSeg h3 (hex[11:8], HEX2);
-  SevenSeg h4 (hex[15:12], HEX3);
+  SevenSeg h2 (hex[11:8], HEX2);
+  SevenSeg h3 (hex[15:12], HEX3);
+  SevenSeg h4 (pcIn[3:0], HEX4);
+  SevenSeg h5 (pcIn[7:4], HEX5);
 
   DataMemory dataMemory (clk, mem_wrt_en, alu_out, src2_data, SW, KEY, LEDR, hex, mem_out);
 endmodule
