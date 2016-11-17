@@ -6,14 +6,14 @@ module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	parameter REG_INDEX_BIT_WIDTH 		 = 4;
 
 	input clk, reset, en, mem_wrt_en_in, reg_file_wrt_en_in;
-	input[BIT_WIDTH-1 : 0] pc_in;
+	input[BIT_WIDTH-1 : 0] pc_in, imm_in;
 	input[REG_INDEX_BIT_WIDTH-1 : 0] src1_in, src2_in, dst_ind_in;
 	input[1:0] alu_mux_in;
 	input[4:0] alu_op_in;
-	output mem_wrt_en_in, reg_file_wrt_en_in;
-	output[BIT_WIDTH-1 : 0] pc_out;
-	output[REG_INDEX_BIT_WIDTH-1 : 0] src1_in, src2_in, dst_ind_in;
-	output[1:0] alu_mux_in;
+	output mem_wrt_en_out, reg_file_wrt_en_out;
+	output[BIT_WIDTH-1 : 0] pc_out, imm_out;
+	output[REG_INDEX_BIT_WIDTH-1 : 0] src1_out, src2_out, dst_ind_out;
+	output[1:0] alu_mux_out;
 	output[4:0] alu_op_out;
 
 	Register #(.BIT_WIDTH(1)) mem_en_reg(clk, reset, en, mem_wrt_en_in, mem_wrt_en_out);
