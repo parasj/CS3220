@@ -1,3 +1,0 @@
-[submodule "assembler"]
-	path = assembler
-	url = git@repo.lucasec.com:cs3220-fall16/assembler.git

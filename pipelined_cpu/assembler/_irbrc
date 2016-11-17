@@ -1,2 +1,0 @@
-# Set the load path correctly
-require './lib/init'
