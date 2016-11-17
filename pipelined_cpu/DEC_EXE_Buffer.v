@@ -20,12 +20,12 @@ module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	Register #(.BIT_WIDTH(1)) reg_file_en_reg(clk, reset, en,
 		reg_file_wrt_en_in, reg_file_wrt_en_out);
 	Register #(.BIT_WIDTH(2)) alu_mux_reg(clk, reset, en, alu_mux_in, alu_mux_out);
-	Register #(.BIT_WIDTH(BIT_WIDTH-1)) pc_reg(clk, reset, en, pc_in, pc_out);
+	Register #(.BIT_WIDTH(BIT_WIDTH)) pc_reg(clk, reset, en, pc_in, pc_out);
 	Register #(.BIT_WIDTH(5)) alu_op_reg(clk, reset, en, alu_op_in, alu_op_out);
-	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH-1)) src1_reg(clk,
+	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH)) src1_reg(clk,
 		reset, en, src1_in, src1_out);
-	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH-1)) src2_reg(clk,
+	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH)) src2_reg(clk,
 		reset, en, src2_in, src2_out);
-	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH-1)) dst_reg(clk,
+	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH)) dst_reg(clk,
 		reset, en, dst_ind_in, dst_ind_out);
 endmodule
