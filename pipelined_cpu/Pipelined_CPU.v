@@ -42,11 +42,12 @@ module Pipelined_CPU(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // tod
   ClockDivider #(.BIT_WIDTH(DBITS)) clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
 
   // Buffer enable signals
-  wire if_dec_en, dec_exe_en, exe_mem_en, mem_wb_en;  
+  wire ifDefEn, decExeEn, exeMemEn, memWbEn;  
 
   // PC calculations
   wire[DBITS - 1: 0] pcOutPlusOne;
   wire[DBITS - 1: 0] pcBranchIn;
+  wire[DBITS - 1: 0] pcBufOut1, pcBufOut2;
 
   // PC output
   wire pcWrtEn = 1'b1;
@@ -54,8 +55,8 @@ module Pipelined_CPU(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // tod
   wire[DBITS - 1: 0] pcOut;
 
   // IR output
-  wire[IMEM_DATA_BIT_WIDTH - 1: 0] inst_buf_in;
-  wire[IMEM_DATA_BIT_WIDTH - 1: 0] inst_buf_out;
+  wire[IMEM_DATA_BIT_WIDTH - 1: 0] instOut;
+  wire[IMEM_DATA_BIT_WIDTH - 1: 0] instBufOut;
 
   // RR input
   wire[REG_INDEX_BIT_WIDTH - 1: 0] src_index1, src_index2, dst_index;
@@ -76,25 +77,28 @@ module Pipelined_CPU(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,CLOCK_50); // tod
   wire[DBITS - 1 : 0] mem_out;
 
   PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
-  BranchCalculator #(.BIT_WIDTH(DBITS)) branchCalculator (imm_ext, pcOutPlusOne, pcBranchIn);
 
   Register #(.BIT_WIDTH(DBITS), .RESET_VALUE(START_PC)) pc (clk, reset, pcWrtEn, pcIn, pcOut);
 
-  InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], inst_buf_in);
+  InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
   
-  IF_DEC_Buffer if_dec_buf(clk, reset, if_dec_en, pc_in_1, pc_out_1, inst_buf_in, inst_buf_out);
+  IF_DEC_Buffer if_dec_buf(clk, reset, ifDecEn, pcOut, pcBufOut1, instOut, instBufOut);
 
-  DEC_EXE_Buffer dec_exe_buf(clk, reset, dec_exe_en, pc_in_2, pc_out_2, src1_buf_in, src1_buf_out, src2_buf_in,
-  src2_buf_out, imm_buf_in, imm_buf_out, alu_op_buf_in, alu_op_buf_out, alu_mux_buf_in, alu_mux_buf_out,
-  dst_ind_in, dst_ind_out, mem_wrt_en_in, mem_wrt_en_out, reg_file_wrt_en_in,
-  reg_file_wrt_en_out);
-
-  /*Controller #(.INST_BIT_WIDTH(DBITS)) control(instWord, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
+  Controller #(.INST_BIT_WIDTH(DBITS)) control(instBufOut, src_index1, src_index2, dst_index, imm,
+    alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
+  
   SignExtension #(16, DBITS) sign_ext(imm, imm_ext);
 
-  Mux4 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux, alu_out, mem_out, pcOutPlusOne, 32'b0, dst_data);
+  DEC_EXE_Buffer dec_exe_buf(clk, reset, decExeEn, pcBufOut1, pcBufOut2, src_index1, src1_buf_out, src_index2, 
+    src2_buf_out, imm_ext, imm_buf_out, alu_op, alu_op_buf_out, alu_mux, alu_mux_buf_out, 
+    dst_index, dst_ind_out, mem_wrt_en, mem_wrt_en_out, reg_file_wrt_en, reg_file_wrt_en_out);
+
+  /*Mux4 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux, alu_out, mem_out, pcOutPlusOne, 32'b0, dst_data);
   RegFile #(.BIT_WIDTH(DBITS)) regfile(clk, reset, src_index1, src_index2, dst_index, dst_data, src1_data, src2_data, reg_wrt_en);
   
+  EXE_MEM_Buffer(clk, reset, en, src1_in, src1_out, alu_res_in, alu_res_out, dst_ind_in,
+  dst_ind_out, mem_wrt_en_in, mem_wrt_en_out, reg_file_wrt_en_in, reg_file_wrt_en_out);
+
   Mux4 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux, src2_data, imm_ext, (imm_ext << 2), 32'b0, alu_b);
   ALU #(.BIT_WIDTH(DBITS)) alu(alu_op, src1_data, alu_b, alu_out, cmd_flag);
 
