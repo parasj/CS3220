@@ -1,0 +1,123 @@
+# vsim -do {run -all; exit} -c CPUTestBench 
+# Loading work.CPUTestBench
+# Loading work.PCIncrementer
+# Loading work.Mux4
+# Loading work.Register
+# Loading work.DummyMemory
+# Loading work.IF_DEC_Buffer
+# Loading work.Controller
+# Loading work.RegFile
+# Loading work.DEC_EXE_Buffer
+# Loading work.SignExtension
+# Loading work.ALU
+# Loading work.SignedComparator
+# Loading work.EXE_MEM_Buffer
+# Loading work.DataMemory
+# Loading work.MEM_WB_Buffer
+# ** Warning: (vsim-3015) CPUTestBench.v(90): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_index'. The port definition is at: Controller.v(1).
+# 
+#         Region: /CPUTestBench/control
+# ** Warning: (vsim-3015) CPUTestBench.v(90): [PCDPC] - Port size (5 or 5) does not match connection size (1) for port 'alu_op'. The port definition is at: Controller.v(1).
+# 
+#         Region: /CPUTestBench/control
+# ** Warning: (vsim-3015) CPUTestBench.v(91): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'src1_data'. The port definition is at: RegFile.v(1).
+# 
+#         Region: /CPUTestBench/regfile
+# ** Warning: (vsim-3015) CPUTestBench.v(91): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'src2_data'. The port definition is at: RegFile.v(1).
+# 
+#         Region: /CPUTestBench/regfile
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src1_in'. The port definition is at: DEC_EXE_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src1_out'. The port definition is at: DEC_EXE_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src2_in'. The port definition is at: DEC_EXE_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src2_out'. The port definition is at: DEC_EXE_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'imm_out'. The port definition is at: DEC_EXE_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (5 or 5) does not match connection size (1) for port 'alu_op_in'. The port definition is at: DEC_EXE_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (5 or 5) does not match connection size (1) for port 'alu_op_out'. The port definition is at: DEC_EXE_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (2 or 2) does not match connection size (1) for port 'alu_mux_out'. The port definition is at: DEC_EXE_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_ind_in'. The port definition is at: DEC_EXE_Buffer.v(3).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(94): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_ind_out'. The port definition is at: DEC_EXE_Buffer.v(3).
+# 
+#         Region: /CPUTestBench/dec_exe_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(99): [PCDPC] - Port size (2 or 2) does not match connection size (1) for port 's'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/aluSrc2Mux
+# ** Warning: (vsim-3015) CPUTestBench.v(99): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'd0'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/aluSrc2Mux
+# ** Warning: (vsim-3015) CPUTestBench.v(99): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'd1'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/aluSrc2Mux
+# ** Warning: (vsim-3015) CPUTestBench.v(99): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'out'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/aluSrc2Mux
+# ** Warning: (vsim-3015) CPUTestBench.v(101): [PCDPC] - Port size (5 or 5) does not match connection size (1) for port 'aluop'. The port definition is at: ALU.v(26).
+# 
+#         Region: /CPUTestBench/alu
+# ** Warning: (vsim-3015) CPUTestBench.v(101): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'a'. The port definition is at: ALU.v(26).
+# 
+#         Region: /CPUTestBench/alu
+# ** Warning: (vsim-3015) CPUTestBench.v(101): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'b'. The port definition is at: ALU.v(26).
+# 
+#         Region: /CPUTestBench/alu
+# ** Warning: (vsim-3015) CPUTestBench.v(103): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src1_in'. The port definition is at: EXE_MEM_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/exe_mem_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(103): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'src1_out'. The port definition is at: EXE_MEM_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/exe_mem_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(103): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'alu_res_out'. The port definition is at: EXE_MEM_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/exe_mem_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(103): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_ind_in'. The port definition is at: EXE_MEM_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/exe_mem_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(103): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_ind_out'. The port definition is at: EXE_MEM_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/exe_mem_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(106): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'addr'. The port definition is at: DataMemory.v(1).
+# 
+#         Region: /CPUTestBench/dataMemory
+# ** Warning: (vsim-3015) CPUTestBench.v(106): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'dIn'. The port definition is at: DataMemory.v(1).
+# 
+#         Region: /CPUTestBench/dataMemory
+# ** Warning: (vsim-3015) CPUTestBench.v(107): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'd0'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/registerDestMux
+# ** Warning: (vsim-3015) CPUTestBench.v(107): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'out'. The port definition is at: Mux4.v(1).
+# 
+#         Region: /CPUTestBench/registerDestMux
+# ** Warning: (vsim-3015) CPUTestBench.v(109): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'dst_ind_in'. The port definition is at: MEM_WB_Buffer.v(1).
+# 
+#         Region: /CPUTestBench/mem_wb_buf
+# ** Warning: (vsim-3015) CPUTestBench.v(109): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'end_res_in'. The port definition is at: MEM_WB_Buffer.v(2).
+# 
+#         Region: /CPUTestBench/mem_wb_buf
+# ** Warning: (vsim-3015) MEM_WB_Buffer.v(18): [PCDPC] - Port size (4 or 4) does not match connection size (32) for port 'dataIn'. The port definition is at: Register.v(1).
+# 
+#         Region: /CPUTestBench/mem_wb_buf/end_res
+# ** Warning: (vsim-3015) MEM_WB_Buffer.v(18): [PCDPC] - Port size (4 or 4) does not match connection size (32) for port 'dataOut'. The port definition is at: Register.v(1).
+# 
+#         Region: /CPUTestBench/mem_wb_buf/end_res
+# run -all 
+# clk 0 rst 0
+# Break in Task dumpState at CPUTestBench.v line 232
+# Stopped at CPUTestBench.v line 232 
+#  exit 
