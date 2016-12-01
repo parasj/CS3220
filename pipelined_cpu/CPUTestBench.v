@@ -57,7 +57,7 @@ module CPUTestBench();
 	// Controller output
 	wire[15:0] imm;
 	wire[DBITS-1: 0] imm_ext;
-	wire[1:0] alu_mux, dstdata_mux, next_pc_mux;
+	wire alu_mux, dstdata_mux, next_pc_mux;
 	wire reg_wrt_en, mem_wrt_en;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] src_index1, src_index2, dst_index;
 	wire[4:0] alu_op;
@@ -71,7 +71,7 @@ module CPUTestBench();
 	wire mem_wrt_en_1;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] dst_index_1;
 	wire[4:0] alu_op_buf_out;
-	wire[1:0] alu_mux_buf_out, dstdata_mux_1;
+	wire alu_mux_buf_out, dstdata_mux_1;
 
 	// ALU input
 	wire[DBITS - 1 : 0] alu_b;
@@ -85,7 +85,7 @@ module CPUTestBench();
 	wire reg_wrt_en_2;
 	wire mem_wrt_en_2;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] dst_index_2;
-	wire[1:0] dstdata_mux_2;
+	wire dstdata_mux_2;
 
 	// MEM output
 	wire[DBITS - 1 : 0] mem_out;
@@ -110,7 +110,7 @@ module CPUTestBench();
 
 	// PC
 	PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
-	Mux4 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, pcBranchIn, alu_res_in, 32'b0, pcIn);
+	Mux2 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, alu_res_in, pcIn);
 	Register #(.BIT_WIDTH(DBITS), .RESET_VALUE(START_PC)) pc (clk, reset, pcWrtEn, pcIn, pcOut);
 
 	// IF
@@ -125,11 +125,10 @@ module CPUTestBench();
 	DEC_EXE_Buffer dec_exe_buf(clk, reset, decExeEn, pcBufOut1, pcBufOut2, src1_data, src1_buf_out, src2_data, 
 	  src2_buf_out, imm_ext, imm_buf_out, alu_op, alu_op_buf_out, alu_mux, alu_mux_buf_out, dstdata_mux, dstdata_mux_1,
 	  dst_index, dst_index_1, mem_wrt_en, mem_wrt_en_1, reg_wrt_en, reg_wrt_en_1);
-	
 
 	// EX
-	// ForwardingLogic #(.BIT_WIDTH(DBITS)) forward ();
-	Mux4 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux_buf_out, src2_data, imm_buf_out, (imm_ext << 2), 32'b0, alu_b);
+	// forwarddingLogic #(.BIT_WIDTH(DBITS)) forward ();
+	Mux2 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux_buf_out, src2_data, imm_buf_out, alu_b);
 	SignExtension #(16, DBITS) sign_ext(imm, imm_ext);
 	ALU #(.BIT_WIDTH(DBITS)) alu(alu_op_buf_out, src1_buf_out, alu_b, alu_res_in, cmd_flag);
 	EXE_MEM_Buffer exe_mem_buf(clk, reset, exeMemEn, src1_buf_out, src1_buf_out_1, alu_res_in, alu_res_out, dst_index_1, 
@@ -137,7 +136,7 @@ module CPUTestBench();
 
 	// MEM
 	DataMemory dataMemory (clk, mem_wrt_en_2, alu_res_out, src2_data, 10'b0, 4'b0, led_wire, hex_wire, mem_out);
-	Mux4 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux_2, alu_res_out, mem_out, pcOutPlusOne, 32'b0, end_res_in);
+	Mux2 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux_2, alu_res_out, mem_out, end_res_in);
 	MEM_WB_Buffer mem_wb_buf(clk, reset, memWbEn, reg_wrt_en_2, reg_wrt_en_3, dst_index_2,
 	  dst_index_3, end_res_in, end_res_out);
 
@@ -152,7 +151,7 @@ module CPUTestBench();
 
 	  clk = 1'b0;
 	  reset = 1'b0;
-	  #20
+	  #100
 	  //reset = 1'b1;
 	  //dumpState;
 	  //reset = 1'b0;
