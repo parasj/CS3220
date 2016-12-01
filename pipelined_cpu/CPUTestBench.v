@@ -32,7 +32,7 @@ module CPUTestBench();
 	parameter OP1_LW                       = 4'b1001;
 	parameter OP1_JAL                      = 4'b1011;
 	
-	reg reset;
+	reg reset = 0;
 	reg clk;
 
 	// Buffer enable signals
@@ -60,7 +60,7 @@ module CPUTestBench();
 	wire[1:0] alu_mux, dstdata_mux, next_pc_mux;
 	wire reg_wrt_en, mem_wrt_en;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] src_index1, src_index2, dst_index;
-	wire[4:0] alu_op
+	wire[4:0] alu_op;
 
 	// RF output
 	wire[DBITS - 1 : 0] src1_data, src2_data;
@@ -91,6 +91,7 @@ module CPUTestBench();
 	wire[DBITS - 1 : 0] mem_out;
 
 	// MEM_WB input
+	wire[DBITS - 1 : 0] end_res_in;
 	wire[DBITS - 1 : 0] end_res_out; 
 	wire reg_wrt_en_3;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] dst_index_3;
@@ -102,6 +103,10 @@ module CPUTestBench();
 
 	// Stalled?
 	// Staller stall (isStalled, ifDefEn, decExeEn, exeMemEn, memWbEn);
+	assign ifDefEn = 1;
+	assign decExeEn = 1;
+	assign exeMemEn = 1;
+	assign memWbEn = 1;
 
 	// PC
 	PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
@@ -111,7 +116,7 @@ module CPUTestBench();
 	// IF
 	// InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
 	DummyMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
-	IF_DEC_Buffer if_dec_buf(clk, reset, ifDecEn, pcOutPlusOne, pcBufOut1, instOut, instBufOut);
+	IF_DEC_Buffer if_dec_buf(clk, reset, ifDefEn, pcOutPlusOne, pcBufOut1, instOut, instBufOut);
 
 	// ID
 	Controller #(.INST_BIT_WIDTH(DBITS)) control(instBufOut, src_index1, src_index2, dst_index, imm,
@@ -138,17 +143,19 @@ module CPUTestBench();
 
 	// WB
 	// Piped directly to RR
+	always begin
+		#1 clk = !clk;
+	end
 
 	initial begin
 	  $monitor("clk %b rst %b", clk, reset);
 
 	  clk = 1'b0;
 	  reset = 1'b0;
-	  #10
-	  reset = 1'b1;
-	  dumpState;
-	  reset = 1'b0;
-	  #10
+	  #20
+	  //reset = 1'b1;
+	  //dumpState;
+	  //reset = 1'b0;
 
 	  
 	  // dumpState;
