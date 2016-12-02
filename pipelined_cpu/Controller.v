@@ -1,15 +1,17 @@
-module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, nextpc_mux, cmd_flag, fn_exe_in, fn_exe_out);
+module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, nextpc_mux, cmd_flag, fn_exe_in, fn_exe_out, jump_sel);
 	parameter INST_BIT_WIDTH = 32;
 	input [INST_BIT_WIDTH - 1 : 0] in;
 	
 	input cmd_flag;
 	output[3:0] src_index1, src_index2, dst_index;
-	output alu_mux, dstdata_mux, nextpc_mux;
+	output alu_mux, dstdata_mux;
+	output[1:0] nextpc_mux;
 	output reg_wrt_en, mem_wrt_en;
 	output [4:0] alu_op;
 	output[15:0] imm;
 	input[3:0] fn_exe_in;
-	input[3:0] fn_exe_out;
+	output[3:0] fn_exe_out;
+	output jump_sel;
 
 	wire [3:0] op;
 	wire [3:0] fn;
@@ -19,7 +21,7 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	assign src_index1 = (fn == 4'b0010) ? in[23:20] : in[19:16];
 	assign src_index2 = (fn == 4'b0010) ? in[19:16] : (fn == 4'b0011) ? in [23:20] : in[15:12];
 	assign dst_index = in[23:20];
-	assign imm = (fn == 4'b0110) ? in[15:0] << 2 : in[15:0];
+	assign imm = in[15:0];
 	assign x = {in[INST_BIT_WIDTH - 1 : 24]};
 	assign alu_op = out[8:4];
 	assign alu_mux = out[3];
@@ -28,7 +30,9 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	assign mem_wrt_en = out[0];
 	assign fn_exe_out = fn;
 
-	assign nextpc_mux =	(cmd_flag == 1 & (fn_exe_in == 4'b0110 | fn_exe_in == 4'b0010)) ? 1 : 0;
+	assign jump_sel = (fn_exe_in == 4'b0110) ? 1 : 0;
+	assign nextpc_mux =	(fn_exe_in == 4'b0110) ? 2 :
+						(cmd_flag == 1 & fn_exe_in == 4'b0010) ? 1 : 0;
 
 	assign out =	(x == 8'b11000111) ? 9'b000010010 :
 					(x == 8'b11000110) ? 9'b000100010 :
@@ -79,7 +83,7 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 					(x == 8'b00100001) ? 9'b101010000 :
 					(x == 8'b00101110) ? 9'b101100000 :
 					(x == 8'b00101111) ? 9'b101110000 :
-					(x == 8'b01100000) ? 9'b000011110 :
+					(x == 8'b01100000) ? 9'b000011010 :
 					(x == 8'b11000111) ? 9'b000010010 :
 					(x == 8'b11000110) ? 9'b000100010 :
 					(x == 8'b11000000) ? 9'b000110010 :
@@ -129,6 +133,6 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 					(x == 8'b00100001) ? 9'b101010000 :
 					(x == 8'b00101110) ? 9'b101100000 :
 					(x == 8'b00101111) ? 9'b101110000 :
-					(x == 8'b01100000) ? 9'b000011110 :
+					(x == 8'b01100000) ? 9'b000011010 :
 					{13{x}};
 endmodule
