@@ -11,8 +11,14 @@ module RegFile(clk, rst, src1, src2, dst, dst_data, src1_data, src2_data, wrt_en
 
 	assign src1_data = file[src1];
 	assign src2_data = file[src2];
-
 	integer i;
+	initial begin
+		for (i = 0; i < 16; i = i + 1) begin
+				file[i] <= 0;
+		end
+	end
+
+
 	always @ (posedge clk or posedge rst) begin
 		if (rst) begin
 			for (i = 0; i < 16; i = i + 1) begin
