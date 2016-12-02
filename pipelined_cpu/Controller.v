@@ -1,4 +1,4 @@
-module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, nextpc_mux, cmd_flag);
+module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, nextpc_mux, cmd_flag, fn_exe_in, fn_exe_out);
 	parameter INST_BIT_WIDTH = 32;
 	input [INST_BIT_WIDTH - 1 : 0] in;
 	
@@ -8,6 +8,8 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	output reg_wrt_en, mem_wrt_en;
 	output [4:0] alu_op;
 	output[15:0] imm;
+	input[3:0] fn_exe_in;
+	input[3:0] fn_exe_out;
 
 	wire [3:0] op;
 	wire [3:0] fn;
@@ -24,8 +26,9 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 	assign dstdata_mux = out[2];
 	assign reg_wrt_en = out[1];
 	assign mem_wrt_en = out[0];
+	assign fn_exe_out = fn;
 
-	assign nextpc_mux =	(cmd_flag == 1) ? 1 : 0;
+	assign nextpc_mux =	(cmd_flag == 1 & (fn_exe_in == 4'b0110 | fn_exe_in == 4'b0010)) ? 1 : 0;
 
 	assign out =	(x == 8'b11000111) ? 9'b000010010 :
 					(x == 8'b11000110) ? 9'b000100010 :
@@ -45,7 +48,7 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 					(x == 8'b01001010) ? 9'b010001010 :
 					(x == 8'b01001111) ? 9'b010011010 :
 					(x == 8'b01110000) ? 9'b000011110 :
-					(x == 8'b00110000) ? 9'b000011101 :
+					(x == 8'b00110000) ? 9'b000011001 :
 					(x == 8'b11010011) ? 9'b010100010 :
 					(x == 8'b11010110) ? 9'b010110010 :
 					(x == 8'b11011001) ? 9'b011000010 :
@@ -95,7 +98,7 @@ module Controller(in, src_index1, src_index2, dst_index, imm, alu_op, alu_mux, d
 					(x == 8'b01001010) ? 9'b010001010 :
 					(x == 8'b01001111) ? 9'b010011010 :
 					(x == 8'b01110000) ? 9'b000011110 :
-					(x == 8'b00110000) ? 9'b000011101 :
+					(x == 8'b00110000) ? 9'b000011001 :
 					(x == 8'b11010011) ? 9'b010100010 :
 					(x == 8'b11010110) ? 9'b010110010 :
 					(x == 8'b11011001) ? 9'b011000010 :

@@ -1,6 +1,10 @@
-`timescale 1ns / 1ps
+module PipelinedCPU(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
+	input  [9:0] SW;
+	input  [3:0] KEY;
+	input  CLOCK_50;
+	output [9:0] LEDR;
+	output [6:0] HEX0,HEX1,HEX2,HEX3;
 
-module CPUTestBench();
 	parameter DBITS                        = 32;
 	parameter INST_SIZE                    = 32'd4;
 	parameter INST_BIT_WIDTH               = 32;
@@ -32,8 +36,9 @@ module CPUTestBench();
 	parameter OP1_LW                       = 4'b1001;
 	parameter OP1_JAL                      = 4'b1011;
 	
-	reg reset = 0;
-	reg clk;
+	wire reset = SW[0];
+	wire clk;
+	ClockDivider #(.BIT_WIDTH(DBITS)) clk_divider (.inclk0 (CLOCK_50),.c0 (clk));
 
 	// Buffer enable signals
 	wire ifDecEn, decExeEn, exeMemEn, memWbEn;
@@ -103,8 +108,6 @@ module CPUTestBench();
 	wire[9:0] led_wire;
 	wire[15:0] hex_wire;
 
-	wire[3:0] fn_exe_out, fn_exe_in;
-
 	// Stalled?
 	// Staller stall (isStalled, ifDefEn, decExeEn, exeMemEn, memWbEn);
 	/*assign ifDecEn = 1;
@@ -114,7 +117,7 @@ module CPUTestBench();
 
 	HazardControl #(.BIT_WIDTH(DBITS), .REG_INDEX_BIT_WIDTH(REG_INDEX_BIT_WIDTH)) hazardControl(src_index1, src_index2, cmd_flag,
 		dst_index_1, reg_wrt_en_1, dstdata_mux_1, dst_index_2, reg_wrt_en_2, src1_sel, src2_sel,
-		ifDecReset, decExeReset, ifDecEn, decExeEn, pcWrtEn, dst_index_3, reg_wrt_en_3, fn_exe_in);
+		ifDecReset, decExeReset, ifDecEn, decExeEn, pcWrtEn, dst_index_3, reg_wrt_en_3);
 
 	// PC
 	PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
@@ -123,18 +126,18 @@ module CPUTestBench();
 
 	// IF
 	// InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
-	DummyMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
+	InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
 	IF_DEC_Buffer if_dec_buf(clk, ifDecReset, ifDecEn, pcOutPlusOne, pcBufOut1, instOut, instBufOut);
 
 	// ID
 	Controller #(.INST_BIT_WIDTH(DBITS)) control(instBufOut, src_index1, src_index2, dst_index, imm,
-	  alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag, fn_exe_in, fn_exe_out);
+	  alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
 	Mux4 #(.BIT_WIDTH(DBITS)) src1_mux(src1_sel, src1_data, alu_res_in, end_res_in, end_res_out, src1_forward);
 	Mux4 #(.BIT_WIDTH(DBITS)) src2_mux(src2_sel, src2_data, alu_res_in, end_res_in, end_res_out, src2_forward);
 	RegFile #(.BIT_WIDTH(DBITS)) regfile(clk, reset, src_index1, src_index2, dst_index_3, end_res_out, src1_data, src2_data, reg_wrt_en_3);
 	DEC_EXE_Buffer dec_exe_buf(clk, reset, decExeEn, pcBufOut1, pcBufOut2, src1_forward, src1_buf_out, src2_forward, 
 	  src2_buf_out, imm_ext, imm_buf_out, alu_op, alu_op_buf_out, alu_mux, alu_mux_buf_out, dstdata_mux, dstdata_mux_1,
-	  dst_index, dst_index_1, mem_wrt_en, mem_wrt_en_1, reg_wrt_en, reg_wrt_en_1, fn_exe_out, fn_exe_in);
+	  dst_index, dst_index_1, mem_wrt_en, mem_wrt_en_1, reg_wrt_en, reg_wrt_en_1);
 
 	// EX
 	// forwarddingLogic #(.BIT_WIDTH(DBITS)) forward ();
@@ -145,159 +148,13 @@ module CPUTestBench();
 	  dst_index_2, dstdata_mux_1, dstdata_mux_2, mem_wrt_en_1, mem_wrt_en_2, reg_wrt_en_1, reg_wrt_en_2, src2_buf_out, src2_buf_out_1);
 
 	// MEM
-	DataMemory dataMemory (clk, mem_wrt_en_2, alu_res_out, src2_buf_out_1, 10'b0, 4'b0, led_wire, hex_wire, mem_out);
+	DataMemory dataMemory (clk, mem_wrt_en_2, alu_res_out, src2_buf_out_1, 10'b0, 4'b0, LEDR, hex_wire, mem_out);
 	Mux2 #(.BIT_WIDTH(DBITS)) registerDestMux (dstdata_mux_2, alu_res_out, mem_out, end_res_in);
 	MEM_WB_Buffer mem_wb_buf(clk, reset, memWbEn, reg_wrt_en_2, reg_wrt_en_3, dst_index_2,
 	  dst_index_3, end_res_in, end_res_out);
 
-	// WB
-	// Piped directly to RR
-	always begin
-		#1 clk = !clk;
-	end
-
-	initial begin
-	  $monitor("clk %b rst %b", clk, reset);
-
-	  clk = 1'b0;
-	  reset = 1'b0;
-	  #500
-	  //reset = 1'b1;
-	  //dumpState;
-	  //reset = 1'b0;
-
-	  
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  // dumpState;
-	  
-
-	  $stop;
-	end
-
-	task dumpState;
-		$stop;
-		// begin
-		//     clk = 1'b0;
-		//     #20
-		//     clk = 1'b1;
-		    
-		//     #20
-		//     // $display("IMEM[%h] = %h", pcOut, instWord);
-		//     // $display("  PC: PCOut %h", pcOut);
-		//     // $display("  IR: InstWord %h", instWord);
-		//     // $display("  RR: src1[%h] = %h, src2[%h] = %h", src_index1, src1_data, src_index2, src2_data);
-		//     // $display("  ALU: %h (op=%b) %h = %h", src1_data, alu_op, alu_b, alu_out);
-		//     // $display("       SRC2 = (RegSrc2 %h, ImmExt %h, 4*ImmExt %h)[%b]", src2_data, imm_ext, (imm_ext << 2), alu_mux);
-
-		//     // if (reg_wrt_en == 1'b1) begin
-		//     //   $display("  WB: RR_WRT_EN=%b    rr[%h] = %h", reg_wrt_en, dst_index, end_res_out);
-		//     //   $display("  MEM: WRT mem_wrt_en %b    mem[%h] <- %h (=%h))", mem_wrt_en, alu_out, src2_data, mem_out);
-		//     // end else begin
-		//     //   $display("  MEM: GET mem[%h] == %h)", alu_out, mem_out);
-		//     // end
-
-		//     // $display("  PC UPDATE: pcin %h", pcIn);
-		//     // $display("             pcin = MUX[%b](pcOutPlusOne %h, pcBranchIn %h, alu_out %h)", next_pc_mux, pcOutPlusOne, pcBranchIn, alu_out);
-
-		//     // // $display("  ID -> **: , alu_op %b, alu_mux %b, reg_wrt_en %b, mem_wrt_en %b, next_pc_mux %b, cmd_flag %b", src_index1, src_index2, dst_index, imm, alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag);
-		// end
-	endtask
+	SevenSeg h0 (hex_wire[3:0], HEX0);
+	SevenSeg h1 (hex_wire[7:4], HEX1);
+	SevenSeg h2 (hex_wire[11:8], HEX2);
+	SevenSeg h3 (hex_wire[15:12], HEX3);
 endmodule

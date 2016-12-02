@@ -1,7 +1,7 @@
 module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	src2_out, imm_in, imm_out, alu_op_in, alu_op_out, alu_mux_in, alu_mux_out, dst_mux_in, 
 	dst_mux_out, dst_ind_in, dst_ind_out, mem_wrt_en_in, mem_wrt_en_out, reg_file_wrt_en_in,
-	reg_file_wrt_en_out);
+	reg_file_wrt_en_out, fn_exe_in, fn_exe_out);
 	parameter BIT_WIDTH = 32;
 	parameter REG_INDEX_BIT_WIDTH 		 = 4;
 
@@ -11,6 +11,7 @@ module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	input[REG_INDEX_BIT_WIDTH-1: 0] dst_ind_in;
 	input alu_mux_in;
 	input[4:0] alu_op_in;
+	input[3:0] fn_exe_in;
 	input dst_mux_in;
 	output mem_wrt_en_out, reg_file_wrt_en_out;
 	output[BIT_WIDTH-1 : 0] pc_out, imm_out;
@@ -18,6 +19,7 @@ module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	output[REG_INDEX_BIT_WIDTH-1: 0] dst_ind_out;
 	output alu_mux_out;
 	output[4:0] alu_op_out;
+	output[3:0] fn_exe_out;
 	output dst_mux_out;
 
 	Register #(.BIT_WIDTH(1)) mem_en_reg(clk, reset, en, mem_wrt_en_in, mem_wrt_en_out);
@@ -35,4 +37,5 @@ module DEC_EXE_Buffer(clk, reset, en, pc_in, pc_out, src1_in, src1_out, src2_in,
 	Register #(.BIT_WIDTH(REG_INDEX_BIT_WIDTH)) dst_reg(clk,
 		reset, en, dst_ind_in, dst_ind_out);
 	Register #(.BIT_WIDTH(1)) dst_mux_reg(clk, reset, en, dst_mux_in, dst_mux_out);
+	Register #(.BIT_WIDTH(4)) fn_exe_reg(clk, reset, en, fn_exe_in, fn_exe_out);
 endmodule
