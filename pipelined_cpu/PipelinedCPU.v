@@ -120,6 +120,7 @@ module PipelinedCPU(SW,KEY,LEDR,HEX0,HEX1,HEX2,HEX3,CLOCK_50);
 		ifDecReset, decExeReset, ifDecEn, decExeEn, pcWrtEn, dst_index_3, reg_wrt_en_3);
 
 	// PC
+	BranchPredictorHysteresis #(.BIT_WIDTH(DBITS) branchPredictor(clk, reset, pcOut, pcBufOut2 - 4, next_pc_mux, );
 	PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
 	Mux2 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, imm_buf_out * 4 + pcBufOut2, pcIn);
 	Register #(.BIT_WIDTH(DBITS), .RESET_VALUE(START_PC)) pc (clk, reset, pcWrtEn, pcIn, pcOut);

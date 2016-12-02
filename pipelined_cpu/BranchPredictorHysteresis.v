@@ -5,6 +5,7 @@ module BranchPredictorHysteresis(clk, reset, pcAddr, resAddr, result, resultVal,
 	parameter TABLE_LENGTH = 4096; // 2^TABLE_SELECT_BITS
 
 	input clk;
+	input reset;
 	input[BIT_WIDTH - 1 : 0] pcAddr;
 	input[BIT_WIDTH - 1 : 0] resAddr;
 
@@ -17,6 +18,7 @@ module BranchPredictorHysteresis(clk, reset, pcAddr, resAddr, result, resultVal,
 
 	reg[TABLE_WIDTH - 1 : 0] tbl[TABLE_LENGTH - 1 : 0];
 
+	integer i;
 	initial begin
 	   for (i = 0; i < TABLE_LENGTH; i = i + 1) begin
 	      tbl[i] = {1'b1, {(TABLE_WIDTH - 1){1'b0}}};
@@ -40,5 +42,4 @@ module BranchPredictorHysteresis(clk, reset, pcAddr, resAddr, result, resultVal,
 			end
 		end
 	end
-
 endmodule
