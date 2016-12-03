@@ -57,7 +57,8 @@ module CPUTestBench();
 	// Controller output
 	wire[15:0] imm;
 	wire[DBITS-1: 0] imm_ext;
-	wire alu_mux, dstdata_mux, next_pc_mux;
+	wire alu_mux, dstdata_mux;
+	wire[1:0] next_pc_mux;
 	wire reg_wrt_en, mem_wrt_en;
 	wire[REG_INDEX_BIT_WIDTH - 1: 0] src_index1, src_index2, dst_index;
 	wire[4:0] alu_op;
@@ -78,6 +79,7 @@ module CPUTestBench();
 	wire[DBITS - 1 : 0] alu_b;
 
 	// ALU output
+	wire[DBITS - 1 : 0] alu_out;
 	wire[DBITS - 1 : 0] alu_res_in;
 	wire cmd_flag;
 
@@ -105,6 +107,8 @@ module CPUTestBench();
 
 	wire[3:0] fn_exe_out, fn_exe_in;
 
+	wire jump_sel;
+
 	// Stalled?
 	// Staller stall (isStalled, ifDefEn, decExeEn, exeMemEn, memWbEn);
 	/*assign ifDecEn = 1;
@@ -118,21 +122,21 @@ module CPUTestBench();
 
 	// PC
 	PCIncrementer #(.BIT_WIDTH(DBITS)) pcPlusOneAdder (pcOut, pcOutPlusOne);
-	Mux2 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, imm_buf_out * 4 + pcBufOut2, pcIn);
+	Mux4 #(.BIT_WIDTH(DBITS)) pcInMux (next_pc_mux, pcOutPlusOne, imm_buf_out * 4 + pcBufOut2, imm_buf_out * 4 + src1_buf_out, 0, pcIn);
 	Register #(.BIT_WIDTH(DBITS), .RESET_VALUE(START_PC)) pc (clk, reset, pcWrtEn, pcIn, pcOut);
 
 	// IF
 	// InstMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
-	DummyMemory #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
+	DummyMemory2 #(IMEM_INIT_FILE, IMEM_ADDR_BIT_WIDTH, IMEM_DATA_BIT_WIDTH) instMem (pcOut[IMEM_PC_BITS_HI - 1: IMEM_PC_BITS_LO], instOut);
 	IF_DEC_Buffer if_dec_buf(clk, ifDecReset, ifDecEn, pcOutPlusOne, pcBufOut1, instOut, instBufOut);
 
 	// ID
 	Controller #(.INST_BIT_WIDTH(DBITS)) control(instBufOut, src_index1, src_index2, dst_index, imm,
-	  alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag, fn_exe_in, fn_exe_out);
+	  alu_op, alu_mux, dstdata_mux, reg_wrt_en, mem_wrt_en, next_pc_mux, cmd_flag, fn_exe_in, fn_exe_out, jump_sel);
 	Mux4 #(.BIT_WIDTH(DBITS)) src1_mux(src1_sel, src1_data, alu_res_in, end_res_in, end_res_out, src1_forward);
 	Mux4 #(.BIT_WIDTH(DBITS)) src2_mux(src2_sel, src2_data, alu_res_in, end_res_in, end_res_out, src2_forward);
 	RegFile #(.BIT_WIDTH(DBITS)) regfile(clk, reset, src_index1, src_index2, dst_index_3, end_res_out, src1_data, src2_data, reg_wrt_en_3);
-	DEC_EXE_Buffer dec_exe_buf(clk, reset, decExeEn, pcBufOut1, pcBufOut2, src1_forward, src1_buf_out, src2_forward, 
+	DEC_EXE_Buffer dec_exe_buf(clk, decExeReset, decExeEn, pcBufOut1, pcBufOut2, src1_forward, src1_buf_out, src2_forward, 
 	  src2_buf_out, imm_ext, imm_buf_out, alu_op, alu_op_buf_out, alu_mux, alu_mux_buf_out, dstdata_mux, dstdata_mux_1,
 	  dst_index, dst_index_1, mem_wrt_en, mem_wrt_en_1, reg_wrt_en, reg_wrt_en_1, fn_exe_out, fn_exe_in);
 
@@ -140,7 +144,8 @@ module CPUTestBench();
 	// forwarddingLogic #(.BIT_WIDTH(DBITS)) forward ();
 	Mux2 #(.BIT_WIDTH(DBITS)) aluSrc2Mux (alu_mux_buf_out, src2_buf_out, imm_buf_out, alu_b);
 	SignExtension #(16, DBITS) sign_ext(imm, imm_ext);
-	ALU #(.BIT_WIDTH(DBITS)) alu(alu_op_buf_out, src1_buf_out, alu_b, alu_res_in, cmd_flag);
+	ALU #(.BIT_WIDTH(DBITS)) alu(alu_op_buf_out, src1_buf_out, alu_b, alu_out, cmd_flag);
+	Mux2 #(.BIT_WIDTH(DBITS)) aluOut2Mux (jump_sel, alu_out, pcBufOut2, alu_res_in);
 	EXE_MEM_Buffer exe_mem_buf(clk, reset, exeMemEn, src1_buf_out, src1_buf_out_1, alu_res_in, alu_res_out, dst_index_1, 
 	  dst_index_2, dstdata_mux_1, dstdata_mux_2, mem_wrt_en_1, mem_wrt_en_2, reg_wrt_en_1, reg_wrt_en_2, src2_buf_out, src2_buf_out_1);
 
@@ -161,7 +166,7 @@ module CPUTestBench();
 
 	  clk = 1'b0;
 	  reset = 1'b0;
-	  #500
+	  #50000
 	  //reset = 1'b1;
 	  //dumpState;
 	  //reset = 1'b0;

@@ -32,18 +32,18 @@ module HazardControl(src1, src2, cmd_flag, dst_exe, wrt_en_exe, dst_data_mux_exe
             src2_sel <= 0;
         end
 
-        /*if ((src1 == dst_exe | src2 == dst_exe) & dst_data_mux_exe == 1 & wrt_en_exe == 1) begin
+        if ((src1 == dst_exe | src2 == dst_exe) & dst_data_mux_exe == 1 & wrt_en_exe == 1) begin
             if_dec_en <= 0;
-            dec_exe_en <= 1;
+            dec_exe_en <= 0;
             pc_wrt_en <= 0;
             if_dec_reset <= 0;
             dec_exe_reset <= 1;
-        end else */if (cmd_flag == 1 & (fn_exe_in == 4'b0110 | fn_exe_in == 4'b0010)) begin
+        end else if ((cmd_flag == 1 & fn_exe_in == 4'b0010 ) | fn_exe_in == 4'b0110) begin
             dec_exe_en <= 1;
             if_dec_en <= 0;
             if_dec_reset <= 1;
             pc_wrt_en <= 1;
-            dec_exe_reset <= 0;
+            dec_exe_reset <= 1;
         end else begin
             dec_exe_en <= 1;
             if_dec_en <= 1;
